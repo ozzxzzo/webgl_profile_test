@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebGL Particle Effects Demos</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0a0a;
+            color: #e0e0e0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            padding: 40px 20px;
+        }
+
+        .demos-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .demo-section {
+            background: #0f0f0f;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #1a1a1a;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin-bottom: 8px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        .demo-description {
+            font-size: 12px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .browser-row {
+            background: #1a1a1a;
+            padding: 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+            cursor: pointer;
+            border-radius: 8px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #262626;
+        }
+
+        .browser-row:hover {
+            background: #222;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .browser-info {
+            display: flex;
+            gap: 24px;
+            align-items: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .browser-name {
+            font-weight: 600;
+            font-size: 14px;
+            color: #e0e0e0;
+            min-width: 100px;
+        }
+
+        .browser-detail {
+            font-size: 12px;
+            color: #888;
+            display: flex;
+            gap: 16px;
+        }
+
+        .browser-right {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .btn {
+            padding: 6px 14px;
+            border-radius: 4px;
+            border: 1px solid #333;
+            background: transparent;
+            color: #888;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .btn:hover {
+            border-color: #fff;
+            color: #fff;
+        }
+
+        .particle-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.5s;
+            z-index: 1;
+        }
+
+        .browser-row:hover .particle-canvas {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="demos-container">
+        
+        <!-- Demo 1: 流光粒子波 -->
+        <div class="demo-section">
+            <h2>Demo 1: Flowing Light Waves</h2>
+            <p class="demo-description">流动的光波粒子，随鼠标产生涟漪效果</p>
+            <div class="browser-row" id="demo1">
+                <canvas class="particle-canvas"></canvas>
+                <div class="browser-info">
+                    <div class="browser-name">Profile Alpha</div>
+                    <div class="browser-detail">
+                        <span>Region: US-West</span>
+                        <span>Proxy: Active</span>
+                        <span>Session: #001</span>
+                    </div>
+                </div>
+                <div class="browser-right">
+                    <button class="btn">Launch</button>
+                    <button class="btn">Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 2: 量子网格 -->
+        <div class="demo-section">
+            <h2>Demo 2: Quantum Grid</h2>
+            <p class="demo-description">量子化的网格粒子，呈现数据流动感</p>
+            <div class="browser-row" id="demo2">
+                <canvas class="particle-canvas"></canvas>
+                <div class="browser-info">
+                    <div class="browser-name">Profile Beta</div>
+                    <div class="browser-detail">
+                        <span>Region: EU-Central</span>
+                        <span>Proxy: Active</span>
+                        <span>Session: #002</span>
+                    </div>
+                </div>
+                <div class="browser-right">
+                    <button class="btn">Launch</button>
+                    <button class="btn">Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 3: 星云漩涡 -->
+        <div class="demo-section">
+            <h2>Demo 3: Nebula Vortex</h2>
+            <p class="demo-description">旋转的星云粒子，创造深度空间感</p>
+            <div class="browser-row" id="demo3">
+                <canvas class="particle-canvas"></canvas>
+                <div class="browser-info">
+                    <div class="browser-name">Profile Gamma</div>
+                    <div class="browser-detail">
+                        <span>Region: Asia-Pacific</span>
+                        <span>Proxy: Active</span>
+                        <span>Session: #003</span>
+                    </div>
+                </div>
+                <div class="browser-right">
+                    <button class="btn">Launch</button>
+                    <button class="btn">Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 4: DNA螺旋 -->
+        <div class="demo-section">
+            <h2>Demo 4: DNA Helix</h2>
+            <p class="demo-description">双螺旋结构的粒子流，象征数据的基因序列</p>
+            <div class="browser-row" id="demo4">
+                <canvas class="particle-canvas"></canvas>
+                <div class="browser-info">
+                    <div class="browser-name">Profile Delta</div>
+                    <div class="browser-detail">
+                        <span>Region: UK-London</span>
+                        <span>Proxy: Active</span>
+                        <span>Session: #004</span>
+                    </div>
+                </div>
+                <div class="browser-right">
+                    <button class="btn">Launch</button>
+                    <button class="btn">Edit</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Demo 5: 神经网络 -->
+        <div class="demo-section">
+            <h2>Demo 5: Neural Network</h2>
+            <p class="demo-description">神经元连接的粒子网络，展现AI智能感</p>
+            <div class="browser-row" id="demo5">
+                <canvas class="particle-canvas"></canvas>
+                <div class="browser-info">
+                    <div class="browser-name">Profile Epsilon</div>
+                    <div class="browser-detail">
+                        <span>Region: JP-Tokyo</span>
+                        <span>Proxy: Active</span>
+                        <span>Session: #005</span>
+                    </div>
+                </div>
+                <div class="browser-right">
+                    <button class="btn">Launch</button>
+                    <button class="btn">Edit</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Demo 1: Flowing Light Waves
+        class FlowingLightWaves {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.waves = [];
+                this.time = 0;
+                this.mouseX = 0;
+                this.mouseY = 0;
+                this.init();
+            }
+
+            init() {
+                this.resize();
+                for (let i = 0; i < 60; i++) {
+                    this.particles.push({
+                        x: Math.random() * this.canvas.width,
+                        y: Math.random() * this.canvas.height,
+                        vx: 0,
+                        vy: 0,
+                        radius: Math.random() * 2 + 0.5,
+                        phase: Math.random() * Math.PI * 2
+                    });
+                }
+                this.setupEvents();
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            setupEvents() {
+                this.canvas.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.mouseX = e.clientX - rect.left;
+                    this.mouseY = e.clientY - rect.top;
+                    this.waves.push({
+                        x: this.mouseX,
+                        y: this.mouseY,
+                        radius: 0,
+                        opacity: 1
+                    });
+                });
+            }
+
+            update() {
+                this.time += 0.02;
+                
+                // Update waves
+                this.waves = this.waves.filter(wave => {
+                    wave.radius += 3;
+                    wave.opacity -= 0.02;
+                    return wave.opacity > 0;
+                });
+
+                // Update particles
+                this.particles.forEach(p => {
+                    const waveX = Math.sin(this.time + p.phase) * 100;
+                    const waveY = Math.cos(this.time * 0.7 + p.phase) * 50;
+                    
+                    p.vx += (waveX - p.x + this.canvas.width/2) * 0.001;
+                    p.vy += (waveY - p.y + this.canvas.height/2) * 0.001;
+                    
+                    // Mouse influence
+                    const dx = this.mouseX - p.x;
+                    const dy = this.mouseY - p.y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 150) {
+                        p.vx += dx * 0.0002;
+                        p.vy += dy * 0.0002;
+                    }
+                    
+                    p.vx *= 0.98;
+                    p.vy *= 0.98;
+                    p.x += p.vx;
+                    p.y += p.vy;
+                });
+            }
+
+            draw() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw waves
+                this.waves.forEach(wave => {
+                    this.ctx.strokeStyle = `rgba(100, 200, 255, ${wave.opacity * 0.3})`;
+                    this.ctx.lineWidth = 1;
+                    this.ctx.beginPath();
+                    this.ctx.arc(wave.x, wave.y, wave.radius, 0, Math.PI * 2);
+                    this.ctx.stroke();
+                });
+                
+                // Draw connections
+                this.ctx.strokeStyle = 'rgba(100, 200, 255, 0.2)';
+                this.ctx.lineWidth = 0.5;
+                this.particles.forEach((p1, i) => {
+                    this.particles.slice(i + 1).forEach(p2 => {
+                        const dist = Math.hypot(p2.x - p1.x, p2.y - p1.y);
+                        if (dist < 80) {
+                            this.ctx.globalAlpha = (1 - dist / 80) * 0.5;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(p1.x, p1.y);
+                            this.ctx.lineTo(p2.x, p2.y);
+                            this.ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Draw particles
+                this.ctx.globalAlpha = 1;
+                this.particles.forEach(p => {
+                    const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius * 3);
+                    gradient.addColorStop(0, 'rgba(100, 200, 255, 1)');
+                    gradient.addColorStop(1, 'rgba(100, 200, 255, 0)');
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, p.radius * 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+        }
+
+        // Demo 2: Quantum Grid
+        class QuantumGrid {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.gridPoints = [];
+                this.pulses = [];
+                this.time = 0;
+                this.init();
+            }
+
+            init() {
+                this.resize();
+                const cols = Math.floor(this.canvas.width / 30);
+                const rows = Math.floor(this.canvas.height / 30);
+                
+                for (let i = 0; i < cols; i++) {
+                    for (let j = 0; j < rows; j++) {
+                        this.gridPoints.push({
+                            x: i * 30 + 15,
+                            y: j * 30 + 15,
+                            baseX: i * 30 + 15,
+                            baseY: j * 30 + 15,
+                            offset: Math.random() * Math.PI * 2,
+                            active: false,
+                            activation: 0
+                        });
+                    }
+                }
+                this.setupEvents();
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            setupEvents() {
+                this.canvas.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const mouseY = e.clientY - rect.top;
+                    
+                    this.gridPoints.forEach(p => {
+                        const dist = Math.hypot(mouseX - p.baseX, mouseY - p.baseY);
+                        p.active = dist < 100;
+                        if (p.active) {
+                            p.activation = Math.min(p.activation + 0.1, 1);
+                        } else {
+                            p.activation = Math.max(p.activation - 0.05, 0);
+                        }
+                    });
+                    
+                    if (Math.random() > 0.9) {
+                        this.pulses.push({
+                            x: mouseX,
+                            y: mouseY,
+                            radius: 0,
+                            opacity: 1
+                        });
+                    }
+                });
+            }
+
+            update() {
+                this.time += 0.03;
+                
+                this.pulses = this.pulses.filter(pulse => {
+                    pulse.radius += 4;
+                    pulse.opacity -= 0.03;
+                    return pulse.opacity > 0;
+                });
+                
+                this.gridPoints.forEach(p => {
+                    const wave = Math.sin(this.time + p.offset) * 5 * p.activation;
+                    p.x = p.baseX + wave;
+                    p.y = p.baseY + Math.cos(this.time * 0.7 + p.offset) * 3 * p.activation;
+                });
+            }
+
+            draw() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.3)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw pulses
+                this.pulses.forEach(pulse => {
+                    this.ctx.strokeStyle = `rgba(0, 255, 200, ${pulse.opacity * 0.5})`;
+                    this.ctx.lineWidth = 2;
+                    this.ctx.beginPath();
+                    this.ctx.arc(pulse.x, pulse.y, pulse.radius, 0, Math.PI * 2);
+                    this.ctx.stroke();
+                });
+                
+                // Draw grid connections
+                this.gridPoints.forEach((p1, i) => {
+                    this.gridPoints.slice(i + 1).forEach(p2 => {
+                        const dist = Math.hypot(p2.baseX - p1.baseX, p2.baseY - p1.baseY);
+                        if (dist === 30) {
+                            const activation = (p1.activation + p2.activation) / 2;
+                            this.ctx.strokeStyle = `rgba(0, 255, 200, ${0.2 + activation * 0.5})`;
+                            this.ctx.lineWidth = 0.5 + activation;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(p1.x, p1.y);
+                            this.ctx.lineTo(p2.x, p2.y);
+                            this.ctx.stroke();
+                        }
+                    });
+                });
+                
+                // Draw grid points
+                this.gridPoints.forEach(p => {
+                    const size = 2 + p.activation * 3;
+                    const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size);
+                    gradient.addColorStop(0, `rgba(0, 255, 200, ${0.5 + p.activation * 0.5})`);
+                    gradient.addColorStop(1, 'rgba(0, 255, 200, 0)');
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+        }
+
+        // Demo 3: Nebula Vortex
+        class NebulaVortex {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.particles = [];
+                this.centerX = 0;
+                this.centerY = 0;
+                this.time = 0;
+                this.init();
+            }
+
+            init() {
+                this.resize();
+                for (let i = 0; i < 150; i++) {
+                    const angle = Math.random() * Math.PI * 2;
+                    const radius = Math.random() * Math.min(this.canvas.width, this.canvas.height) * 0.5;
+                    this.particles.push({
+                        angle: angle,
+                        radius: radius,
+                        baseRadius: radius,
+                        speed: Math.random() * 0.02 + 0.005,
+                        size: Math.random() * 2 + 0.5,
+                        color: Math.random() > 0.5 ? '147, 51, 234' : '236, 72, 153',
+                        z: Math.random()
+                    });
+                }
+                this.setupEvents();
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+                this.centerX = this.canvas.width / 2;
+                this.centerY = this.canvas.height / 2;
+            }
+
+            setupEvents() {
+                this.canvas.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const mouseY = e.clientY - rect.top;
+                    this.centerX += (mouseX - this.centerX) * 0.05;
+                    this.centerY += (mouseY - this.centerY) * 0.05;
+                });
+            }
+
+            update() {
+                this.time += 0.01;
+                
+                this.particles.forEach(p => {
+                    p.angle += p.speed * (1 - p.z * 0.5);
+                    p.radius = p.baseRadius + Math.sin(this.time * 2 + p.angle) * 20;
+                    
+                    const spiralFactor = Math.sin(p.angle * 3 + this.time) * 10;
+                    p.x = this.centerX + Math.cos(p.angle) * (p.radius + spiralFactor) * p.z;
+                    p.y = this.centerY + Math.sin(p.angle) * (p.radius + spiralFactor) * p.z;
+                });
+            }
+
+            draw() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.1)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Sort particles by z for depth
+                const sorted = [...this.particles].sort((a, b) => a.z - b.z);
+                
+                sorted.forEach(p => {
+                    const alpha = 0.3 + p.z * 0.7;
+                    const size = p.size * (0.5 + p.z * 0.5);
+                    
+                    // Glow effect
+                    const gradient = this.ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, size * 5);
+                    gradient.addColorStop(0, `rgba(${p.color}, ${alpha})`);
+                    gradient.addColorStop(0.5, `rgba(${p.color}, ${alpha * 0.5})`);
+                    gradient.addColorStop(1, `rgba(${p.color}, 0)`);
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, size * 5, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Core
+                    this.ctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
+                    this.ctx.beginPath();
+                    this.ctx.arc(p.x, p.y, size * 0.5, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+        }
+
+        // Demo 4: DNA Helix
+        class DNAHelix {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.strands = [];
+                this.time = 0;
+                this.init();
+            }
+
+            init() {
+                this.resize();
+                const numPairs = 20;
+                for (let i = 0; i < numPairs; i++) {
+                    this.strands.push({
+                        position: i / numPairs,
+                        offset: i * 0.3,
+                        color1: Math.random() > 0.5 ? '59, 130, 246' : '16, 185, 129',
+                        color2: Math.random() > 0.5 ? '239, 68, 68' : '251, 146, 60'
+                    });
+                }
+                this.setupEvents();
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            setupEvents() {
+                this.canvas.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    this.mouseY = e.clientY - rect.top;
+                });
+            }
+
+            update() {
+                this.time += 0.02;
+                
+                this.strands.forEach((s, i) => {
+                    s.position += 0.005;
+                    if (s.position > 1) s.position = 0;
+                    
+                    const x = s.position * this.canvas.width;
+                    const wave = Math.sin(this.time + s.offset);
+                    const radius = 40 + Math.sin(this.time * 0.5 + i * 0.2) * 10;
+                    
+                    s.y1 = this.canvas.height / 2 + wave * radius;
+                    s.y2 = this.canvas.height / 2 - wave * radius;
+                    s.x = x;
+                    
+                    // Mouse influence
+                    if (this.mouseY) {
+                        const dist = Math.abs(this.mouseY - this.canvas.height / 2);
+                        const influence = Math.max(0, 1 - dist / 100);
+                        s.y1 += (this.mouseY - this.canvas.height / 2) * influence * 0.3;
+                        s.y2 += (this.mouseY - this.canvas.height / 2) * influence * 0.3;
+                    }
+                });
+            }
+
+            draw() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.15)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw connections between strands
+                this.strands.forEach((s, i) => {
+                    if (i < this.strands.length - 1) {
+                        const next = this.strands[i + 1];
+                        
+                        // First helix
+                        this.ctx.strokeStyle = `rgba(${s.color1}, 0.5)`;
+                        this.ctx.lineWidth = 2;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(s.x, s.y1);
+                        this.ctx.lineTo(next.x, next.y1);
+                        this.ctx.stroke();
+                        
+                        // Second helix
+                        this.ctx.strokeStyle = `rgba(${s.color2}, 0.5)`;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(s.x, s.y2);
+                        this.ctx.lineTo(next.x, next.y2);
+                        this.ctx.stroke();
+                        
+                        // Cross connections
+                        if (i % 2 === 0) {
+                            const gradient = this.ctx.createLinearGradient(s.x, s.y1, s.x, s.y2);
+                            gradient.addColorStop(0, `rgba(${s.color1}, 0.3)`);
+                            gradient.addColorStop(0.5, 'rgba(255, 255, 255, 0.1)');
+                            gradient.addColorStop(1, `rgba(${s.color2}, 0.3)`);
+                            this.ctx.strokeStyle = gradient;
+                            this.ctx.lineWidth = 1;
+                            this.ctx.beginPath();
+                            this.ctx.moveTo(s.x, s.y1);
+                            this.ctx.lineTo(s.x, s.y2);
+                            this.ctx.stroke();
+                        }
+                    }
+                });
+                
+                // Draw particle nodes
+                this.strands.forEach(s => {
+                    // Top particle
+                    const gradient1 = this.ctx.createRadialGradient(s.x, s.y1, 0, s.x, s.y1, 8);
+                    gradient1.addColorStop(0, `rgba(${s.color1}, 1)`);
+                    gradient1.addColorStop(1, `rgba(${s.color1}, 0)`);
+                    this.ctx.fillStyle = gradient1;
+                    this.ctx.beginPath();
+                    this.ctx.arc(s.x, s.y1, 8, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Bottom particle
+                    const gradient2 = this.ctx.createRadialGradient(s.x, s.y2, 0, s.x, s.y2, 8);
+                    gradient2.addColorStop(0, `rgba(${s.color2}, 1)`);
+                    gradient2.addColorStop(1, `rgba(${s.color2}, 0)`);
+                    this.ctx.fillStyle = gradient2;
+                    this.ctx.beginPath();
+                    this.ctx.arc(s.x, s.y2, 8, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+        }
+
+        // Demo 5: Neural Network
+        class NeuralNetwork {
+            constructor(canvas) {
+                this.canvas = canvas;
+                this.ctx = canvas.getContext('2d');
+                this.neurons = [];
+                this.signals = [];
+                this.time = 0;
+                this.init();
+            }
+
+            init() {
+                this.resize();
+                
+                // Create neurons in layers
+                const layers = 4;
+                const neuronsPerLayer = 5;
+                
+                for (let layer = 0; layer < layers; layer++) {
+                    for (let n = 0; n < neuronsPerLayer; n++) {
+                        this.neurons.push({
+                            x: (layer + 1) * (this.canvas.width / (layers + 1)),
+                            y: (n + 1) * (this.canvas.height / (neuronsPerLayer + 1)),
+                            layer: layer,
+                            activation: 0,
+                            connections: [],
+                            pulsePhase: Math.random() * Math.PI * 2
+                        });
+                    }
+                }
+                
+                // Create connections
+                this.neurons.forEach((neuron, i) => {
+                    this.neurons.forEach((target, j) => {
+                        if (target.layer === neuron.layer + 1) {
+                            if (Math.random() > 0.3) {
+                                neuron.connections.push(j);
+                            }
+                        }
+                    });
+                });
+                
+                this.setupEvents();
+            }
+
+            resize() {
+                const rect = this.canvas.parentElement.getBoundingClientRect();
+                this.canvas.width = rect.width;
+                this.canvas.height = rect.height;
+            }
+
+            setupEvents() {
+                this.canvas.parentElement.addEventListener('mousemove', (e) => {
+                    const rect = this.canvas.getBoundingClientRect();
+                    const mouseX = e.clientX - rect.left;
+                    const mouseY = e.clientY - rect.top;
+                    
+                    this.neurons.forEach(n => {
+                        const dist = Math.hypot(mouseX - n.x, mouseY - n.y);
+                        if (dist < 100) {
+                            n.activation = 1;
+                            
+                            // Send signals
+                            if (Math.random() > 0.8 && n.connections.length > 0) {
+                                n.connections.forEach(targetIndex => {
+                                    this.signals.push({
+                                        from: n,
+                                        to: this.neurons[targetIndex],
+                                        progress: 0,
+                                        speed: 0.02 + Math.random() * 0.02
+                                    });
+                                });
+                            }
+                        }
+                    });
+                });
+            }
+
+            update() {
+                this.time += 0.02;
+                
+                // Update neurons
+                this.neurons.forEach(n => {
+                    n.activation *= 0.95;
+                    
+                    // Pulse effect
+                    const pulse = Math.sin(this.time * 2 + n.pulsePhase) * 0.2 + 0.8;
+                    n.displayActivation = n.activation * pulse;
+                });
+                
+                // Update signals
+                this.signals = this.signals.filter(signal => {
+                    signal.progress += signal.speed;
+                    if (signal.progress >= 1) {
+                        signal.to.activation = Math.min(1, signal.to.activation + 0.5);
+                        return false;
+                    }
+                    return true;
+                });
+            }
+
+            draw() {
+                this.ctx.fillStyle = 'rgba(10, 10, 10, 0.2)';
+                this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+                
+                // Draw connections
+                this.neurons.forEach(neuron => {
+                    neuron.connections.forEach(targetIndex => {
+                        const target = this.neurons[targetIndex];
+                        const alpha = neuron.displayActivation * 0.3 + 0.1;
+                        
+                        const gradient = this.ctx.createLinearGradient(neuron.x, neuron.y, target.x, target.y);
+                        gradient.addColorStop(0, `rgba(147, 197, 253, ${alpha})`);
+                        gradient.addColorStop(1, `rgba(196, 181, 253, ${alpha})`);
+                        
+                        this.ctx.strokeStyle = gradient;
+                        this.ctx.lineWidth = 0.5 + neuron.displayActivation;
+                        this.ctx.beginPath();
+                        this.ctx.moveTo(neuron.x, neuron.y);
+                        this.ctx.lineTo(target.x, target.y);
+                        this.ctx.stroke();
+                    });
+                });
+                
+                // Draw signals
+                this.signals.forEach(signal => {
+                    const x = signal.from.x + (signal.to.x - signal.from.x) * signal.progress;
+                    const y = signal.from.y + (signal.to.y - signal.from.y) * signal.progress;
+                    
+                    const gradient = this.ctx.createRadialGradient(x, y, 0, x, y, 10);
+                    gradient.addColorStop(0, 'rgba(255, 255, 255, 1)');
+                    gradient.addColorStop(0.5, 'rgba(147, 197, 253, 0.5)');
+                    gradient.addColorStop(1, 'rgba(147, 197, 253, 0)');
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(x, y, 10, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+                
+                // Draw neurons
+                this.neurons.forEach(n => {
+                    const size = 5 + n.displayActivation * 5;
+                    
+                    // Outer glow
+                    const glowGradient = this.ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, size * 3);
+                    glowGradient.addColorStop(0, `rgba(147, 197, 253, ${n.displayActivation * 0.5})`);
+                    glowGradient.addColorStop(1, 'rgba(147, 197, 253, 0)');
+                    
+                    this.ctx.fillStyle = glowGradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(n.x, n.y, size * 3, 0, Math.PI * 2);
+                    this.ctx.fill();
+                    
+                    // Core
+                    const gradient = this.ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, size);
+                    gradient.addColorStop(0, `rgba(255, 255, 255, ${0.8 + n.displayActivation * 0.2})`);
+                    gradient.addColorStop(0.7, `rgba(147, 197, 253, ${0.5 + n.displayActivation * 0.5})`);
+                    gradient.addColorStop(1, `rgba(147, 197, 253, 0)`);
+                    
+                    this.ctx.fillStyle = gradient;
+                    this.ctx.beginPath();
+                    this.ctx.arc(n.x, n.y, size, 0, Math.PI * 2);
+                    this.ctx.fill();
+                });
+            }
+        }
+
+        // Initialize effects
+        function initEffect(demoId, EffectClass) {
+            const row = document.getElementById(demoId);
+            const canvas = row.querySelector('.particle-canvas');
+            const effect = new EffectClass(canvas);
+            
+            let animating = false;
+            
+            row.addEventListener('mouseenter', () => {
+                animating = true;
+                animate();
+            });
+            
+            row.addEventListener('mouseleave', () => {
+                animating = false;
+            });
+            
+            function animate() {
+                if (!animating) return;
+                effect.update();
+                effect.draw();
+                requestAnimationFrame(animate);
+            }
+        }
+
+        // Start all demos
+        initEffect('demo1', FlowingLightWaves);
+        initEffect('demo2', QuantumGrid);
+        initEffect('demo3', NebulaVortex);
+        initEffect('demo4', DNAHelix);
+        initEffect('demo5', NeuralNetwork);
+    </script>
+</body>
+</html>
