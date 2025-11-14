@@ -340,24 +340,6 @@
         </div>
 
         <div class="control-section">
-            <h3>🧲 磁性吸附 Magnetic Field</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableMagnetic" checked>
-                    <span class="checkbox-label">启用磁性吸附 Enable Magnetic</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>吸附强度 Strength: <span class="value-display" id="magneticStrength-value">15.0</span></label>
-                <input type="range" id="magneticStrength" min="0" max="50" step="1" value="15">
-            </div>
-            <div class="control-group">
-                <label>作用范围 Range: <span class="value-display" id="magneticRange-value">100</span></label>
-                <input type="range" id="magneticRange" min="20" max="200" step="10" value="100">
-            </div>
-        </div>
-
-        <div class="control-section">
             <h3>🌀 推力排斥场 Repulsion Field</h3>
             <div class="control-group">
                 <label>
@@ -372,30 +354,6 @@
             <div class="control-group">
                 <label>作用范围 Range: <span class="value-display" id="repulsionRange-value">100</span></label>
                 <input type="range" id="repulsionRange" min="20" max="200" step="10" value="100">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>🌪️ 涡旋漩涡 Vortex Swirl</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableVortex">
-                    <span class="checkbox-label">启用漩涡 Enable Vortex</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>旋转强度 Strength: <span class="value-display" id="vortexStrength-value">10.0</span></label>
-                <input type="range" id="vortexStrength" min="0" max="30" step="1" value="10">
-            </div>
-            <div class="control-group">
-                <label>作用范围 Range: <span class="value-display" id="vortexRange-value">120</span></label>
-                <input type="range" id="vortexRange" min="30" max="250" step="10" value="120">
-            </div>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="vortexClockwise" checked>
-                    <span class="checkbox-label">顺时针旋转 Clockwise</span>
-                </label>
             </div>
         </div>
 
@@ -418,28 +376,6 @@
             <div class="control-group">
                 <label>波纹衰减 Decay: <span class="value-display" id="rippleDecay-value">0.02</span></label>
                 <input type="range" id="rippleDecay" min="0.01" max="0.1" step="0.01" value="0.02">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>⚡ 粒子连线 Connection</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableConnection">
-                    <span class="checkbox-label">启用连线 Enable Connection</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>连线距离 Distance: <span class="value-display" id="connectionDistance-value">50</span></label>
-                <input type="range" id="connectionDistance" min="20" max="150" step="5" value="50">
-            </div>
-            <div class="control-group">
-                <label>连线透明度 Opacity: <span class="value-display" id="connectionOpacity-value">0.6</span></label>
-                <input type="range" id="connectionOpacity" min="0.1" max="1" step="0.1" value="0.6">
-            </div>
-            <div class="control-group">
-                <label>鼠标范围 Mouse Range: <span class="value-display" id="connectionMouseRange-value">150</span></label>
-                <input type="range" id="connectionMouseRange" min="50" max="300" step="10" value="150">
             </div>
         </div>
 
@@ -516,50 +452,6 @@
             <div class="control-group">
                 <label>作用范围 Range: <span class="value-display" id="timeDilationRange-value">100</span></label>
                 <input type="range" id="timeDilationRange" min="30" max="200" step="10" value="100">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>🔆 动态光晕 Dynamic Halo</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableHalo" checked>
-                    <span class="checkbox-label">启用光晕 Enable Halo</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>光晕大小 Size: <span class="value-display" id="haloSize-value">60</span></label>
-                <input type="range" id="haloSize" min="20" max="150" step="5" value="60">
-            </div>
-            <div class="control-group">
-                <label>光晕强度 Intensity: <span class="value-display" id="haloIntensity-value">0.8</span></label>
-                <input type="range" id="haloIntensity" min="0.1" max="2" step="0.1" value="0.8">
-            </div>
-            <div class="control-group">
-                <label>脉动速度 Pulse Speed: <span class="value-display" id="haloPulseSpeed-value">2.0</span></label>
-                <input type="range" id="haloPulseSpeed" min="0.5" max="5" step="0.5" value="2">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>🎯 磁力线 Force Field Lines</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableForceLines">
-                    <span class="checkbox-label">启用磁力线 Enable Force Lines</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>连线数量 Count: <span class="value-display" id="forceLinesCount-value">10</span></label>
-                <input type="range" id="forceLinesCount" min="5" max="30" step="1" value="10">
-            </div>
-            <div class="control-group">
-                <label>连线范围 Range: <span class="value-display" id="forceLinesRange-value">120</span></label>
-                <input type="range" id="forceLinesRange" min="50" max="250" step="10" value="120">
-            </div>
-            <div class="control-group">
-                <label>连线透明度 Opacity: <span class="value-display" id="forceLinesOpacity-value">0.5</span></label>
-                <input type="range" id="forceLinesOpacity" min="0.1" max="1" step="0.1" value="0.5">
             </div>
         </div>
 
@@ -714,9 +606,6 @@
         // 鼠标交互特效数据
         let ripples = []; // 波纹数组
         let trailParticles = []; // 尾迹粒子数组
-        let connectionLines = null; // 粒子连线
-        let forceFieldLines = null; // 磁力线
-        let mouseHalo = null; // 鼠标光晕
 
         // 配置参数
         const config = {
@@ -758,28 +647,14 @@
             timeSpeed: 0.8,
 
             // 鼠标交互特效参数
-            enableMagnetic: true,
-            magneticStrength: 15,
-            magneticRange: 100,
-
             enableRepulsion: false,
             repulsionStrength: 20,
             repulsionRange: 100,
-
-            enableVortex: false,
-            vortexStrength: 10,
-            vortexRange: 120,
-            vortexClockwise: true,
 
             enableRipple: true,
             rippleStrength: 25,
             rippleSpeed: 0.8,
             rippleDecay: 0.02,
-
-            enableConnection: false,
-            connectionDistance: 50,
-            connectionOpacity: 0.6,
-            connectionMouseRange: 150,
 
             enableInfection: false,
             infectionColor: new THREE.Color(0xff00ff),
@@ -797,16 +672,6 @@
             enableTimeDilation: false,
             timeDilationFactor: 0.3,
             timeDilationRange: 100,
-
-            enableHalo: false,
-            haloSize: 30,
-            haloIntensity: 0.5,
-            haloPulseSpeed: 2.0,
-
-            enableForceLines: false,
-            forceLinesCount: 10,
-            forceLinesRange: 120,
-            forceLinesOpacity: 0.5,
 
             // 其他特效参数
             enableDOF: true,
@@ -1207,85 +1072,11 @@
 
             setupPostProcessing();
             createSurfaces();
-            createInteractiveElements();
             setupControls();
             updateUIFromConfig();
 
             window.addEventListener('resize', onWindowResize);
             document.getElementById('loading').style.display = 'none';
-        }
-
-        // 创建交互特效元素
-        function createInteractiveElements() {
-            // 创建鼠标光晕
-            const haloGeometry = new THREE.CircleGeometry(1, 32);
-            const haloMaterial = new THREE.ShaderMaterial({
-                uniforms: {
-                    time: { value: 0 },
-                    intensity: { value: config.haloIntensity },
-                    pulseSpeed: { value: config.haloPulseSpeed }
-                },
-                vertexShader: `
-                    varying vec2 vUv;
-                    void main() {
-                        vUv = uv;
-                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                    }
-                `,
-                fragmentShader: `
-                    uniform float time;
-                    uniform float intensity;
-                    uniform float pulseSpeed;
-                    varying vec2 vUv;
-                    void main() {
-                        vec2 center = vUv - vec2(0.5);
-                        float dist = length(center);
-                        float pulse = sin(time * pulseSpeed) * 0.3 + 0.7;
-                        float alpha = (1.0 - dist) * pulse * intensity;
-                        alpha = smoothstep(0.0, 0.5, alpha);
-                        vec3 color = vec3(0.16, 0.95, 0.13); // #28f321
-                        gl_FragColor = vec4(color, alpha * 0.5);
-                    }
-                `,
-                transparent: true,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-            mouseHalo = new THREE.Mesh(haloGeometry, haloMaterial);
-            mouseHalo.position.z = 0;
-            scene.add(mouseHalo);
-
-            // 创建粒子连线
-            const maxConnections = 1000;
-            const connectionPositions = new Float32Array(maxConnections * 6);
-            const connectionColors = new Float32Array(maxConnections * 6);
-            const connectionGeometry = new THREE.BufferGeometry();
-            connectionGeometry.setAttribute('position', new THREE.BufferAttribute(connectionPositions, 3));
-            connectionGeometry.setAttribute('color', new THREE.BufferAttribute(connectionColors, 3));
-            const connectionMaterial = new THREE.LineBasicMaterial({
-                vertexColors: true,
-                transparent: true,
-                opacity: config.connectionOpacity,
-                blending: THREE.AdditiveBlending
-            });
-            connectionLines = new THREE.LineSegments(connectionGeometry, connectionMaterial);
-            scene.add(connectionLines);
-
-            // 创建磁力线
-            const maxForceLines = 30;
-            const forceLinePositions = new Float32Array(maxForceLines * 6);
-            const forceLineColors = new Float32Array(maxForceLines * 6);
-            const forceLineGeometry = new THREE.BufferGeometry();
-            forceLineGeometry.setAttribute('position', new THREE.BufferAttribute(forceLinePositions, 3));
-            forceLineGeometry.setAttribute('color', new THREE.BufferAttribute(forceLineColors, 3));
-            const forceLineMaterial = new THREE.LineBasicMaterial({
-                vertexColors: true,
-                transparent: true,
-                opacity: config.forceLinesOpacity,
-                blending: THREE.AdditiveBlending
-            });
-            forceFieldLines = new THREE.LineSegments(forceLineGeometry, forceLineMaterial);
-            scene.add(forceFieldLines);
         }
 
         // 设置后处理
