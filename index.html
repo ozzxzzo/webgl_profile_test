@@ -236,16 +236,16 @@
         <div class="control-section">
             <h3>光效 Lighting</h3>
             <div class="control-group">
-                <label>辉光强度 Bloom Strength: <span class="value-display" id="bloomStrength-value">0.5</span></label>
-                <input type="range" id="bloomStrength" min="0" max="3" step="0.1" value="0.5">
+                <label>辉光强度 Bloom Strength: <span class="value-display" id="bloomStrength-value">1.7</span></label>
+                <input type="range" id="bloomStrength" min="0" max="3" step="0.1" value="1.7">
             </div>
             <div class="control-group">
-                <label>辉光半径 Bloom Radius: <span class="value-display" id="bloomRadius-value">0.20</span></label>
-                <input type="range" id="bloomRadius" min="0" max="1" step="0.05" value="0.20">
+                <label>辉光半径 Bloom Radius: <span class="value-display" id="bloomRadius-value">0.00</span></label>
+                <input type="range" id="bloomRadius" min="0" max="1" step="0.05" value="0.00">
             </div>
             <div class="control-group">
-                <label>辉光阈值 Bloom Threshold: <span class="value-display" id="bloomThreshold-value">0.40</span></label>
-                <input type="range" id="bloomThreshold" min="0" max="1" step="0.05" value="0.40">
+                <label>辉光阈值 Bloom Threshold: <span class="value-display" id="bloomThreshold-value">0.55</span></label>
+                <input type="range" id="bloomThreshold" min="0" max="1" step="0.05" value="0.55">
             </div>
             <div class="control-group">
                 <label>亮度 Brightness: <span class="value-display" id="brightness-value">1.5</span></label>
@@ -288,8 +288,8 @@
                 <input type="range" id="particleSize" min="0.2" max="2" step="0.1" value="0.8">
             </div>
             <div class="control-group">
-                <label>粒子脉动 Particle Pulse: <span class="value-display" id="particlePulse-value">0.2</span></label>
-                <input type="range" id="particlePulse" min="0" max="1" step="0.05" value="0.2">
+                <label>粒子脉动 Particle Pulse: <span class="value-display" id="particlePulse-value">0.20</span></label>
+                <input type="range" id="particlePulse" min="0" max="1" step="0.05" value="0.20">
             </div>
         </div>
 
@@ -313,7 +313,6 @@
             </div>
         </div>
 
-        <button onclick="saveAsDefault()">保存为默认值 Save as Default</button>
         <button onclick="resetToDefault()">重置默认值 Reset</button>
         <button onclick="randomize()">随机化 Randomize</button>
     </div>
@@ -355,9 +354,9 @@
             colorFlowSpeed: 0.05,
 
             // 光效参数
-            bloomStrength: 0.5,
-            bloomRadius: 0.20,
-            bloomThreshold: 0.40,
+            bloomStrength: 1.7,
+            bloomRadius: 0.00,
+            bloomThreshold: 0.55,
             brightness: 1.5,
 
             // 波动效果参数
@@ -370,7 +369,7 @@
 
             // 粒子参数
             particleSize: 0.8,
-            particlePulse: 0.2,
+            particlePulse: 0.20,
 
             // 相机与环境
             cameraZ: 50,
@@ -386,82 +385,6 @@
         function togglePanel() {
             const panel = document.getElementById('controlPanel');
             panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
-        }
-
-        // 保存配置到 localStorage
-        function saveConfigToLocalStorage() {
-            const configToSave = {
-                surfaceCount: config.surfaceCount,
-                gridDensity: config.gridDensity,
-                surfaceWidth: config.surfaceWidth,
-                surfaceHeight: config.surfaceHeight,
-                colorStart: '#' + config.colorStart.getHexString(),
-                colorEnd: '#' + config.colorEnd.getHexString(),
-                colorFlowSpeed: config.colorFlowSpeed,
-                bloomStrength: config.bloomStrength,
-                bloomRadius: config.bloomRadius,
-                bloomThreshold: config.bloomThreshold,
-                brightness: config.brightness,
-                waveAmplitude: config.waveAmplitude,
-                waveSpeed: config.waveSpeed,
-                spiralFreq: config.spiralFreq,
-                spiralAmp: config.spiralAmp,
-                twistStrength: config.twistStrength,
-                dnaStrength: config.dnaStrength,
-                particleSize: config.particleSize,
-                particlePulse: config.particlePulse,
-                cameraZ: config.cameraZ,
-                fov: config.fov,
-                fogDensity: config.fogDensity,
-                timeSpeed: config.timeSpeed
-            };
-            localStorage.setItem('quantumRibbonsConfig', JSON.stringify(configToSave));
-            console.log('配置已保存到 localStorage');
-        }
-
-        // 从 localStorage 加载配置
-        function loadConfigFromLocalStorage() {
-            const savedConfig = localStorage.getItem('quantumRibbonsConfig');
-            if (savedConfig) {
-                try {
-                    const parsed = JSON.parse(savedConfig);
-                    config.surfaceCount = parsed.surfaceCount || config.surfaceCount;
-                    config.gridDensity = parsed.gridDensity || config.gridDensity;
-                    config.surfaceWidth = parsed.surfaceWidth || config.surfaceWidth;
-                    config.surfaceHeight = parsed.surfaceHeight || config.surfaceHeight;
-                    config.colorStart = new THREE.Color(parsed.colorStart || '#28f321');
-                    config.colorEnd = new THREE.Color(parsed.colorEnd || '#2196F3');
-                    config.colorFlowSpeed = parsed.colorFlowSpeed ?? config.colorFlowSpeed;
-                    config.bloomStrength = parsed.bloomStrength ?? config.bloomStrength;
-                    config.bloomRadius = parsed.bloomRadius ?? config.bloomRadius;
-                    config.bloomThreshold = parsed.bloomThreshold ?? config.bloomThreshold;
-                    config.brightness = parsed.brightness ?? config.brightness;
-                    config.waveAmplitude = parsed.waveAmplitude ?? config.waveAmplitude;
-                    config.waveSpeed = parsed.waveSpeed ?? config.waveSpeed;
-                    config.spiralFreq = parsed.spiralFreq ?? config.spiralFreq;
-                    config.spiralAmp = parsed.spiralAmp ?? config.spiralAmp;
-                    config.twistStrength = parsed.twistStrength ?? config.twistStrength;
-                    config.dnaStrength = parsed.dnaStrength ?? config.dnaStrength;
-                    config.particleSize = parsed.particleSize ?? config.particleSize;
-                    config.particlePulse = parsed.particlePulse ?? config.particlePulse;
-                    config.cameraZ = parsed.cameraZ || config.cameraZ;
-                    config.fov = parsed.fov || config.fov;
-                    config.fogDensity = parsed.fogDensity ?? config.fogDensity;
-                    config.timeSpeed = parsed.timeSpeed ?? config.timeSpeed;
-                    console.log('配置已从 localStorage 加载');
-                    return true;
-                } catch (e) {
-                    console.error('加载配置失败:', e);
-                    return false;
-                }
-            }
-            return false;
-        }
-
-        // 保存为默认值
-        function saveAsDefault() {
-            saveConfigToLocalStorage();
-            alert('当前配置已保存为默认值！刷新页面将使用此配置。');
         }
 
         // 重置为默认值
@@ -579,9 +502,6 @@
 
         // 初始化场景
         function init() {
-            // 加载保存的配置
-            loadConfigFromLocalStorage();
-
             // 场景
             scene = new THREE.Scene();
             scene.fog = new THREE.FogExp2(0x0a0a0f, config.fogDensity);
