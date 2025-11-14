@@ -392,7 +392,7 @@
         const defaultConfig = {...config};
 
         // 控制面板切换
-        function togglePanel() {
+        window.togglePanel = function() {
             const panel = document.getElementById('controlPanel');
             const toggleBtn = document.querySelector('.toggle-btn');
             const isVisible = panel.classList.contains('visible');
@@ -417,14 +417,14 @@
         }
 
         // 重置为默认值
-        function resetToDefault() {
+        window.resetToDefault = function() {
             Object.assign(config, defaultConfig);
             updateUIFromConfig();
             needsRebuild = true;
         }
 
         // 随机化参数
-        function randomize() {
+        window.randomize = function() {
             config.surfaceCount = Math.floor(Math.random() * 8) + 2;
             config.gridDensity = Math.random() * 1.5 + 0.5;
             config.surfaceWidth = Math.random() * 120 + 50;
