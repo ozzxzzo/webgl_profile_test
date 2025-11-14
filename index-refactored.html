@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quantum Energy Ribbons - 量子能量丝带·终极交互版</title>
+
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+    <div id="cursor"></div>
+    <div id="loading">Loading Ultimate Interactive Effects...</div>
+    <div id="info">
+        <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
+        <div>量子能量丝带 · 精选版 · 5 Effects</div>
+        <div class="features">
+            <span class="effect-badge">🌀 Repulsion</span>
+            <span class="effect-badge">💫 QuantumPulse</span>
+            <span class="effect-badge">🎨 Infection</span>
+            <span class="effect-badge">📷 DOF</span>
+            <span class="effect-badge">💎 Reflect</span>
+        </div>
+    </div>
+
+    <button class="toggle-btn" onclick="togglePanel()">控制面板</button>
+
+    <div id="controlPanel">
+        <h2>🎛️ 终极交互控制面板</h2>
+
+        <div class="control-section">
+            <h3>🎨 基础参数 Basic</h3>
+            <div class="control-group">
+                <label>曲面数量 Surfaces: <span class="value-display" id="surfaceCount-value">1</span></label>
+                <input type="range" id="surfaceCount" min="1" max="10" step="1" value="1">
+            </div>
+            <div class="control-group">
+                <label>网格密度 Grid Density: <span class="value-display" id="gridDensity-value">1.7</span></label>
+                <input type="range" id="gridDensity" min="0.2" max="2" step="0.1" value="1.7">
+            </div>
+            <div class="control-group">
+                <label>丝带宽度 Ribbon Width: <span class="value-display" id="surfaceWidth-value">200</span></label>
+                <input type="range" id="surfaceWidth" min="30" max="200" step="5" value="200">
+            </div>
+            <div class="control-group">
+                <label>丝带高度 Ribbon Height: <span class="value-display" id="surfaceHeight-value">29</span></label>
+                <input type="range" id="surfaceHeight" min="5" max="40" step="1" value="29">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🌈 颜色 Colors</h3>
+            <div class="control-group">
+                <label>起始颜色 Start Color</label>
+                <input type="color" id="colorStart" value="#28f321">
+            </div>
+            <div class="control-group">
+                <label>结束颜色 End Color</label>
+                <input type="color" id="colorEnd" value="#2196f3">
+            </div>
+            <div class="control-group">
+                <label>颜色流动速度 Color Flow: <span class="value-display" id="colorFlowSpeed-value">0.05</span></label>
+                <input type="range" id="colorFlowSpeed" min="0" max="0.5" step="0.01" value="0.05">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🎮 鼠标交互特效 Mouse Effects</h3>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">以下所有特效基于鼠标位置实时生效</p>
+        </div>
+
+        <div class="control-section">
+            <h3>🌀 推力排斥场 Repulsion Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableRepulsion">
+                    <span class="checkbox-label">启用排斥力 Enable Repulsion</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>排斥强度 Strength: <span class="value-display" id="repulsionStrength-value">20.0</span></label>
+                <input type="range" id="repulsionStrength" min="0" max="50" step="1" value="20">
+            </div>
+            <div class="control-group">
+                <label>作用范围 Range: <span class="value-display" id="repulsionRange-value">100</span></label>
+                <input type="range" id="repulsionRange" min="20" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💫 量子脉冲 Quantum Pulse</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableRipple" checked>
+                    <span class="checkbox-label">启用量子脉冲 Enable Quantum Pulse (点击)</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>脉冲强度 Strength: <span class="value-display" id="rippleStrength-value">25.0</span></label>
+                <input type="range" id="rippleStrength" min="5" max="50" step="1" value="25">
+            </div>
+            <div class="control-group">
+                <label>扩散速度 Speed: <span class="value-display" id="rippleSpeed-value">0.8</span></label>
+                <input type="range" id="rippleSpeed" min="0.2" max="2" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>能量衰减 Decay: <span class="value-display" id="rippleDecay-value">0.02</span></label>
+                <input type="range" id="rippleDecay" min="0.01" max="0.1" step="0.01" value="0.02">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🎨 色彩感染 Color Infection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableInfection">
+                    <span class="checkbox-label">启用色彩感染 Enable Infection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>感染颜色 Infection Color</label>
+                <input type="color" id="infectionColor" value="#ff00ff">
+            </div>
+            <div class="control-group">
+                <label>感染强度 Intensity: <span class="value-display" id="infectionIntensity-value">0.8</span></label>
+                <input type="range" id="infectionIntensity" min="0" max="1" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>感染范围 Range: <span class="value-display" id="infectionRange-value">100</span></label>
+                <input type="range" id="infectionRange" min="30" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>📷 景深 Depth of Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableDOF" checked>
+                    <span class="checkbox-label">启用景深 Enable DOF</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>焦距 Focus Distance: <span class="value-display" id="focusDistance-value">50</span></label>
+                <input type="range" id="focusDistance" min="20" max="150" step="5" value="50">
+            </div>
+            <div class="control-group">
+                <label>景深范围 DOF Range: <span class="value-display" id="dofRange-value">30</span></label>
+                <input type="range" id="dofRange" min="10" max="100" step="5" value="30">
+            </div>
+            <div class="control-group">
+                <label>虚化强度 Blur Strength: <span class="value-display" id="blurStrength-value">1.5</span></label>
+                <input type="range" id="blurStrength" min="0" max="5" step="0.1" value="1.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💎 反射折射 Reflection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableReflection" checked>
+                    <span class="checkbox-label">启用反射 Enable Reflection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>反射强度 Intensity: <span class="value-display" id="reflectionIntensity-value">0.6</span></label>
+                <input type="range" id="reflectionIntensity" min="0" max="2" step="0.1" value="0.6">
+            </div>
+            <div class="control-group">
+                <label>折射率 Refraction: <span class="value-display" id="refractionIndex-value">1.5</span></label>
+                <input type="range" id="refractionIndex" min="1" max="3" step="0.1" value="1.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>✨ 光效 Lighting</h3>
+            <div class="control-group">
+                <label>辉光强度 Bloom Strength: <span class="value-display" id="bloomStrength-value">1.7</span></label>
+                <input type="range" id="bloomStrength" min="0" max="3" step="0.1" value="1.7">
+            </div>
+            <div class="control-group">
+                <label>辉光半径 Bloom Radius: <span class="value-display" id="bloomRadius-value">0.00</span></label>
+                <input type="range" id="bloomRadius" min="0" max="1" step="0.05" value="0.00">
+            </div>
+            <div class="control-group">
+                <label>辉光阈值 Bloom Threshold: <span class="value-display" id="bloomThreshold-value">0.55</span></label>
+                <input type="range" id="bloomThreshold" min="0" max="1" step="0.05" value="0.55">
+            </div>
+            <div class="control-group">
+                <label>亮度 Brightness: <span class="value-display" id="brightness-value">1.5</span></label>
+                <input type="range" id="brightness" min="0.5" max="3" step="0.1" value="1.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🌊 波动效果 Wave Effects</h3>
+            <div class="control-group">
+                <label>波动幅度 Wave Amplitude: <span class="value-display" id="waveAmplitude-value">1.7</span></label>
+                <input type="range" id="waveAmplitude" min="0" max="8" step="0.1" value="1.7">
+            </div>
+            <div class="control-group">
+                <label>波动速度 Wave Speed: <span class="value-display" id="waveSpeed-value">0.27</span></label>
+                <input type="range" id="waveSpeed" min="0" max="1" step="0.01" value="0.27">
+            </div>
+            <div class="control-group">
+                <label>螺旋频率 Spiral Frequency: <span class="value-display" id="spiralFreq-value">11.5</span></label>
+                <input type="range" id="spiralFreq" min="0" max="12" step="0.5" value="11.5">
+            </div>
+            <div class="control-group">
+                <label>螺旋幅度 Spiral Amplitude: <span class="value-display" id="spiralAmp-value">1.3</span></label>
+                <input type="range" id="spiralAmp" min="0" max="5" step="0.1" value="1.3">
+            </div>
+            <div class="control-group">
+                <label>扭曲强度 Twist Strength: <span class="value-display" id="twistStrength-value">1.9</span></label>
+                <input type="range" id="twistStrength" min="0" max="3" step="0.1" value="1.9">
+            </div>
+            <div class="control-group">
+                <label>DNA效果强度 DNA Effect: <span class="value-display" id="dnaStrength-value">0.5</span></label>
+                <input type="range" id="dnaStrength" min="0" max="2" step="0.1" value="0.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>✨ 粒子 Particles</h3>
+            <div class="control-group">
+                <label>粒子大小 Particle Size: <span class="value-display" id="particleSize-value">0.8</span></label>
+                <input type="range" id="particleSize" min="0.2" max="2" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>粒子脉动 Particle Pulse: <span class="value-display" id="particlePulse-value">0.20</span></label>
+                <input type="range" id="particlePulse" min="0" max="1" step="0.05" value="0.20">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>📷 相机与环境 Camera</h3>
+            <div class="control-group">
+                <label>相机距离 Camera Distance: <span class="value-display" id="cameraZ-value">50</span></label>
+                <input type="range" id="cameraZ" min="20" max="150" step="5" value="50">
+            </div>
+            <div class="control-group">
+                <label>视野角度 FOV: <span class="value-display" id="fov-value">60</span></label>
+                <input type="range" id="fov" min="30" max="120" step="5" value="60">
+            </div>
+            <div class="control-group">
+                <label>雾密度 Fog Density: <span class="value-display" id="fogDensity-value">0.011</span></label>
+                <input type="range" id="fogDensity" min="0" max="0.02" step="0.001" value="0.011">
+            </div>
+            <div class="control-group">
+                <label>动画速度 Animation Speed: <span class="value-display" id="timeSpeed-value">0.8</span></label>
+                <input type="range" id="timeSpeed" min="0" max="3" step="0.1" value="0.8">
+            </div>
+        </div>
+
+        <button onclick="resetToDefault()">🔄 重置默认值 Reset</button>
+        <button onclick="randomize()">🎲 随机化 Randomize</button>
+        <button onclick="toggleAllEffects()">⚡ 全效果开关 Toggle All</button>
+    </div>
+
+    <!-- Three.js Import Map -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- Main Application Script -->
+    <script type="module" src="js/main.js"></script>
+</body>
+</html>
