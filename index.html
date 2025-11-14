@@ -282,14 +282,16 @@
     <div id="loading">Loading Ultimate Interactive Effects...</div>
     <div id="info">
         <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
-        <div>量子能量丝带 · 终极交互版 · 13 Effects (打开控制面板启用)</div>
+        <div>量子能量丝带 · 精选版 · 8 Effects</div>
         <div class="features">
-            <span class="effect-badge">🧲 Magnetic</span>
+            <span class="effect-badge">🌀 Repulsion</span>
             <span class="effect-badge">🌊 Ripple</span>
+            <span class="effect-badge">🎨 Infection</span><br>
+            <span class="effect-badge">🌟 Gravity</span>
+            <span class="effect-badge">💫 Trail</span>
+            <span class="effect-badge">⏱️ TimeDilation</span><br>
             <span class="effect-badge">📷 DOF</span>
-            <span class="effect-badge">💎 Reflect</span><br>
-            <span style="font-size: 9px; opacity: 0.6;">更多特效: 🌀 Repulsion | 🌪️ Vortex | ⚡ Connection | 🎨 Infection<br>
-            🌟 Gravity | 💫 Trail | ⏱️ Time | 🔆 Halo | 🎯 ForceLines</span>
+            <span class="effect-badge">💎 Reflect</span>
         </div>
     </div>
 
@@ -860,23 +862,16 @@
 
         // 全效果开关
         window.toggleAllEffects = function() {
-            const allEnabled = config.enableMagnetic && config.enableRepulsion && config.enableVortex &&
-                              config.enableRipple && config.enableConnection && config.enableInfection &&
+            const allEnabled = config.enableRepulsion && config.enableRipple && config.enableInfection &&
                               config.enableGravity && config.enableTrail && config.enableTimeDilation &&
-                              config.enableHalo && config.enableForceLines && config.enableDOF &&
-                              config.enableReflection;
+                              config.enableDOF && config.enableReflection;
 
-            config.enableMagnetic = !allEnabled;
             config.enableRepulsion = !allEnabled;
-            config.enableVortex = !allEnabled;
             config.enableRipple = !allEnabled;
-            config.enableConnection = !allEnabled;
             config.enableInfection = !allEnabled;
             config.enableGravity = !allEnabled;
             config.enableTrail = !allEnabled;
             config.enableTimeDilation = !allEnabled;
-            config.enableHalo = !allEnabled;
-            config.enableForceLines = !allEnabled;
             config.enableDOF = !allEnabled;
             config.enableReflection = !allEnabled;
 
@@ -1317,33 +1312,12 @@
                         const dz = mouse.worldZ - finalZ;
                         const mouseDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-                        // 时间膨胀系数（默认为1）
-                        let timeScale = 1.0;
-
-                        // 磁性吸附效果
-                        if (config.enableMagnetic && mouseDistance < config.magneticRange) {
-                            const force = (1 - mouseDistance / config.magneticRange) * config.magneticStrength;
-                            finalX += (dx / mouseDistance) * force * 0.1;
-                            finalY += (dy / mouseDistance) * force * 0.1;
-                            finalZ += (dz / mouseDistance) * force * 0.1;
-                        }
-
                         // 排斥力效果
                         if (config.enableRepulsion && mouseDistance < config.repulsionRange) {
                             const force = (1 - mouseDistance / config.repulsionRange) * config.repulsionStrength;
                             finalX -= (dx / mouseDistance) * force * 0.1;
                             finalY -= (dy / mouseDistance) * force * 0.1;
                             finalZ -= (dz / mouseDistance) * force * 0.1;
-                        }
-
-                        // 涡旋漩涡效果
-                        if (config.enableVortex && mouseDistance < config.vortexRange) {
-                            const force = (1 - mouseDistance / config.vortexRange) * config.vortexStrength;
-                            const tangentX = -dy;
-                            const tangentY = dx;
-                            const dir = config.vortexClockwise ? 1 : -1;
-                            finalX += tangentX * force * 0.05 * dir;
-                            finalY += tangentY * force * 0.05 * dir;
                         }
 
                         // 重力井效果（平方反比定律）
@@ -1437,18 +1411,6 @@
 
         // 更新鼠标交互特效
         function updateMouseEffects() {
-            // 更新光晕
-            if (mouseHalo && config.enableHalo) {
-                mouseHalo.visible = true;
-                mouseHalo.position.set(mouse.worldX, mouse.worldY, mouse.worldZ);
-                mouseHalo.scale.setScalar(config.haloSize);
-                mouseHalo.material.uniforms.time.value = time;
-                mouseHalo.material.uniforms.intensity.value = config.haloIntensity;
-                mouseHalo.material.uniforms.pulseSpeed.value = config.haloPulseSpeed;
-            } else if (mouseHalo) {
-                mouseHalo.visible = false;
-            }
-
             // 更新波纹
             for (let i = ripples.length - 1; i >= 0; i--) {
                 ripples[i].radius += config.rippleSpeed;
@@ -1456,132 +1418,6 @@
                 if (ripples[i].strength < 0.1) {
                     ripples.splice(i, 1);
                 }
-            }
-
-            // 更新粒子连线
-            if (connectionLines && config.enableConnection) {
-                connectionLines.visible = true;
-                const positions = connectionLines.geometry.attributes.position.array;
-                const colors = connectionLines.geometry.attributes.color.array;
-                let lineIndex = 0;
-
-                ribbons.forEach(surface => {
-                    const particlePositions = surface.geometry.attributes.position.array;
-                    const particleCount = particlePositions.length / 3;
-
-                    for (let i = 0; i < particleCount && lineIndex < 1000; i++) {
-                        const x1 = particlePositions[i * 3];
-                        const y1 = particlePositions[i * 3 + 1];
-                        const z1 = particlePositions[i * 3 + 2];
-
-                        const distToMouse = Math.sqrt(
-                            Math.pow(x1 - mouse.worldX, 2) +
-                            Math.pow(y1 - mouse.worldY, 2) +
-                            Math.pow(z1 - mouse.worldZ, 2)
-                        );
-
-                        if (distToMouse < config.connectionMouseRange) {
-                            for (let j = i + 1; j < particleCount && lineIndex < 1000; j++) {
-                                const x2 = particlePositions[j * 3];
-                                const y2 = particlePositions[j * 3 + 1];
-                                const z2 = particlePositions[j * 3 + 2];
-
-                                const dist = Math.sqrt(
-                                    Math.pow(x2 - x1, 2) +
-                                    Math.pow(y2 - y1, 2) +
-                                    Math.pow(z2 - z1, 2)
-                                );
-
-                                if (dist < config.connectionDistance) {
-                                    positions[lineIndex * 6] = x1;
-                                    positions[lineIndex * 6 + 1] = y1;
-                                    positions[lineIndex * 6 + 2] = z1;
-                                    positions[lineIndex * 6 + 3] = x2;
-                                    positions[lineIndex * 6 + 4] = y2;
-                                    positions[lineIndex * 6 + 5] = z2;
-
-                                    const alpha = 1 - dist / config.connectionDistance;
-                                    colors[lineIndex * 6] = 0.16;
-                                    colors[lineIndex * 6 + 1] = 0.95;
-                                    colors[lineIndex * 6 + 2] = 0.13;
-                                    colors[lineIndex * 6 + 3] = 0.16;
-                                    colors[lineIndex * 6 + 4] = 0.95;
-                                    colors[lineIndex * 6 + 5] = 0.13;
-
-                                    lineIndex++;
-                                }
-                            }
-                        }
-                    }
-                });
-
-                connectionLines.geometry.setDrawRange(0, lineIndex * 2);
-                connectionLines.geometry.attributes.position.needsUpdate = true;
-                connectionLines.geometry.attributes.color.needsUpdate = true;
-                connectionLines.material.opacity = config.connectionOpacity;
-            } else if (connectionLines) {
-                connectionLines.visible = false;
-            }
-
-            // 更新磁力线
-            if (forceFieldLines && config.enableForceLines) {
-                forceFieldLines.visible = true;
-                const positions = forceFieldLines.geometry.attributes.position.array;
-                const colors = forceFieldLines.geometry.attributes.color.array;
-                let lineIndex = 0;
-
-                ribbons.forEach(surface => {
-                    const particlePositions = surface.geometry.attributes.position.array;
-                    const particleCount = particlePositions.length / 3;
-
-                    let closestParticles = [];
-                    for (let i = 0; i < particleCount; i++) {
-                        const x = particlePositions[i * 3];
-                        const y = particlePositions[i * 3 + 1];
-                        const z = particlePositions[i * 3 + 2];
-
-                        const dist = Math.sqrt(
-                            Math.pow(x - mouse.worldX, 2) +
-                            Math.pow(y - mouse.worldY, 2) +
-                            Math.pow(z - mouse.worldZ, 2)
-                        );
-
-                        if (dist < config.forceLinesRange) {
-                            closestParticles.push({ x, y, z, dist });
-                        }
-                    }
-
-                    closestParticles.sort((a, b) => a.dist - b.dist);
-                    closestParticles = closestParticles.slice(0, config.forceLinesCount);
-
-                    closestParticles.forEach(p => {
-                        if (lineIndex < 30) {
-                            positions[lineIndex * 6] = mouse.worldX;
-                            positions[lineIndex * 6 + 1] = mouse.worldY;
-                            positions[lineIndex * 6 + 2] = mouse.worldZ;
-                            positions[lineIndex * 6 + 3] = p.x;
-                            positions[lineIndex * 6 + 4] = p.y;
-                            positions[lineIndex * 6 + 5] = p.z;
-
-                            const alpha = 1 - p.dist / config.forceLinesRange;
-                            colors[lineIndex * 6] = 0.16;
-                            colors[lineIndex * 6 + 1] = 0.95;
-                            colors[lineIndex * 6 + 2] = 0.13;
-                            colors[lineIndex * 6 + 3] = 0.13 * alpha;
-                            colors[lineIndex * 6 + 4] = 0.59 * alpha;
-                            colors[lineIndex * 6 + 5] = 0.95 * alpha;
-
-                            lineIndex++;
-                        }
-                    });
-                });
-
-                forceFieldLines.geometry.setDrawRange(0, lineIndex * 2);
-                forceFieldLines.geometry.attributes.position.needsUpdate = true;
-                forceFieldLines.geometry.attributes.color.needsUpdate = true;
-                forceFieldLines.material.opacity = config.forceLinesOpacity;
-            } else if (forceFieldLines) {
-                forceFieldLines.visible = false;
             }
         }
 
