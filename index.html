@@ -852,8 +852,6 @@
             config.colorStart = new THREE.Color(randomColor1);
             config.colorEnd = new THREE.Color(randomColor2);
 
-            config.magneticStrength = Math.random() * 40 + 10;
-            config.magneticRange = Math.random() * 150 + 50;
             config.reflectionIntensity = Math.random() * 1.5;
 
             updateUIFromConfig();
@@ -947,24 +945,11 @@
             document.getElementById('timeSpeed-value').textContent = config.timeSpeed.toFixed(1);
 
             // 鼠标交互特效
-            document.getElementById('enableMagnetic').checked = config.enableMagnetic;
-            document.getElementById('magneticStrength').value = config.magneticStrength;
-            document.getElementById('magneticStrength-value').textContent = config.magneticStrength.toFixed(1);
-            document.getElementById('magneticRange').value = config.magneticRange;
-            document.getElementById('magneticRange-value').textContent = Math.round(config.magneticRange);
-
             document.getElementById('enableRepulsion').checked = config.enableRepulsion;
             document.getElementById('repulsionStrength').value = config.repulsionStrength;
             document.getElementById('repulsionStrength-value').textContent = config.repulsionStrength.toFixed(1);
             document.getElementById('repulsionRange').value = config.repulsionRange;
             document.getElementById('repulsionRange-value').textContent = Math.round(config.repulsionRange);
-
-            document.getElementById('enableVortex').checked = config.enableVortex;
-            document.getElementById('vortexStrength').value = config.vortexStrength;
-            document.getElementById('vortexStrength-value').textContent = config.vortexStrength.toFixed(1);
-            document.getElementById('vortexRange').value = config.vortexRange;
-            document.getElementById('vortexRange-value').textContent = Math.round(config.vortexRange);
-            document.getElementById('vortexClockwise').checked = config.vortexClockwise;
 
             document.getElementById('enableRipple').checked = config.enableRipple;
             document.getElementById('rippleStrength').value = config.rippleStrength;
@@ -973,14 +958,6 @@
             document.getElementById('rippleSpeed-value').textContent = config.rippleSpeed.toFixed(1);
             document.getElementById('rippleDecay').value = config.rippleDecay;
             document.getElementById('rippleDecay-value').textContent = config.rippleDecay.toFixed(2);
-
-            document.getElementById('enableConnection').checked = config.enableConnection;
-            document.getElementById('connectionDistance').value = config.connectionDistance;
-            document.getElementById('connectionDistance-value').textContent = Math.round(config.connectionDistance);
-            document.getElementById('connectionOpacity').value = config.connectionOpacity;
-            document.getElementById('connectionOpacity-value').textContent = config.connectionOpacity.toFixed(1);
-            document.getElementById('connectionMouseRange').value = config.connectionMouseRange;
-            document.getElementById('connectionMouseRange-value').textContent = Math.round(config.connectionMouseRange);
 
             document.getElementById('enableInfection').checked = config.enableInfection;
             document.getElementById('infectionColor').value = '#' + config.infectionColor.getHexString();
@@ -1006,22 +983,6 @@
             document.getElementById('timeDilationFactor-value').textContent = config.timeDilationFactor.toFixed(1);
             document.getElementById('timeDilationRange').value = config.timeDilationRange;
             document.getElementById('timeDilationRange-value').textContent = Math.round(config.timeDilationRange);
-
-            document.getElementById('enableHalo').checked = config.enableHalo;
-            document.getElementById('haloSize').value = config.haloSize;
-            document.getElementById('haloSize-value').textContent = Math.round(config.haloSize);
-            document.getElementById('haloIntensity').value = config.haloIntensity;
-            document.getElementById('haloIntensity-value').textContent = config.haloIntensity.toFixed(1);
-            document.getElementById('haloPulseSpeed').value = config.haloPulseSpeed;
-            document.getElementById('haloPulseSpeed-value').textContent = config.haloPulseSpeed.toFixed(1);
-
-            document.getElementById('enableForceLines').checked = config.enableForceLines;
-            document.getElementById('forceLinesCount').value = config.forceLinesCount;
-            document.getElementById('forceLinesCount-value').textContent = Math.round(config.forceLinesCount);
-            document.getElementById('forceLinesRange').value = config.forceLinesRange;
-            document.getElementById('forceLinesRange-value').textContent = Math.round(config.forceLinesRange);
-            document.getElementById('forceLinesOpacity').value = config.forceLinesOpacity;
-            document.getElementById('forceLinesOpacity-value').textContent = config.forceLinesOpacity.toFixed(1);
 
             document.getElementById('enableDOF').checked = config.enableDOF;
             document.getElementById('focusDistance').value = config.focusDistance;
@@ -1589,18 +1550,6 @@
             });
 
             // 鼠标交互特效控制
-            setupCheckbox('enableMagnetic', (val) => {
-                config.enableMagnetic = val;
-            });
-
-            setupSlider('magneticStrength', (val) => {
-                config.magneticStrength = parseFloat(val);
-            });
-
-            setupSlider('magneticRange', (val) => {
-                config.magneticRange = parseFloat(val);
-            });
-
             setupCheckbox('enableRepulsion', (val) => {
                 config.enableRepulsion = val;
             });
@@ -1611,22 +1560,6 @@
 
             setupSlider('repulsionRange', (val) => {
                 config.repulsionRange = parseFloat(val);
-            });
-
-            setupCheckbox('enableVortex', (val) => {
-                config.enableVortex = val;
-            });
-
-            setupSlider('vortexStrength', (val) => {
-                config.vortexStrength = parseFloat(val);
-            });
-
-            setupSlider('vortexRange', (val) => {
-                config.vortexRange = parseFloat(val);
-            });
-
-            setupCheckbox('vortexClockwise', (val) => {
-                config.vortexClockwise = val;
             });
 
             setupCheckbox('enableRipple', (val) => {
@@ -1643,22 +1576,6 @@
 
             setupSlider('rippleDecay', (val) => {
                 config.rippleDecay = parseFloat(val);
-            });
-
-            setupCheckbox('enableConnection', (val) => {
-                config.enableConnection = val;
-            });
-
-            setupSlider('connectionDistance', (val) => {
-                config.connectionDistance = parseFloat(val);
-            });
-
-            setupSlider('connectionOpacity', (val) => {
-                config.connectionOpacity = parseFloat(val);
-            });
-
-            setupSlider('connectionMouseRange', (val) => {
-                config.connectionMouseRange = parseFloat(val);
             });
 
             setupCheckbox('enableInfection', (val) => {
@@ -1711,38 +1628,6 @@
 
             setupSlider('timeDilationRange', (val) => {
                 config.timeDilationRange = parseFloat(val);
-            });
-
-            setupCheckbox('enableHalo', (val) => {
-                config.enableHalo = val;
-            });
-
-            setupSlider('haloSize', (val) => {
-                config.haloSize = parseFloat(val);
-            });
-
-            setupSlider('haloIntensity', (val) => {
-                config.haloIntensity = parseFloat(val);
-            });
-
-            setupSlider('haloPulseSpeed', (val) => {
-                config.haloPulseSpeed = parseFloat(val);
-            });
-
-            setupCheckbox('enableForceLines', (val) => {
-                config.enableForceLines = val;
-            });
-
-            setupSlider('forceLinesCount', (val) => {
-                config.forceLinesCount = parseFloat(val);
-            });
-
-            setupSlider('forceLinesRange', (val) => {
-                config.forceLinesRange = parseFloat(val);
-            });
-
-            setupSlider('forceLinesOpacity', (val) => {
-                config.forceLinesOpacity = parseFloat(val);
             });
 
             setupCheckbox('enableDOF', (val) => {
