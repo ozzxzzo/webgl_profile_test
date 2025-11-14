@@ -282,14 +282,12 @@
     <div id="loading">Loading Ultimate Interactive Effects...</div>
     <div id="info">
         <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
-        <div>量子能量丝带 · 精选版 · 8 Effects</div>
+        <div>量子能量丝带 · 精选版 · 6 Effects</div>
         <div class="features">
             <span class="effect-badge">🌀 Repulsion</span>
             <span class="effect-badge">🌊 Ripple</span>
             <span class="effect-badge">🎨 Infection</span><br>
-            <span class="effect-badge">🌟 Gravity</span>
-            <span class="effect-badge">💫 Trail</span>
-            <span class="effect-badge">⏱️ TimeDilation</span><br>
+            <span class="effect-badge">⏱️ TimeDilation</span>
             <span class="effect-badge">📷 DOF</span>
             <span class="effect-badge">💎 Reflect</span>
         </div>
@@ -400,42 +398,6 @@
             <div class="control-group">
                 <label>感染范围 Range: <span class="value-display" id="infectionRange-value">100</span></label>
                 <input type="range" id="infectionRange" min="30" max="200" step="10" value="100">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>🌟 重力井 Gravity Well</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableGravity">
-                    <span class="checkbox-label">启用重力井 Enable Gravity</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>重力强度 Strength: <span class="value-display" id="gravityStrength-value">500</span></label>
-                <input type="range" id="gravityStrength" min="100" max="2000" step="50" value="500">
-            </div>
-            <div class="control-group">
-                <label>最小距离 Min Distance: <span class="value-display" id="gravityMinDist-value">10</span></label>
-                <input type="range" id="gravityMinDist" min="5" max="50" step="5" value="10">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>💫 粒子尾迹 Particle Trail</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableTrail">
-                    <span class="checkbox-label">启用尾迹 Enable Trail</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>尾迹长度 Length: <span class="value-display" id="trailLength-value">30</span></label>
-                <input type="range" id="trailLength" min="10" max="100" step="5" value="30">
-            </div>
-            <div class="control-group">
-                <label>尾迹衰减 Decay: <span class="value-display" id="trailDecay-value">0.95</span></label>
-                <input type="range" id="trailDecay" min="0.8" max="0.99" step="0.01" value="0.95">
             </div>
         </div>
 
@@ -607,7 +569,6 @@
 
         // 鼠标交互特效数据
         let ripples = []; // 波纹数组
-        let mouseTrail = []; // 鼠标轨迹历史位置
 
         // 配置参数
         const config = {
@@ -662,14 +623,6 @@
             infectionColor: new THREE.Color(0xff00ff),
             infectionIntensity: 0.8,
             infectionRange: 100,
-
-            enableGravity: false,
-            gravityStrength: 500,
-            gravityMinDist: 10,
-
-            enableTrail: false,
-            trailLength: 30,
-            trailDecay: 0.95,
 
             enableTimeDilation: false,
             timeDilationFactor: 0.3,
@@ -765,21 +718,6 @@
             mouse.worldX = pos.x;
             mouse.worldY = pos.y;
             mouse.worldZ = 0;
-
-            // 记录鼠标轨迹用于尾迹效果
-            if (config.enableTrail) {
-                mouseTrail.push({
-                    x: mouse.worldX,
-                    y: mouse.worldY,
-                    z: mouse.worldZ,
-                    life: 1.0  // 生命值，从1衰减到0
-                });
-
-                // 限制轨迹点数量
-                if (mouseTrail.length > config.trailLength) {
-                    mouseTrail.shift();
-                }
-            }
         });
 
         document.addEventListener('click', () => {
@@ -876,14 +814,11 @@
         // 全效果开关
         window.toggleAllEffects = function() {
             const allEnabled = config.enableRepulsion && config.enableRipple && config.enableInfection &&
-                              config.enableGravity && config.enableTrail && config.enableTimeDilation &&
-                              config.enableDOF && config.enableReflection;
+                              config.enableTimeDilation && config.enableDOF && config.enableReflection;
 
             config.enableRepulsion = !allEnabled;
             config.enableRipple = !allEnabled;
             config.enableInfection = !allEnabled;
-            config.enableGravity = !allEnabled;
-            config.enableTrail = !allEnabled;
             config.enableTimeDilation = !allEnabled;
             config.enableDOF = !allEnabled;
             config.enableReflection = !allEnabled;
@@ -980,18 +915,6 @@
             document.getElementById('infectionIntensity-value').textContent = config.infectionIntensity.toFixed(1);
             document.getElementById('infectionRange').value = config.infectionRange;
             document.getElementById('infectionRange-value').textContent = Math.round(config.infectionRange);
-
-            document.getElementById('enableGravity').checked = config.enableGravity;
-            document.getElementById('gravityStrength').value = config.gravityStrength;
-            document.getElementById('gravityStrength-value').textContent = Math.round(config.gravityStrength);
-            document.getElementById('gravityMinDist').value = config.gravityMinDist;
-            document.getElementById('gravityMinDist-value').textContent = Math.round(config.gravityMinDist);
-
-            document.getElementById('enableTrail').checked = config.enableTrail;
-            document.getElementById('trailLength').value = config.trailLength;
-            document.getElementById('trailLength-value').textContent = Math.round(config.trailLength);
-            document.getElementById('trailDecay').value = config.trailDecay;
-            document.getElementById('trailDecay-value').textContent = config.trailDecay.toFixed(2);
 
             document.getElementById('enableTimeDilation').checked = config.enableTimeDilation;
             document.getElementById('timeDilationFactor').value = config.timeDilationFactor;
@@ -1327,15 +1250,6 @@
                             finalZ -= (dz / finalMouseDistance) * force * 0.1;
                         }
 
-                        // 重力井效果（平方反比定律）- 增强效果
-                        if (config.enableGravity) {
-                            const minDist = Math.max(finalMouseDistance, config.gravityMinDist);
-                            const gravityForce = config.gravityStrength / (minDist * minDist);
-                            finalX += (dx / finalMouseDistance) * gravityForce * 0.015;
-                            finalY += (dy / finalMouseDistance) * gravityForce * 0.015;
-                            finalZ += (dz / finalMouseDistance) * gravityForce * 0.015;
-                        }
-
                         // 波纹扩散效果
                         for (let r = 0; r < ripples.length; r++) {
                             const ripple = ripples[r];
@@ -1386,33 +1300,14 @@
                         // 律动的粒子大小
                         const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
                         const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        let baseSize = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
-
-                        // 粒子尾迹效果 - 鼠标经过的地方粒子变亮变大
-                        let trailBoost = 0;
-                        if (config.enableTrail) {
-                            for (let t = 0; t < mouseTrail.length; t++) {
-                                const trail = mouseTrail[t];
-                                const tdx = finalX - trail.x;
-                                const tdy = finalY - trail.y;
-                                const tdz = finalZ - trail.z;
-                                const trailDist = Math.sqrt(tdx * tdx + tdy * tdy + tdz * tdz);
-
-                                if (trailDist < 30) {
-                                    const trailEffect = (1 - trailDist / 30) * trail.life;
-                                    trailBoost = Math.max(trailBoost, trailEffect);
-                                }
-                            }
-                        }
-
-                        sizes[idx] = baseSize * (1.0 + trailBoost * 0.8);
+                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
 
                         // 律动的透明度
                         const edgeFadeX = Math.sin(u * Math.PI);
                         const edgeFadeY = Math.sin(v * Math.PI);
                         const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
                         const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2 + trailBoost * 0.3);
+                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
 
                         idx++;
                     }
@@ -1437,14 +1332,6 @@
                 ripples[i].strength *= (1 - config.rippleDecay);
                 if (ripples[i].strength < 0.1) {
                     ripples.splice(i, 1);
-                }
-            }
-
-            // 更新鼠标轨迹尾迹
-            for (let i = mouseTrail.length - 1; i >= 0; i--) {
-                mouseTrail[i].life *= config.trailDecay;
-                if (mouseTrail[i].life < 0.01) {
-                    mouseTrail.splice(i, 1);
                 }
             }
         }
@@ -1659,30 +1546,6 @@
 
             setupSlider('infectionRange', (val) => {
                 config.infectionRange = parseFloat(val);
-            });
-
-            setupCheckbox('enableGravity', (val) => {
-                config.enableGravity = val;
-            });
-
-            setupSlider('gravityStrength', (val) => {
-                config.gravityStrength = parseFloat(val);
-            });
-
-            setupSlider('gravityMinDist', (val) => {
-                config.gravityMinDist = parseFloat(val);
-            });
-
-            setupCheckbox('enableTrail', (val) => {
-                config.enableTrail = val;
-            });
-
-            setupSlider('trailLength', (val) => {
-                config.trailLength = parseFloat(val);
-            });
-
-            setupSlider('trailDecay', (val) => {
-                config.trailDecay = parseFloat(val);
             });
 
             setupCheckbox('enableTimeDilation', (val) => {
