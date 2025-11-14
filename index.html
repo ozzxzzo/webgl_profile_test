@@ -607,7 +607,7 @@
 
         // 鼠标交互特效数据
         let ripples = []; // 波纹数组
-        let trailParticles = []; // 尾迹粒子数组
+        let mouseTrail = []; // 鼠标轨迹历史位置
 
         // 配置参数
         const config = {
@@ -765,6 +765,21 @@
             mouse.worldX = pos.x;
             mouse.worldY = pos.y;
             mouse.worldZ = 0;
+
+            // 记录鼠标轨迹用于尾迹效果
+            if (config.enableTrail) {
+                mouseTrail.push({
+                    x: mouse.worldX,
+                    y: mouse.worldY,
+                    z: mouse.worldZ,
+                    life: 1.0  // 生命值，从1衰减到0
+                });
+
+                // 限制轨迹点数量
+                if (mouseTrail.length > config.trailLength) {
+                    mouseTrail.shift();
+                }
+            }
         });
 
         document.addEventListener('click', () => {
@@ -1242,9 +1257,27 @@
                         const y = (v - 0.5) * config.surfaceHeight + surface.yOffset;
                         const z = surface.zOffset;
 
-                        const waveOffset = surface.phaseOffset + time * config.waveSpeed;
+                        // 先计算基础位置以确定到鼠标的距离
+                        const baseX = x;
+                        const baseY = y;
+                        const baseZ = z;
+                        const baseDx = mouse.worldX - baseX;
+                        const baseDy = mouse.worldY - baseY;
+                        const baseDz = mouse.worldZ - baseZ;
+                        const mouseDistance = Math.sqrt(baseDx * baseDx + baseDy * baseDy + baseDz * baseDz);
 
-                        // 原有波动效果
+                        // 时间膨胀系数（默认为1）
+                        let timeScale = 1.0;
+
+                        // 时间膨胀效果 - 鼠标附近的粒子时间变慢
+                        if (config.enableTimeDilation && mouseDistance < config.timeDilationRange) {
+                            const factor = 1 - (mouseDistance / config.timeDilationRange);
+                            timeScale = 1.0 - factor * (1.0 - config.timeDilationFactor);
+                        }
+
+                        const waveOffset = surface.phaseOffset + time * config.waveSpeed * timeScale;
+
+                        // 原有波动效果（受时间膨胀影响）
                         const spiralY = Math.sin(u * Math.PI * config.spiralFreq + waveOffset + v * Math.PI * 2) * config.spiralAmp;
                         const spiralZ = Math.cos(u * Math.PI * config.spiralFreq + waveOffset + v * Math.PI * 2) * config.spiralAmp;
 
@@ -1256,8 +1289,8 @@
                         const distFromCenter = Math.sqrt(centerX * centerX + centerY * centerY);
                         const radialWave = Math.sin(distFromCenter * Math.PI * 6 + waveOffset * 2) * config.waveAmplitude * 0.3;
 
-                        const twistX = Math.sin(u * Math.PI * 12 + time * 2) * Math.cos(v * Math.PI * 6 + time) * config.twistStrength;
-                        const twistY = Math.cos(u * Math.PI * 6 + time * 1.5) * Math.sin(v * Math.PI * 12 + time * 2) * config.twistStrength;
+                        const twistX = Math.sin(u * Math.PI * 12 + time * timeScale * 2) * Math.cos(v * Math.PI * 6 + time * timeScale) * config.twistStrength;
+                        const twistY = Math.cos(u * Math.PI * 6 + time * timeScale * 1.5) * Math.sin(v * Math.PI * 12 + time * timeScale * 2) * config.twistStrength;
 
                         const dnaPhase = u * Math.PI * 8 + waveOffset * 3;
                         const dnaY = Math.sin(dnaPhase + v * Math.PI) * config.dnaStrength;
@@ -1267,33 +1300,27 @@
                         let finalY = y + spiralY + wave1 + wave2 + radialWave + dnaY + twistY;
                         let finalZ = z + spiralZ + dnaZ;
 
-                        // 计算到鼠标的距离（用于多个特效）
+                        // 重新计算到鼠标的距离（用于其他特效）
                         const dx = mouse.worldX - finalX;
                         const dy = mouse.worldY - finalY;
                         const dz = mouse.worldZ - finalZ;
-                        const mouseDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                        const finalMouseDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
                         // 排斥力效果
-                        if (config.enableRepulsion && mouseDistance < config.repulsionRange) {
-                            const force = (1 - mouseDistance / config.repulsionRange) * config.repulsionStrength;
-                            finalX -= (dx / mouseDistance) * force * 0.1;
-                            finalY -= (dy / mouseDistance) * force * 0.1;
-                            finalZ -= (dz / mouseDistance) * force * 0.1;
+                        if (config.enableRepulsion && finalMouseDistance < config.repulsionRange) {
+                            const force = (1 - finalMouseDistance / config.repulsionRange) * config.repulsionStrength;
+                            finalX -= (dx / finalMouseDistance) * force * 0.1;
+                            finalY -= (dy / finalMouseDistance) * force * 0.1;
+                            finalZ -= (dz / finalMouseDistance) * force * 0.1;
                         }
 
-                        // 重力井效果（平方反比定律）
+                        // 重力井效果（平方反比定律）- 增强效果
                         if (config.enableGravity) {
-                            const minDist = Math.max(mouseDistance, config.gravityMinDist);
+                            const minDist = Math.max(finalMouseDistance, config.gravityMinDist);
                             const gravityForce = config.gravityStrength / (minDist * minDist);
-                            finalX += (dx / mouseDistance) * gravityForce * 0.001;
-                            finalY += (dy / mouseDistance) * gravityForce * 0.001;
-                            finalZ += (dz / mouseDistance) * gravityForce * 0.001;
-                        }
-
-                        // 时间膨胀效果
-                        if (config.enableTimeDilation && mouseDistance < config.timeDilationRange) {
-                            const factor = 1 - (mouseDistance / config.timeDilationRange);
-                            timeScale = 1.0 - factor * (1.0 - config.timeDilationFactor);
+                            finalX += (dx / finalMouseDistance) * gravityForce * 0.015;
+                            finalY += (dy / finalMouseDistance) * gravityForce * 0.015;
+                            finalZ += (dz / finalMouseDistance) * gravityForce * 0.015;
                         }
 
                         // 波纹扩散效果
@@ -1346,14 +1373,33 @@
                         // 律动的粒子大小
                         const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
                         const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
+                        let baseSize = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
+
+                        // 粒子尾迹效果 - 鼠标经过的地方粒子变亮变大
+                        let trailBoost = 0;
+                        if (config.enableTrail) {
+                            for (let t = 0; t < mouseTrail.length; t++) {
+                                const trail = mouseTrail[t];
+                                const tdx = finalX - trail.x;
+                                const tdy = finalY - trail.y;
+                                const tdz = finalZ - trail.z;
+                                const trailDist = Math.sqrt(tdx * tdx + tdy * tdy + tdz * tdz);
+
+                                if (trailDist < 30) {
+                                    const trailEffect = (1 - trailDist / 30) * trail.life;
+                                    trailBoost = Math.max(trailBoost, trailEffect);
+                                }
+                            }
+                        }
+
+                        sizes[idx] = baseSize * (1.0 + trailBoost * 0.8);
 
                         // 律动的透明度
                         const edgeFadeX = Math.sin(u * Math.PI);
                         const edgeFadeY = Math.sin(v * Math.PI);
                         const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
                         const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
+                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2 + trailBoost * 0.3);
 
                         idx++;
                     }
@@ -1378,6 +1424,14 @@
                 ripples[i].strength *= (1 - config.rippleDecay);
                 if (ripples[i].strength < 0.1) {
                     ripples.splice(i, 1);
+                }
+            }
+
+            // 更新鼠标轨迹尾迹
+            for (let i = mouseTrail.length - 1; i >= 0; i--) {
+                mouseTrail[i].life *= config.trailDecay;
+                if (mouseTrail[i].life < 0.01) {
+                    mouseTrail.splice(i, 1);
                 }
             }
         }
