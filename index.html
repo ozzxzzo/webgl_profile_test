@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Energy Ribbons Enhanced - 量子能量丝带·终极版</title>
+    <title>Quantum Energy Ribbons - 量子能量丝带·终极豪华版</title>
     <style>
         * {
             margin: 0;
@@ -14,12 +14,40 @@
         body {
             background: #0a0a0f;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            cursor: none;
         }
 
         canvas {
             display: block;
             width: 100vw;
             height: 100vh;
+        }
+
+        #cursor {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 2px solid #28f321;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            mix-blend-mode: screen;
+            transition: transform 0.1s ease;
+            box-shadow: 0 0 20px rgba(40, 243, 33, 0.6),
+                        inset 0 0 20px rgba(40, 243, 33, 0.3);
+        }
+
+        #cursor::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 6px;
+            height: 6px;
+            background: #28f321;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #28f321;
         }
 
         #info {
@@ -31,18 +59,20 @@
             pointer-events: none;
             text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
             line-height: 1.6;
+            z-index: 100;
         }
 
         #info .title {
-            font-size: 18px;
+            font-size: 20px;
             font-weight: bold;
             color: #28f321;
             text-shadow: 0 0 15px rgba(40, 243, 33, 0.8);
+            margin-bottom: 8px;
         }
 
         #info .features {
             margin-top: 10px;
-            font-size: 11px;
+            font-size: 10px;
             color: rgba(255, 255, 255, 0.5);
         }
 
@@ -60,7 +90,7 @@
             position: absolute;
             top: 20px;
             right: 20px;
-            width: 340px;
+            width: 360px;
             max-height: 90vh;
             overflow-y: auto;
             background: rgba(10, 10, 15, 0.95);
@@ -75,6 +105,7 @@
             opacity: 0;
             transform: translateX(20px);
             transition: opacity 0.3s ease, transform 0.3s ease;
+            z-index: 100;
         }
 
         #controlPanel.visible {
@@ -212,6 +243,7 @@
             margin: 0;
             transition: right 0.3s ease;
             font-size: 12px;
+            z-index: 100;
         }
 
         #controlPanel::-webkit-scrollbar {
@@ -234,27 +266,30 @@
 
         .effect-badge {
             display: inline-block;
-            padding: 2px 8px;
-            margin: 2px;
+            padding: 3px 10px;
+            margin: 3px;
             background: rgba(40, 243, 33, 0.2);
             border: 1px solid rgba(40, 243, 33, 0.4);
-            border-radius: 10px;
+            border-radius: 12px;
             font-size: 10px;
             color: #28f321;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
+    <div id="cursor"></div>
     <div id="loading">Loading Ultimate Effects...</div>
     <div id="info">
-        <div class="title">Quantum Energy Ribbons - 终极版</div>
+        <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
+        <div>量子能量丝带 · 终极豪华版</div>
         <div class="features">
-            <span class="effect-badge">Neural Links</span>
-            <span class="effect-badge">Lightning</span>
-            <span class="effect-badge">Shockwave</span><br>
-            <span class="effect-badge">Chromatic</span>
-            <span class="effect-badge">Lens Flare</span>
-            <span class="effect-badge">Nebula</span>
+            <span class="effect-badge">🧲 Magnetic</span>
+            <span class="effect-badge">💗 Pulse</span>
+            <span class="effect-badge">📷 DOF</span><br>
+            <span class="effect-badge">⚡ Glitch</span>
+            <span class="effect-badge">✨ Fresnel</span>
+            <span class="effect-badge">💎 Reflect</span>
         </div>
     </div>
 
@@ -296,6 +331,122 @@
             <div class="control-group">
                 <label>颜色流动速度 Color Flow: <span class="value-display" id="colorFlowSpeed-value">0.05</span></label>
                 <input type="range" id="colorFlowSpeed" min="0" max="0.5" step="0.01" value="0.05">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🧲 磁性吸附 Magnetic Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableMagnetic" checked>
+                    <span class="checkbox-label">启用磁性吸附 Enable Magnetic</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>吸附强度 Strength: <span class="value-display" id="magneticStrength-value">15.0</span></label>
+                <input type="range" id="magneticStrength" min="0" max="50" step="1" value="15">
+            </div>
+            <div class="control-group">
+                <label>作用范围 Range: <span class="value-display" id="magneticRange-value">100</span></label>
+                <input type="range" id="magneticRange" min="20" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💗 能量脉冲 Energy Pulse</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enablePulse" checked>
+                    <span class="checkbox-label">启用脉冲 Enable Pulse</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>脉冲速度 Speed: <span class="value-display" id="pulseSpeed-value">0.5</span></label>
+                <input type="range" id="pulseSpeed" min="0.1" max="2" step="0.1" value="0.5">
+            </div>
+            <div class="control-group">
+                <label>脉冲强度 Intensity: <span class="value-display" id="pulseIntensity-value">2.0</span></label>
+                <input type="range" id="pulseIntensity" min="0.5" max="5" step="0.1" value="2.0">
+            </div>
+            <div class="control-group">
+                <label>脉冲频率 Frequency: <span class="value-display" id="pulseFrequency-value">1.0</span></label>
+                <input type="range" id="pulseFrequency" min="0.1" max="3" step="0.1" value="1.0">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>📷 景深 Depth of Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableDOF" checked>
+                    <span class="checkbox-label">启用景深 Enable DOF</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>焦距 Focus Distance: <span class="value-display" id="focusDistance-value">50</span></label>
+                <input type="range" id="focusDistance" min="20" max="150" step="5" value="50">
+            </div>
+            <div class="control-group">
+                <label>景深范围 DOF Range: <span class="value-display" id="dofRange-value">30</span></label>
+                <input type="range" id="dofRange" min="10" max="100" step="5" value="30">
+            </div>
+            <div class="control-group">
+                <label>虚化强度 Blur Strength: <span class="value-display" id="blurStrength-value">1.5</span></label>
+                <input type="range" id="blurStrength" min="0" max="5" step="0.1" value="1.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>⚡ 全息故障 Holographic Glitch</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableGlitch" checked>
+                    <span class="checkbox-label">启用故障 Enable Glitch</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>故障强度 Intensity: <span class="value-display" id="glitchIntensity-value">0.3</span></label>
+                <input type="range" id="glitchIntensity" min="0" max="1" step="0.05" value="0.3">
+            </div>
+            <div class="control-group">
+                <label>故障频率 Frequency: <span class="value-display" id="glitchFrequency-value">0.1</span></label>
+                <input type="range" id="glitchFrequency" min="0.01" max="0.5" step="0.01" value="0.1">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>✨ 边缘发光 Fresnel Glow</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableFresnel" checked>
+                    <span class="checkbox-label">启用边缘光 Enable Fresnel</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>发光强度 Intensity: <span class="value-display" id="fresnelIntensity-value">1.5</span></label>
+                <input type="range" id="fresnelIntensity" min="0" max="5" step="0.1" value="1.5">
+            </div>
+            <div class="control-group">
+                <label>发光功率 Power: <span class="value-display" id="fresnelPower-value">2.0</span></label>
+                <input type="range" id="fresnelPower" min="0.5" max="5" step="0.1" value="2.0">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💎 反射折射 Reflection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableReflection" checked>
+                    <span class="checkbox-label">启用反射 Enable Reflection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>反射强度 Intensity: <span class="value-display" id="reflectionIntensity-value">0.6</span></label>
+                <input type="range" id="reflectionIntensity" min="0" max="2" step="0.1" value="0.6">
+            </div>
+            <div class="control-group">
+                <label>折射率 Refraction: <span class="value-display" id="refractionIndex-value">1.5</span></label>
+                <input type="range" id="refractionIndex" min="1" max="3" step="0.1" value="1.5">
             </div>
         </div>
 
@@ -344,66 +495,6 @@
             <div class="control-group">
                 <label>DNA效果强度 DNA Effect: <span class="value-display" id="dnaStrength-value">0.5</span></label>
                 <input type="range" id="dnaStrength" min="0" max="2" step="0.1" value="0.5">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>⚡ 新增特效 New Effects</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableConnections" checked>
-                    <span class="checkbox-label">粒子连线 Neural Links</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>连线距离 Link Distance: <span class="value-display" id="connectionDistance-value">15</span></label>
-                <input type="range" id="connectionDistance" min="5" max="30" step="1" value="15">
-            </div>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableLightning" checked>
-                    <span class="checkbox-label">电弧闪电 Lightning</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>闪电频率 Lightning Freq: <span class="value-display" id="lightningFrequency-value">0.5</span></label>
-                <input type="range" id="lightningFrequency" min="0.1" max="2" step="0.1" value="0.5">
-            </div>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableShockwave" checked>
-                    <span class="checkbox-label">冲击波 Shockwave</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>冲击波频率 Wave Freq: <span class="value-display" id="shockwaveFreq-value">0.2</span></label>
-                <input type="range" id="shockwaveFreq" min="0.05" max="1" step="0.05" value="0.2">
-            </div>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableChromaticAberration" checked>
-                    <span class="checkbox-label">色差效果 Chromatic</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>色差强度 CA Strength: <span class="value-display" id="chromaticStrength-value">0.002</span></label>
-                <input type="range" id="chromaticStrength" min="0" max="0.01" step="0.0005" value="0.002">
-            </div>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableLensFlare" checked>
-                    <span class="checkbox-label">镜头光晕 Lens Flare</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableNebula" checked>
-                    <span class="checkbox-label">星云背景 Nebula</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>星云密度 Nebula Density: <span class="value-display" id="nebulaDensity-value">2000</span></label>
-                <input type="range" id="nebulaDensity" min="500" max="5000" step="100" value="2000">
             </div>
         </div>
 
@@ -460,19 +551,15 @@
         import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
         import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
         import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-        import { Lensflare, LensflareElement } from 'three/addons/objects/Lensflare.js';
 
         // 场景设置
-        let scene, camera, renderer, composer, bloomPass, chromaticPass;
+        let scene, camera, renderer, composer, bloomPass, dofPass, glitchPass;
         let ribbons = [];
-        let connectionLines = null;
-        let lightningBolts = [];
-        let shockwaves = [];
-        let nebulaParticles = null;
-        let lensflares = [];
         let time = 0;
+        let mouse = { x: 0, y: 0, worldX: 0, worldY: 0, worldZ: 0 };
+        let energyPulses = [];
 
-        // 配置参数 - 完整的可配置参数集
+        // 配置参数
         const config = {
             // 基础参数
             surfaceCount: 1,
@@ -512,27 +599,46 @@
             timeSpeed: 0.8,
 
             // 新增特效参数
-            enableConnections: true,
-            connectionDistance: 15,
-            enableLightning: true,
-            lightningFrequency: 0.5,
-            enableShockwave: true,
-            shockwaveFreq: 0.2,
-            enableChromaticAberration: true,
-            chromaticStrength: 0.002,
-            enableLensFlare: true,
-            enableNebula: true,
-            nebulaDensity: 2000
+            enableMagnetic: true,
+            magneticStrength: 15,
+            magneticRange: 100,
+
+            enablePulse: true,
+            pulseSpeed: 0.5,
+            pulseIntensity: 2.0,
+            pulseFrequency: 1.0,
+
+            enableDOF: true,
+            focusDistance: 50,
+            dofRange: 30,
+            blurStrength: 1.5,
+
+            enableGlitch: true,
+            glitchIntensity: 0.3,
+            glitchFrequency: 0.1,
+
+            enableFresnel: true,
+            fresnelIntensity: 1.5,
+            fresnelPower: 2.0,
+
+            enableReflection: true,
+            reflectionIntensity: 0.6,
+            refractionIndex: 1.5
         };
 
         // 默认配置备份
         const defaultConfig = JSON.parse(JSON.stringify({...config, colorStart: 0x28f321, colorEnd: 0x2196F3}));
 
-        // 色差效果 Shader
-        const ChromaticAberrationShader = {
+        // 景深着色器
+        const DOFShader = {
             uniforms: {
                 'tDiffuse': { value: null },
-                'amount': { value: 0.002 }
+                'tDepth': { value: null },
+                'focusDistance': { value: 50.0 },
+                'dofRange': { value: 30.0 },
+                'blurStrength': { value: 1.5 },
+                'cameraNear': { value: 0.1 },
+                'cameraFar': { value: 1000.0 }
             },
             vertexShader: `
                 varying vec2 vUv;
@@ -543,20 +649,127 @@
             `,
             fragmentShader: `
                 uniform sampler2D tDiffuse;
-                uniform float amount;
+                uniform float focusDistance;
+                uniform float dofRange;
+                uniform float blurStrength;
                 varying vec2 vUv;
 
                 void main() {
-                    vec2 offset = amount * vec2(cos(vUv.y * 10.0), sin(vUv.x * 10.0));
+                    vec4 color = texture2D(tDiffuse, vUv);
 
-                    vec4 cr = texture2D(tDiffuse, vUv + offset);
-                    vec4 cg = texture2D(tDiffuse, vUv);
-                    vec4 cb = texture2D(tDiffuse, vUv - offset);
+                    // 简化的景深模糊
+                    float depth = gl_FragCoord.z / gl_FragCoord.w;
+                    float blur = abs(depth - focusDistance) / dofRange;
+                    blur = clamp(blur * blurStrength, 0.0, 1.0);
 
-                    gl_FragColor = vec4(cr.r, cg.g, cb.b, cg.a);
+                    // 简单的模糊采样
+                    vec4 blurred = vec4(0.0);
+                    float samples = 9.0;
+                    float offset = blur * 0.003;
+
+                    for(float x = -1.0; x <= 1.0; x++) {
+                        for(float y = -1.0; y <= 1.0; y++) {
+                            vec2 sampleUv = vUv + vec2(x, y) * offset;
+                            blurred += texture2D(tDiffuse, sampleUv);
+                        }
+                    }
+                    blurred /= samples;
+
+                    gl_FragColor = mix(color, blurred, blur);
                 }
             `
         };
+
+        // 故障效果着色器
+        const GlitchShader = {
+            uniforms: {
+                'tDiffuse': { value: null },
+                'time': { value: 0.0 },
+                'intensity': { value: 0.3 },
+                'frequency': { value: 0.1 }
+            },
+            vertexShader: `
+                varying vec2 vUv;
+                void main() {
+                    vUv = uv;
+                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                }
+            `,
+            fragmentShader: `
+                uniform sampler2D tDiffuse;
+                uniform float time;
+                uniform float intensity;
+                uniform float frequency;
+                varying vec2 vUv;
+
+                float random(vec2 st) {
+                    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
+                }
+
+                void main() {
+                    vec2 uv = vUv;
+
+                    // 随机闪烁
+                    float glitchRandom = random(vec2(floor(time * 10.0), floor(uv.y * 100.0)));
+
+                    if(glitchRandom < frequency * intensity) {
+                        // RGB分离
+                        float offset = (random(vec2(time, uv.y)) - 0.5) * intensity * 0.05;
+                        vec4 r = texture2D(tDiffuse, uv + vec2(offset, 0.0));
+                        vec4 g = texture2D(tDiffuse, uv);
+                        vec4 b = texture2D(tDiffuse, uv - vec2(offset, 0.0));
+                        gl_FragColor = vec4(r.r, g.g, b.b, 1.0);
+
+                        // 扫描线
+                        float scanline = sin(uv.y * 800.0 + time * 20.0) * 0.5 + 0.5;
+                        gl_FragColor.rgb *= 0.8 + scanline * 0.2;
+                    } else {
+                        // 横向干扰条
+                        float lineGlitch = step(0.99, random(vec2(floor(time * 5.0), floor(uv.y * 50.0))));
+                        if(lineGlitch > 0.5) {
+                            uv.x += (random(vec2(time, uv.y)) - 0.5) * intensity * 0.1;
+                        }
+
+                        vec4 color = texture2D(tDiffuse, uv);
+
+                        // 像素化闪烁
+                        float pixelGlitch = step(0.98, random(vec2(floor(uv.x * 500.0), floor(uv.y * 500.0) + time)));
+                        color.rgb = mix(color.rgb, vec3(1.0), pixelGlitch * intensity * 0.5);
+
+                        gl_FragColor = color;
+                    }
+                }
+            `
+        };
+
+        // 自定义鼠标光标
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX - 20 + 'px';
+            cursor.style.top = e.clientY - 20 + 'px';
+
+            // 更新鼠标世界坐标
+            mouse.x = (e.clientX / window.innerWidth) * 2 - 1;
+            mouse.y = -(e.clientY / window.innerHeight) * 2 + 1;
+
+            // 转换为世界坐标
+            const vector = new THREE.Vector3(mouse.x, mouse.y, 0.5);
+            vector.unproject(camera);
+            const dir = vector.sub(camera.position).normalize();
+            const distance = -camera.position.z / dir.z;
+            const pos = camera.position.clone().add(dir.multiplyScalar(distance));
+
+            mouse.worldX = pos.x;
+            mouse.worldY = pos.y;
+            mouse.worldZ = 0;
+        });
+
+        document.addEventListener('click', () => {
+            cursor.style.transform = 'scale(1.5)';
+            setTimeout(() => {
+                cursor.style.transform = 'scale(1)';
+            }, 150);
+        });
 
         // 控制面板切换
         window.togglePanel = function() {
@@ -569,7 +782,7 @@
                 setTimeout(() => {
                     panel.classList.add('visible');
                 }, 10);
-                toggleBtn.style.right = '380px';
+                toggleBtn.style.right = '400px';
                 toggleBtn.textContent = '隐藏面板';
             } else {
                 panel.classList.remove('visible');
@@ -619,11 +832,13 @@
             config.colorStart = new THREE.Color(randomColor1);
             config.colorEnd = new THREE.Color(randomColor2);
 
-            config.connectionDistance = Math.random() * 20 + 10;
-            config.lightningFrequency = Math.random() * 1.5 + 0.2;
-            config.shockwaveFreq = Math.random() * 0.8 + 0.1;
-            config.chromaticStrength = Math.random() * 0.008;
-            config.nebulaDensity = Math.random() * 4000 + 1000;
+            config.magneticStrength = Math.random() * 40 + 10;
+            config.magneticRange = Math.random() * 150 + 50;
+            config.pulseSpeed = Math.random() * 1.5 + 0.2;
+            config.pulseIntensity = Math.random() * 4 + 1;
+            config.glitchIntensity = Math.random() * 0.8;
+            config.fresnelIntensity = Math.random() * 4 + 0.5;
+            config.reflectionIntensity = Math.random() * 1.5;
 
             updateUIFromConfig();
             needsRebuild = true;
@@ -631,16 +846,16 @@
 
         // 全效果开关
         window.toggleAllEffects = function() {
-            const allEnabled = config.enableConnections && config.enableLightning &&
-                             config.enableShockwave && config.enableChromaticAberration &&
-                             config.enableLensFlare && config.enableNebula;
+            const allEnabled = config.enableMagnetic && config.enablePulse &&
+                             config.enableDOF && config.enableGlitch &&
+                             config.enableFresnel && config.enableReflection;
 
-            config.enableConnections = !allEnabled;
-            config.enableLightning = !allEnabled;
-            config.enableShockwave = !allEnabled;
-            config.enableChromaticAberration = !allEnabled;
-            config.enableLensFlare = !allEnabled;
-            config.enableNebula = !allEnabled;
+            config.enableMagnetic = !allEnabled;
+            config.enablePulse = !allEnabled;
+            config.enableDOF = !allEnabled;
+            config.enableGlitch = !allEnabled;
+            config.enableFresnel = !allEnabled;
+            config.enableReflection = !allEnabled;
 
             updateUIFromConfig();
         }
@@ -654,10 +869,10 @@
             document.getElementById('gridDensity-value').textContent = config.gridDensity.toFixed(1);
 
             document.getElementById('surfaceWidth').value = config.surfaceWidth;
-            document.getElementById('surfaceWidth-value').textContent = config.surfaceWidth;
+            document.getElementById('surfaceWidth-value').textContent = Math.round(config.surfaceWidth);
 
             document.getElementById('surfaceHeight').value = config.surfaceHeight;
-            document.getElementById('surfaceHeight-value').textContent = config.surfaceHeight;
+            document.getElementById('surfaceHeight-value').textContent = Math.round(config.surfaceHeight);
 
             document.getElementById('colorStart').value = '#' + config.colorStart.getHexString();
             document.getElementById('colorEnd').value = '#' + config.colorEnd.getHexString();
@@ -702,10 +917,10 @@
             document.getElementById('particlePulse-value').textContent = config.particlePulse.toFixed(2);
 
             document.getElementById('cameraZ').value = config.cameraZ;
-            document.getElementById('cameraZ-value').textContent = config.cameraZ;
+            document.getElementById('cameraZ-value').textContent = Math.round(config.cameraZ);
 
             document.getElementById('fov').value = config.fov;
-            document.getElementById('fov-value').textContent = config.fov;
+            document.getElementById('fov-value').textContent = Math.round(config.fov);
 
             document.getElementById('fogDensity').value = config.fogDensity;
             document.getElementById('fogDensity-value').textContent = config.fogDensity.toFixed(3);
@@ -714,27 +929,45 @@
             document.getElementById('timeSpeed-value').textContent = config.timeSpeed.toFixed(1);
 
             // 新增特效
-            document.getElementById('enableConnections').checked = config.enableConnections;
-            document.getElementById('connectionDistance').value = config.connectionDistance;
-            document.getElementById('connectionDistance-value').textContent = config.connectionDistance;
+            document.getElementById('enableMagnetic').checked = config.enableMagnetic;
+            document.getElementById('magneticStrength').value = config.magneticStrength;
+            document.getElementById('magneticStrength-value').textContent = config.magneticStrength.toFixed(1);
+            document.getElementById('magneticRange').value = config.magneticRange;
+            document.getElementById('magneticRange-value').textContent = Math.round(config.magneticRange);
 
-            document.getElementById('enableLightning').checked = config.enableLightning;
-            document.getElementById('lightningFrequency').value = config.lightningFrequency;
-            document.getElementById('lightningFrequency-value').textContent = config.lightningFrequency.toFixed(1);
+            document.getElementById('enablePulse').checked = config.enablePulse;
+            document.getElementById('pulseSpeed').value = config.pulseSpeed;
+            document.getElementById('pulseSpeed-value').textContent = config.pulseSpeed.toFixed(1);
+            document.getElementById('pulseIntensity').value = config.pulseIntensity;
+            document.getElementById('pulseIntensity-value').textContent = config.pulseIntensity.toFixed(1);
+            document.getElementById('pulseFrequency').value = config.pulseFrequency;
+            document.getElementById('pulseFrequency-value').textContent = config.pulseFrequency.toFixed(1);
 
-            document.getElementById('enableShockwave').checked = config.enableShockwave;
-            document.getElementById('shockwaveFreq').value = config.shockwaveFreq;
-            document.getElementById('shockwaveFreq-value').textContent = config.shockwaveFreq.toFixed(2);
+            document.getElementById('enableDOF').checked = config.enableDOF;
+            document.getElementById('focusDistance').value = config.focusDistance;
+            document.getElementById('focusDistance-value').textContent = Math.round(config.focusDistance);
+            document.getElementById('dofRange').value = config.dofRange;
+            document.getElementById('dofRange-value').textContent = Math.round(config.dofRange);
+            document.getElementById('blurStrength').value = config.blurStrength;
+            document.getElementById('blurStrength-value').textContent = config.blurStrength.toFixed(1);
 
-            document.getElementById('enableChromaticAberration').checked = config.enableChromaticAberration;
-            document.getElementById('chromaticStrength').value = config.chromaticStrength;
-            document.getElementById('chromaticStrength-value').textContent = config.chromaticStrength.toFixed(4);
+            document.getElementById('enableGlitch').checked = config.enableGlitch;
+            document.getElementById('glitchIntensity').value = config.glitchIntensity;
+            document.getElementById('glitchIntensity-value').textContent = config.glitchIntensity.toFixed(2);
+            document.getElementById('glitchFrequency').value = config.glitchFrequency;
+            document.getElementById('glitchFrequency-value').textContent = config.glitchFrequency.toFixed(2);
 
-            document.getElementById('enableLensFlare').checked = config.enableLensFlare;
+            document.getElementById('enableFresnel').checked = config.enableFresnel;
+            document.getElementById('fresnelIntensity').value = config.fresnelIntensity;
+            document.getElementById('fresnelIntensity-value').textContent = config.fresnelIntensity.toFixed(1);
+            document.getElementById('fresnelPower').value = config.fresnelPower;
+            document.getElementById('fresnelPower-value').textContent = config.fresnelPower.toFixed(1);
 
-            document.getElementById('enableNebula').checked = config.enableNebula;
-            document.getElementById('nebulaDensity').value = config.nebulaDensity;
-            document.getElementById('nebulaDensity-value').textContent = config.nebulaDensity;
+            document.getElementById('enableReflection').checked = config.enableReflection;
+            document.getElementById('reflectionIntensity').value = config.reflectionIntensity;
+            document.getElementById('reflectionIntensity-value').textContent = config.reflectionIntensity.toFixed(1);
+            document.getElementById('refractionIndex').value = config.refractionIndex;
+            document.getElementById('refractionIndex-value').textContent = config.refractionIndex.toFixed(1);
         }
 
         // 需要重建标志
@@ -766,9 +999,6 @@
 
             setupPostProcessing();
             createSurfaces();
-            createNebula();
-            createConnectionLines();
-            createLensFlares();
             setupControls();
             updateUIFromConfig();
 
@@ -791,268 +1021,33 @@
             );
             composer.addPass(bloomPass);
 
-            chromaticPass = new ShaderPass(ChromaticAberrationShader);
-            chromaticPass.uniforms['amount'].value = config.chromaticStrength;
-            composer.addPass(chromaticPass);
+            dofPass = new ShaderPass(DOFShader);
+            dofPass.uniforms['focusDistance'].value = config.focusDistance;
+            dofPass.uniforms['dofRange'].value = config.dofRange;
+            dofPass.uniforms['blurStrength'].value = config.blurStrength;
+            composer.addPass(dofPass);
+
+            glitchPass = new ShaderPass(GlitchShader);
+            glitchPass.uniforms['intensity'].value = config.glitchIntensity;
+            glitchPass.uniforms['frequency'].value = config.glitchFrequency;
+            composer.addPass(glitchPass);
 
             const outputPass = new OutputPass();
             composer.addPass(outputPass);
         }
 
-        // 创建星云背景
-        function createNebula() {
-            const nebulaGeometry = new THREE.BufferGeometry();
-            const nebulaCount = config.nebulaDensity;
-            const positions = new Float32Array(nebulaCount * 3);
-            const colors = new Float32Array(nebulaCount * 3);
-            const sizes = new Float32Array(nebulaCount);
-
-            for (let i = 0; i < nebulaCount; i++) {
-                positions[i * 3] = (Math.random() - 0.5) * 400;
-                positions[i * 3 + 1] = (Math.random() - 0.5) * 400;
-                positions[i * 3 + 2] = (Math.random() - 0.5) * 400 - 100;
-
-                const color = new THREE.Color();
-                color.setHSL(Math.random() * 0.3 + 0.5, 0.5, 0.2);
-                colors[i * 3] = color.r;
-                colors[i * 3 + 1] = color.g;
-                colors[i * 3 + 2] = color.b;
-
-                sizes[i] = Math.random() * 2 + 0.5;
-            }
-
-            nebulaGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            nebulaGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-            nebulaGeometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-            const nebulaMaterial = new THREE.PointsMaterial({
-                size: 2,
-                vertexColors: true,
-                transparent: true,
-                opacity: 0.3,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-
-            nebulaParticles = new THREE.Points(nebulaGeometry, nebulaMaterial);
-            scene.add(nebulaParticles);
-        }
-
-        // 创建镜头光晕
-        function createLensFlares() {
-            const textureLoader = new THREE.TextureLoader();
-
-            // 创建多个光晕光源
-            const flarePositions = [
-                new THREE.Vector3(30, 10, -20),
-                new THREE.Vector3(-30, -10, -20),
-                new THREE.Vector3(0, 20, -30)
-            ];
-
-            flarePositions.forEach((pos, index) => {
-                const light = new THREE.PointLight(0xffffff, 1.5, 100);
-                light.position.copy(pos);
-
-                // 简化的光晕效果 - 使用自定义粒子代替
-                const flareGeometry = new THREE.SphereGeometry(2, 16, 16);
-                const flareMaterial = new THREE.MeshBasicMaterial({
-                    color: index === 0 ? 0x28f321 : (index === 1 ? 0x2196F3 : 0xff00ff),
-                    transparent: true,
-                    opacity: 0.6,
-                    blending: THREE.AdditiveBlending
-                });
-                const flareMesh = new THREE.Mesh(flareGeometry, flareMaterial);
-                flareMesh.position.copy(pos);
-
-                lensflares.push({ light, mesh: flareMesh, basePos: pos.clone() });
-                scene.add(light);
-                scene.add(flareMesh);
-            });
-        }
-
-        // 创建粒子连线
-        function createConnectionLines() {
-            const lineMaterial = new THREE.LineBasicMaterial({
-                color: 0x28f321,
-                transparent: true,
-                opacity: 0.3,
-                blending: THREE.AdditiveBlending
-            });
-
-            const lineGeometry = new THREE.BufferGeometry();
-            connectionLines = new THREE.LineSegments(lineGeometry, lineMaterial);
-            scene.add(connectionLines);
-        }
-
-        // 更新粒子连线
-        function updateConnectionLines() {
-            if (!config.enableConnections || ribbons.length === 0) {
-                connectionLines.visible = false;
-                return;
-            }
-            connectionLines.visible = true;
-
-            const positions = [];
-            const maxConnections = 500; // 限制连线数量以优化性能
-            let connectionCount = 0;
-
-            ribbons.forEach((surface) => {
-                const surfacePositions = surface.geometry.attributes.position.array;
-                const particleCount = surfacePositions.length / 3;
-
-                // 采样部分粒子以优化性能
-                const sampleRate = Math.max(1, Math.floor(particleCount / 200));
-
-                for (let i = 0; i < particleCount && connectionCount < maxConnections; i += sampleRate) {
-                    const x1 = surfacePositions[i * 3];
-                    const y1 = surfacePositions[i * 3 + 1];
-                    const z1 = surfacePositions[i * 3 + 2];
-
-                    for (let j = i + sampleRate; j < particleCount && connectionCount < maxConnections; j += sampleRate) {
-                        const x2 = surfacePositions[j * 3];
-                        const y2 = surfacePositions[j * 3 + 1];
-                        const z2 = surfacePositions[j * 3 + 2];
-
-                        const dx = x2 - x1;
-                        const dy = y2 - y1;
-                        const dz = z2 - z1;
-                        const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
-
-                        if (distance < config.connectionDistance) {
-                            positions.push(x1, y1, z1, x2, y2, z2);
-                            connectionCount++;
-                        }
-                    }
-                }
-            });
-
-            connectionLines.geometry.setAttribute('position', new THREE.Float32BufferAttribute(positions, 3));
-            connectionLines.geometry.attributes.position.needsUpdate = true;
-        }
-
-        // 创建闪电效果
-        function createLightning() {
-            if (!config.enableLightning || ribbons.length < 2) return;
-
-            if (Math.random() < config.lightningFrequency * 0.01) {
-                const surface1 = ribbons[Math.floor(Math.random() * ribbons.length)];
-                const surface2 = ribbons[Math.floor(Math.random() * ribbons.length)];
-
-                if (surface1 === surface2) return;
-
-                const pos1 = surface1.geometry.attributes.position.array;
-                const pos2 = surface2.geometry.attributes.position.array;
-
-                const idx1 = Math.floor(Math.random() * (pos1.length / 3)) * 3;
-                const idx2 = Math.floor(Math.random() * (pos2.length / 3)) * 3;
-
-                const start = new THREE.Vector3(pos1[idx1], pos1[idx1 + 1], pos1[idx1 + 2]);
-                const end = new THREE.Vector3(pos2[idx2], pos2[idx2 + 1], pos2[idx2 + 2]);
-
-                const lightningPoints = [];
-                const segments = 10;
-
-                for (let i = 0; i <= segments; i++) {
-                    const t = i / segments;
-                    const point = new THREE.Vector3().lerpVectors(start, end, t);
-
-                    if (i > 0 && i < segments) {
-                        point.x += (Math.random() - 0.5) * 3;
-                        point.y += (Math.random() - 0.5) * 3;
-                        point.z += (Math.random() - 0.5) * 3;
-                    }
-
-                    lightningPoints.push(point);
-                }
-
-                const lightningGeometry = new THREE.BufferGeometry().setFromPoints(lightningPoints);
-                const lightningMaterial = new THREE.LineBasicMaterial({
-                    color: 0xffffff,
-                    transparent: true,
-                    opacity: 0.9,
-                    blending: THREE.AdditiveBlending,
-                    linewidth: 2
-                });
-
-                const lightning = new THREE.Line(lightningGeometry, lightningMaterial);
-                lightning.userData.lifespan = 0.3; // 持续时间（秒）
-                lightning.userData.age = 0;
-
-                lightningBolts.push(lightning);
-                scene.add(lightning);
-            }
-
-            // 更新和移除旧闪电
-            for (let i = lightningBolts.length - 1; i >= 0; i--) {
-                lightningBolts[i].userData.age += 0.016;
-                lightningBolts[i].material.opacity = 1 - (lightningBolts[i].userData.age / lightningBolts[i].userData.lifespan);
-
-                if (lightningBolts[i].userData.age >= lightningBolts[i].userData.lifespan) {
-                    scene.remove(lightningBolts[i]);
-                    lightningBolts[i].geometry.dispose();
-                    lightningBolts[i].material.dispose();
-                    lightningBolts.splice(i, 1);
-                }
-            }
-        }
-
-        // 创建冲击波
-        function createShockwave() {
-            if (!config.enableShockwave) return;
-
-            if (Math.random() < config.shockwaveFreq * 0.01) {
-                const shockwaveGeometry = new THREE.RingGeometry(0.1, 1, 32);
-                const shockwaveMaterial = new THREE.MeshBasicMaterial({
-                    color: config.colorStart,
-                    transparent: true,
-                    opacity: 0.8,
-                    side: THREE.DoubleSide,
-                    blending: THREE.AdditiveBlending
-                });
-
-                const shockwave = new THREE.Mesh(shockwaveGeometry, shockwaveMaterial);
-                shockwave.position.set(
-                    (Math.random() - 0.5) * 50,
-                    (Math.random() - 0.5) * 30,
-                    (Math.random() - 0.5) * 20
-                );
-                shockwave.rotation.x = Math.random() * Math.PI;
-                shockwave.rotation.y = Math.random() * Math.PI;
-
-                shockwave.userData.lifespan = 2;
-                shockwave.userData.age = 0;
-                shockwave.userData.maxScale = 20 + Math.random() * 20;
-
-                shockwaves.push(shockwave);
-                scene.add(shockwave);
-            }
-
-            // 更新冲击波
-            for (let i = shockwaves.length - 1; i >= 0; i--) {
-                const wave = shockwaves[i];
-                wave.userData.age += 0.016;
-                const progress = wave.userData.age / wave.userData.lifespan;
-
-                const scale = 1 + progress * wave.userData.maxScale;
-                wave.scale.set(scale, scale, scale);
-                wave.material.opacity = 0.8 * (1 - progress);
-
-                if (progress >= 1) {
-                    scene.remove(wave);
-                    wave.geometry.dispose();
-                    wave.material.dispose();
-                    shockwaves.splice(i, 1);
-                }
-            }
-        }
-
-        // 创建粒子材质
+        // 创建粒子材质（带Fresnel和反射）
         function createParticleMaterial() {
             return new THREE.ShaderMaterial({
                 uniforms: {
                     time: { value: 0 },
                     colorStart: { value: config.colorStart },
-                    colorEnd: { value: config.colorEnd }
+                    colorEnd: { value: config.colorEnd },
+                    fresnelIntensity: { value: config.fresnelIntensity },
+                    fresnelPower: { value: config.fresnelPower },
+                    reflectionIntensity: { value: config.reflectionIntensity },
+                    enableFresnel: { value: config.enableFresnel ? 1.0 : 0.0 },
+                    enableReflection: { value: config.enableReflection ? 1.0 : 0.0 }
                 },
                 vertexShader: `
                     attribute float alpha;
@@ -1061,21 +1056,43 @@
 
                     varying vec3 vColor;
                     varying float vAlpha;
+                    varying vec3 vPosition;
+                    varying vec3 vNormal;
+                    varying vec3 vViewPosition;
 
                     void main() {
                         vColor = customColor;
                         vAlpha = alpha;
+                        vPosition = position;
+
+                        // 计算法线（近似）
+                        vNormal = normalize(position);
 
                         vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
+                        vViewPosition = -mvPosition.xyz;
+
                         gl_PointSize = size * (300.0 / -mvPosition.z);
                         gl_Position = projectionMatrix * mvPosition;
                     }
                 `,
                 fragmentShader: `
+                    uniform float time;
+                    uniform vec3 colorStart;
+                    uniform vec3 colorEnd;
+                    uniform float fresnelIntensity;
+                    uniform float fresnelPower;
+                    uniform float reflectionIntensity;
+                    uniform float enableFresnel;
+                    uniform float enableReflection;
+
                     varying vec3 vColor;
                     varying float vAlpha;
+                    varying vec3 vPosition;
+                    varying vec3 vNormal;
+                    varying vec3 vViewPosition;
 
                     void main() {
+                        // 创建圆角正方形粒子
                         vec2 center = gl_PointCoord - vec2(0.5);
                         vec2 absCenter = abs(center);
 
@@ -1087,10 +1104,34 @@
 
                         if (dist > 0.0) discard;
 
+                        // 边缘渐变
                         float strength = 1.0 - smoothstep(-0.1, 0.0, dist);
                         strength = pow(strength, 1.5);
 
-                        gl_FragColor = vec4(vColor * 1.8, strength * vAlpha);
+                        // Fresnel 边缘发光
+                        vec3 normal = normalize(vNormal);
+                        vec3 viewDir = normalize(vViewPosition);
+                        float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), fresnelPower);
+                        fresnel *= fresnelIntensity;
+
+                        // 反射效果（简化的环境映射）
+                        vec3 reflection = reflect(-viewDir, normal);
+                        float reflectionFactor = (sin(reflection.x * 10.0 + time) * 0.5 + 0.5) *
+                                                (cos(reflection.y * 10.0 + time * 0.7) * 0.5 + 0.5);
+                        reflectionFactor *= reflectionIntensity;
+
+                        // 组合所有效果
+                        vec3 finalColor = vColor * 1.8;
+
+                        if (enableFresnel > 0.5) {
+                            finalColor += vec3(fresnel) * mix(colorStart, colorEnd, 0.5);
+                        }
+
+                        if (enableReflection > 0.5) {
+                            finalColor += vec3(reflectionFactor) * 0.5;
+                        }
+
+                        gl_FragColor = vec4(finalColor, strength * vAlpha);
                     }
                 `,
                 transparent: true,
@@ -1180,6 +1221,39 @@
             };
         }
 
+        // 创建能量脉冲
+        function createEnergyPulse() {
+            if (!config.enablePulse) return;
+
+            const pulse = {
+                position: 0, // 0 到 1，表示从左到右的位置
+                intensity: config.pulseIntensity,
+                width: 0.15,
+                speed: config.pulseSpeed
+            };
+
+            energyPulses.push(pulse);
+        }
+
+        // 更新能量脉冲
+        function updateEnergyPulses() {
+            // 周期性创建新脉冲
+            if (config.enablePulse && Math.sin(time * config.pulseFrequency * Math.PI) > 0.99) {
+                createEnergyPulse();
+            }
+
+            // 更新现有脉冲
+            for (let i = energyPulses.length - 1; i >= 0; i--) {
+                const pulse = energyPulses[i];
+                pulse.position += pulse.speed * 0.01;
+
+                // 移除超出范围的脉冲
+                if (pulse.position > 1.2) {
+                    energyPulses.splice(i, 1);
+                }
+            }
+        }
+
         // 更新光流曲面动画
         function updateRibbons() {
             ribbons.forEach((surface, surfaceIndex) => {
@@ -1200,6 +1274,7 @@
 
                         const waveOffset = surface.phaseOffset + time * config.waveSpeed;
 
+                        // 原有波动效果
                         const spiralY = Math.sin(u * Math.PI * config.spiralFreq + waveOffset + v * Math.PI * 2) * config.spiralAmp;
                         const spiralZ = Math.cos(u * Math.PI * config.spiralFreq + waveOffset + v * Math.PI * 2) * config.spiralAmp;
 
@@ -1218,10 +1293,45 @@
                         const dnaY = Math.sin(dnaPhase + v * Math.PI) * config.dnaStrength;
                         const dnaZ = Math.cos(dnaPhase + v * Math.PI) * config.dnaStrength;
 
-                        positions[idx * 3] = x + twistX;
-                        positions[idx * 3 + 1] = y + spiralY + wave1 + wave2 + radialWave + dnaY + twistY;
-                        positions[idx * 3 + 2] = z + spiralZ + dnaZ;
+                        let finalX = x + twistX;
+                        let finalY = y + spiralY + wave1 + wave2 + radialWave + dnaY + twistY;
+                        let finalZ = z + spiralZ + dnaZ;
 
+                        // 磁性吸附效果
+                        if (config.enableMagnetic) {
+                            const dx = mouse.worldX - finalX;
+                            const dy = mouse.worldY - finalY;
+                            const dz = mouse.worldZ - finalZ;
+                            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+
+                            if (distance < config.magneticRange) {
+                                const force = (1 - distance / config.magneticRange) * config.magneticStrength;
+                                finalX += (dx / distance) * force * 0.1;
+                                finalY += (dy / distance) * force * 0.1;
+                                finalZ += (dz / distance) * force * 0.1;
+                            }
+                        }
+
+                        // 能量脉冲效果
+                        let pulseEffect = 0;
+                        if (config.enablePulse) {
+                            energyPulses.forEach(pulse => {
+                                const distToPulse = Math.abs(u - pulse.position);
+                                if (distToPulse < pulse.width) {
+                                    const pulseFactor = 1 - (distToPulse / pulse.width);
+                                    pulseEffect += pulseFactor * pulse.intensity;
+                                }
+                            });
+                        }
+
+                        finalY += pulseEffect * Math.sin(v * Math.PI * 2);
+                        finalZ += pulseEffect * Math.cos(v * Math.PI * 2);
+
+                        positions[idx * 3] = finalX;
+                        positions[idx * 3 + 1] = finalY;
+                        positions[idx * 3 + 2] = finalZ;
+
+                        // 动态循环渐变色
                         const flowOffset = (time * config.colorFlowSpeed) % 1.0;
                         const colorPos = (u + flowOffset) % 1.0;
 
@@ -1237,19 +1347,28 @@
                         const color = new THREE.Color();
                         color.lerpColors(config.colorStart, config.colorEnd, t);
 
+                        // 脉冲颜色增强
+                        if (pulseEffect > 0) {
+                            color.r = Math.min(1, color.r + pulseEffect * 0.3);
+                            color.g = Math.min(1, color.g + pulseEffect * 0.3);
+                            color.b = Math.min(1, color.b + pulseEffect * 0.3);
+                        }
+
                         colors[idx * 3] = color.r;
                         colors[idx * 3 + 1] = color.g;
                         colors[idx * 3 + 2] = color.b;
 
+                        // 律动的粒子大小
                         const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
                         const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
+                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2 + pulseEffect * 0.5);
 
+                        // 律动的透明度
                         const edgeFadeX = Math.sin(u * Math.PI);
                         const edgeFadeY = Math.sin(v * Math.PI);
                         const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
                         const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
+                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2 + pulseEffect * 0.3);
 
                         idx++;
                     }
@@ -1261,41 +1380,12 @@
                 surface.geometry.attributes.alpha.needsUpdate = true;
 
                 surface.points.material.uniforms.time.value = time;
+                surface.points.material.uniforms.fresnelIntensity.value = config.fresnelIntensity;
+                surface.points.material.uniforms.fresnelPower.value = config.fresnelPower;
+                surface.points.material.uniforms.reflectionIntensity.value = config.reflectionIntensity;
+                surface.points.material.uniforms.enableFresnel.value = config.enableFresnel ? 1.0 : 0.0;
+                surface.points.material.uniforms.enableReflection.value = config.enableReflection ? 1.0 : 0.0;
             });
-        }
-
-        // 更新镜头光晕
-        function updateLensFlares() {
-            if (!config.enableLensFlare) {
-                lensflares.forEach(flare => {
-                    flare.light.visible = false;
-                    flare.mesh.visible = false;
-                });
-                return;
-            }
-
-            lensflares.forEach((flare, index) => {
-                flare.light.visible = true;
-                flare.mesh.visible = true;
-
-                const offset = index * Math.PI * 2 / lensflares.length;
-                flare.light.position.x = flare.basePos.x + Math.sin(time + offset) * 10;
-                flare.light.position.y = flare.basePos.y + Math.cos(time * 0.7 + offset) * 5;
-                flare.mesh.position.copy(flare.light.position);
-
-                flare.mesh.material.opacity = 0.4 + Math.sin(time * 2 + offset) * 0.2;
-            });
-        }
-
-        // 更新星云
-        function updateNebula() {
-            if (!config.enableNebula) {
-                nebulaParticles.visible = false;
-                return;
-            }
-            nebulaParticles.visible = true;
-            nebulaParticles.rotation.y += 0.0002;
-            nebulaParticles.rotation.x += 0.0001;
         }
 
         // 窗口大小调整
@@ -1318,12 +1408,8 @@
             }
 
             updateRealTimeParameters();
+            updateEnergyPulses();
             updateRibbons();
-            updateConnectionLines();
-            createLightning();
-            createShockwave();
-            updateLensFlares();
-            updateNebula();
 
             composer.render();
         }
@@ -1344,8 +1430,18 @@
                 bloomPass.threshold = config.bloomThreshold;
             }
 
-            if (chromaticPass) {
-                chromaticPass.uniforms['amount'].value = config.enableChromaticAberration ? config.chromaticStrength : 0;
+            if (dofPass) {
+                dofPass.enabled = config.enableDOF;
+                dofPass.uniforms['focusDistance'].value = config.focusDistance;
+                dofPass.uniforms['dofRange'].value = config.dofRange;
+                dofPass.uniforms['blurStrength'].value = config.blurStrength;
+            }
+
+            if (glitchPass) {
+                glitchPass.enabled = config.enableGlitch;
+                glitchPass.uniforms['time'].value = time;
+                glitchPass.uniforms['intensity'].value = config.glitchIntensity;
+                glitchPass.uniforms['frequency'].value = config.glitchFrequency;
             }
 
             renderer.toneMappingExposure = config.brightness;
@@ -1367,14 +1463,7 @@
             });
             ribbons = [];
 
-            if (nebulaParticles) {
-                scene.remove(nebulaParticles);
-                nebulaParticles.geometry.dispose();
-                nebulaParticles.material.dispose();
-            }
-
             createSurfaces();
-            createNebula();
         }
 
         // 设置控制面板事件监听器
@@ -1474,49 +1563,84 @@
             });
 
             // 新增特效控制
-            setupCheckbox('enableConnections', (val) => {
-                config.enableConnections = val;
+            setupCheckbox('enableMagnetic', (val) => {
+                config.enableMagnetic = val;
             });
 
-            setupSlider('connectionDistance', (val) => {
-                config.connectionDistance = parseFloat(val);
+            setupSlider('magneticStrength', (val) => {
+                config.magneticStrength = parseFloat(val);
             });
 
-            setupCheckbox('enableLightning', (val) => {
-                config.enableLightning = val;
+            setupSlider('magneticRange', (val) => {
+                config.magneticRange = parseFloat(val);
             });
 
-            setupSlider('lightningFrequency', (val) => {
-                config.lightningFrequency = parseFloat(val);
+            setupCheckbox('enablePulse', (val) => {
+                config.enablePulse = val;
             });
 
-            setupCheckbox('enableShockwave', (val) => {
-                config.enableShockwave = val;
+            setupSlider('pulseSpeed', (val) => {
+                config.pulseSpeed = parseFloat(val);
             });
 
-            setupSlider('shockwaveFreq', (val) => {
-                config.shockwaveFreq = parseFloat(val);
+            setupSlider('pulseIntensity', (val) => {
+                config.pulseIntensity = parseFloat(val);
             });
 
-            setupCheckbox('enableChromaticAberration', (val) => {
-                config.enableChromaticAberration = val;
+            setupSlider('pulseFrequency', (val) => {
+                config.pulseFrequency = parseFloat(val);
             });
 
-            setupSlider('chromaticStrength', (val) => {
-                config.chromaticStrength = parseFloat(val);
+            setupCheckbox('enableDOF', (val) => {
+                config.enableDOF = val;
             });
 
-            setupCheckbox('enableLensFlare', (val) => {
-                config.enableLensFlare = val;
+            setupSlider('focusDistance', (val) => {
+                config.focusDistance = parseFloat(val);
             });
 
-            setupCheckbox('enableNebula', (val) => {
-                config.enableNebula = val;
+            setupSlider('dofRange', (val) => {
+                config.dofRange = parseFloat(val);
             });
 
-            setupSlider('nebulaDensity', (val) => {
-                config.nebulaDensity = parseFloat(val);
-                needsRebuild = true;
+            setupSlider('blurStrength', (val) => {
+                config.blurStrength = parseFloat(val);
+            });
+
+            setupCheckbox('enableGlitch', (val) => {
+                config.enableGlitch = val;
+            });
+
+            setupSlider('glitchIntensity', (val) => {
+                config.glitchIntensity = parseFloat(val);
+            });
+
+            setupSlider('glitchFrequency', (val) => {
+                config.glitchFrequency = parseFloat(val);
+            });
+
+            setupCheckbox('enableFresnel', (val) => {
+                config.enableFresnel = val;
+            });
+
+            setupSlider('fresnelIntensity', (val) => {
+                config.fresnelIntensity = parseFloat(val);
+            });
+
+            setupSlider('fresnelPower', (val) => {
+                config.fresnelPower = parseFloat(val);
+            });
+
+            setupCheckbox('enableReflection', (val) => {
+                config.enableReflection = val;
+            });
+
+            setupSlider('reflectionIntensity', (val) => {
+                config.reflectionIntensity = parseFloat(val);
+            });
+
+            setupSlider('refractionIndex', (val) => {
+                config.refractionIndex = parseFloat(val);
             });
         }
 
