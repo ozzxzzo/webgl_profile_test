@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Energy Ribbons - 量子能量丝带·精选版</title>
+    <title>Quantum Energy Ribbons - 量子能量丝带·终极交互版</title>
     <style>
         * {
             margin: 0;
@@ -279,12 +279,22 @@
 </head>
 <body>
     <div id="cursor"></div>
-    <div id="loading">Loading Effects...</div>
+    <div id="loading">Loading Ultimate Interactive Effects...</div>
     <div id="info">
         <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
-        <div>量子能量丝带 · 精选版</div>
+        <div>量子能量丝带 · 终极交互版 · 13 Effects</div>
         <div class="features">
             <span class="effect-badge">🧲 Magnetic</span>
+            <span class="effect-badge">🌀 Repulsion</span>
+            <span class="effect-badge">🌪️ Vortex</span><br>
+            <span class="effect-badge">🌊 Ripple</span>
+            <span class="effect-badge">⚡ Connection</span>
+            <span class="effect-badge">🎨 Infection</span><br>
+            <span class="effect-badge">🌟 Gravity</span>
+            <span class="effect-badge">💫 Trail</span>
+            <span class="effect-badge">⏱️ TimeDilation</span><br>
+            <span class="effect-badge">🔆 Halo</span>
+            <span class="effect-badge">🎯 ForceLines</span><br>
             <span class="effect-badge">📷 DOF</span>
             <span class="effect-badge">💎 Reflect</span>
         </div>
@@ -293,7 +303,7 @@
     <button class="toggle-btn" onclick="togglePanel()">控制面板</button>
 
     <div id="controlPanel">
-        <h2>🎛️ 控制面板</h2>
+        <h2>🎛️ 终极交互控制面板</h2>
 
         <div class="control-section">
             <h3>🎨 基础参数 Basic</h3>
@@ -332,6 +342,11 @@
         </div>
 
         <div class="control-section">
+            <h3>🎮 鼠标交互特效 Mouse Effects</h3>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">以下所有特效基于鼠标位置实时生效</p>
+        </div>
+
+        <div class="control-section">
             <h3>🧲 磁性吸附 Magnetic Field</h3>
             <div class="control-group">
                 <label>
@@ -346,6 +361,212 @@
             <div class="control-group">
                 <label>作用范围 Range: <span class="value-display" id="magneticRange-value">100</span></label>
                 <input type="range" id="magneticRange" min="20" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🌀 推力排斥场 Repulsion Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableRepulsion">
+                    <span class="checkbox-label">启用排斥力 Enable Repulsion</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>排斥强度 Strength: <span class="value-display" id="repulsionStrength-value">20.0</span></label>
+                <input type="range" id="repulsionStrength" min="0" max="50" step="1" value="20">
+            </div>
+            <div class="control-group">
+                <label>作用范围 Range: <span class="value-display" id="repulsionRange-value">100</span></label>
+                <input type="range" id="repulsionRange" min="20" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🌪️ 涡旋漩涡 Vortex Swirl</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableVortex">
+                    <span class="checkbox-label">启用漩涡 Enable Vortex</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>旋转强度 Strength: <span class="value-display" id="vortexStrength-value">10.0</span></label>
+                <input type="range" id="vortexStrength" min="0" max="30" step="1" value="10">
+            </div>
+            <div class="control-group">
+                <label>作用范围 Range: <span class="value-display" id="vortexRange-value">120</span></label>
+                <input type="range" id="vortexRange" min="30" max="250" step="10" value="120">
+            </div>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="vortexClockwise" checked>
+                    <span class="checkbox-label">顺时针旋转 Clockwise</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🌊 波纹扩散 Ripple Wave</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableRipple" checked>
+                    <span class="checkbox-label">启用波纹 Enable Ripple (点击)</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>波纹强度 Strength: <span class="value-display" id="rippleStrength-value">25.0</span></label>
+                <input type="range" id="rippleStrength" min="5" max="50" step="1" value="25">
+            </div>
+            <div class="control-group">
+                <label>波纹速度 Speed: <span class="value-display" id="rippleSpeed-value">0.8</span></label>
+                <input type="range" id="rippleSpeed" min="0.2" max="2" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>波纹衰减 Decay: <span class="value-display" id="rippleDecay-value">0.02</span></label>
+                <input type="range" id="rippleDecay" min="0.01" max="0.1" step="0.01" value="0.02">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>⚡ 粒子连线 Connection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableConnection">
+                    <span class="checkbox-label">启用连线 Enable Connection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>连线距离 Distance: <span class="value-display" id="connectionDistance-value">50</span></label>
+                <input type="range" id="connectionDistance" min="20" max="150" step="5" value="50">
+            </div>
+            <div class="control-group">
+                <label>连线透明度 Opacity: <span class="value-display" id="connectionOpacity-value">0.6</span></label>
+                <input type="range" id="connectionOpacity" min="0.1" max="1" step="0.1" value="0.6">
+            </div>
+            <div class="control-group">
+                <label>鼠标范围 Mouse Range: <span class="value-display" id="connectionMouseRange-value">150</span></label>
+                <input type="range" id="connectionMouseRange" min="50" max="300" step="10" value="150">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🎨 色彩感染 Color Infection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableInfection">
+                    <span class="checkbox-label">启用色彩感染 Enable Infection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>感染颜色 Infection Color</label>
+                <input type="color" id="infectionColor" value="#ff00ff">
+            </div>
+            <div class="control-group">
+                <label>感染强度 Intensity: <span class="value-display" id="infectionIntensity-value">0.8</span></label>
+                <input type="range" id="infectionIntensity" min="0" max="1" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>感染范围 Range: <span class="value-display" id="infectionRange-value">100</span></label>
+                <input type="range" id="infectionRange" min="30" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🌟 重力井 Gravity Well</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableGravity">
+                    <span class="checkbox-label">启用重力井 Enable Gravity</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>重力强度 Strength: <span class="value-display" id="gravityStrength-value">500</span></label>
+                <input type="range" id="gravityStrength" min="100" max="2000" step="50" value="500">
+            </div>
+            <div class="control-group">
+                <label>最小距离 Min Distance: <span class="value-display" id="gravityMinDist-value">10</span></label>
+                <input type="range" id="gravityMinDist" min="5" max="50" step="5" value="10">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💫 粒子尾迹 Particle Trail</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableTrail">
+                    <span class="checkbox-label">启用尾迹 Enable Trail</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>尾迹长度 Length: <span class="value-display" id="trailLength-value">30</span></label>
+                <input type="range" id="trailLength" min="10" max="100" step="5" value="30">
+            </div>
+            <div class="control-group">
+                <label>尾迹衰减 Decay: <span class="value-display" id="trailDecay-value">0.95</span></label>
+                <input type="range" id="trailDecay" min="0.8" max="0.99" step="0.01" value="0.95">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>⏱️ 时间膨胀 Time Dilation</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableTimeDilation">
+                    <span class="checkbox-label">启用时间膨胀 Enable Time Dilation</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>膨胀系数 Factor: <span class="value-display" id="timeDilationFactor-value">0.3</span></label>
+                <input type="range" id="timeDilationFactor" min="0.1" max="2" step="0.1" value="0.3">
+            </div>
+            <div class="control-group">
+                <label>作用范围 Range: <span class="value-display" id="timeDilationRange-value">100</span></label>
+                <input type="range" id="timeDilationRange" min="30" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🔆 动态光晕 Dynamic Halo</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableHalo" checked>
+                    <span class="checkbox-label">启用光晕 Enable Halo</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>光晕大小 Size: <span class="value-display" id="haloSize-value">60</span></label>
+                <input type="range" id="haloSize" min="20" max="150" step="5" value="60">
+            </div>
+            <div class="control-group">
+                <label>光晕强度 Intensity: <span class="value-display" id="haloIntensity-value">0.8</span></label>
+                <input type="range" id="haloIntensity" min="0.1" max="2" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>脉动速度 Pulse Speed: <span class="value-display" id="haloPulseSpeed-value">2.0</span></label>
+                <input type="range" id="haloPulseSpeed" min="0.5" max="5" step="0.5" value="2">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🎯 磁力线 Force Field Lines</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableForceLines">
+                    <span class="checkbox-label">启用磁力线 Enable Force Lines</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>连线数量 Count: <span class="value-display" id="forceLinesCount-value">10</span></label>
+                <input type="range" id="forceLinesCount" min="5" max="30" step="1" value="10">
+            </div>
+            <div class="control-group">
+                <label>连线范围 Range: <span class="value-display" id="forceLinesRange-value">120</span></label>
+                <input type="range" id="forceLinesRange" min="50" max="250" step="10" value="120">
+            </div>
+            <div class="control-group">
+                <label>连线透明度 Opacity: <span class="value-display" id="forceLinesOpacity-value">0.5</span></label>
+                <input type="range" id="forceLinesOpacity" min="0.1" max="1" step="0.1" value="0.5">
             </div>
         </div>
 
@@ -497,6 +718,13 @@
         let time = 0;
         let mouse = { x: 0, y: 0, worldX: 0, worldY: 0, worldZ: 0 };
 
+        // 鼠标交互特效数据
+        let ripples = []; // 波纹数组
+        let trailParticles = []; // 尾迹粒子数组
+        let connectionLines = null; // 粒子连线
+        let forceFieldLines = null; // 磁力线
+        let mouseHalo = null; // 鼠标光晕
+
         // 配置参数
         const config = {
             // 基础参数
@@ -536,11 +764,58 @@
             fogDensity: 0.011,
             timeSpeed: 0.8,
 
-            // 特效参数
+            // 鼠标交互特效参数
             enableMagnetic: true,
             magneticStrength: 15,
             magneticRange: 100,
 
+            enableRepulsion: false,
+            repulsionStrength: 20,
+            repulsionRange: 100,
+
+            enableVortex: false,
+            vortexStrength: 10,
+            vortexRange: 120,
+            vortexClockwise: true,
+
+            enableRipple: true,
+            rippleStrength: 25,
+            rippleSpeed: 0.8,
+            rippleDecay: 0.02,
+
+            enableConnection: false,
+            connectionDistance: 50,
+            connectionOpacity: 0.6,
+            connectionMouseRange: 150,
+
+            enableInfection: false,
+            infectionColor: new THREE.Color(0xff00ff),
+            infectionIntensity: 0.8,
+            infectionRange: 100,
+
+            enableGravity: false,
+            gravityStrength: 500,
+            gravityMinDist: 10,
+
+            enableTrail: false,
+            trailLength: 30,
+            trailDecay: 0.95,
+
+            enableTimeDilation: false,
+            timeDilationFactor: 0.3,
+            timeDilationRange: 100,
+
+            enableHalo: true,
+            haloSize: 60,
+            haloIntensity: 0.8,
+            haloPulseSpeed: 2.0,
+
+            enableForceLines: false,
+            forceLinesCount: 10,
+            forceLinesRange: 120,
+            forceLinesOpacity: 0.5,
+
+            // 其他特效参数
             enableDOF: true,
             focusDistance: 50,
             dofRange: 30,
@@ -552,7 +827,12 @@
         };
 
         // 默认配置备份
-        const defaultConfig = JSON.parse(JSON.stringify({...config, colorStart: 0x28f321, colorEnd: 0x2196F3}));
+        const defaultConfig = JSON.parse(JSON.stringify({
+            ...config,
+            colorStart: 0x28f321,
+            colorEnd: 0x2196F3,
+            infectionColor: 0xff00ff
+        }));
 
         // 景深着色器
         const DOFShader = {
@@ -632,6 +912,17 @@
             setTimeout(() => {
                 cursor.style.transform = 'scale(1)';
             }, 150);
+
+            // 创建波纹效果
+            if (config.enableRipple) {
+                ripples.push({
+                    x: mouse.worldX,
+                    y: mouse.worldY,
+                    z: mouse.worldZ,
+                    radius: 0,
+                    strength: config.rippleStrength
+                });
+            }
         });
 
         // 控制面板切换
@@ -661,7 +952,13 @@
         window.resetToDefault = function() {
             config.colorStart = new THREE.Color(defaultConfig.colorStart);
             config.colorEnd = new THREE.Color(defaultConfig.colorEnd);
-            Object.assign(config, {...defaultConfig, colorStart: config.colorStart, colorEnd: config.colorEnd});
+            config.infectionColor = new THREE.Color(defaultConfig.infectionColor);
+            Object.assign(config, {
+                ...defaultConfig,
+                colorStart: config.colorStart,
+                colorEnd: config.colorEnd,
+                infectionColor: config.infectionColor
+            });
             updateUIFromConfig();
             needsRebuild = true;
         }
@@ -705,9 +1002,23 @@
 
         // 全效果开关
         window.toggleAllEffects = function() {
-            const allEnabled = config.enableMagnetic && config.enableDOF && config.enableReflection;
+            const allEnabled = config.enableMagnetic && config.enableRepulsion && config.enableVortex &&
+                              config.enableRipple && config.enableConnection && config.enableInfection &&
+                              config.enableGravity && config.enableTrail && config.enableTimeDilation &&
+                              config.enableHalo && config.enableForceLines && config.enableDOF &&
+                              config.enableReflection;
 
             config.enableMagnetic = !allEnabled;
+            config.enableRepulsion = !allEnabled;
+            config.enableVortex = !allEnabled;
+            config.enableRipple = !allEnabled;
+            config.enableConnection = !allEnabled;
+            config.enableInfection = !allEnabled;
+            config.enableGravity = !allEnabled;
+            config.enableTrail = !allEnabled;
+            config.enableTimeDilation = !allEnabled;
+            config.enableHalo = !allEnabled;
+            config.enableForceLines = !allEnabled;
             config.enableDOF = !allEnabled;
             config.enableReflection = !allEnabled;
 
@@ -782,12 +1093,82 @@
             document.getElementById('timeSpeed').value = config.timeSpeed;
             document.getElementById('timeSpeed-value').textContent = config.timeSpeed.toFixed(1);
 
-            // 特效
+            // 鼠标交互特效
             document.getElementById('enableMagnetic').checked = config.enableMagnetic;
             document.getElementById('magneticStrength').value = config.magneticStrength;
             document.getElementById('magneticStrength-value').textContent = config.magneticStrength.toFixed(1);
             document.getElementById('magneticRange').value = config.magneticRange;
             document.getElementById('magneticRange-value').textContent = Math.round(config.magneticRange);
+
+            document.getElementById('enableRepulsion').checked = config.enableRepulsion;
+            document.getElementById('repulsionStrength').value = config.repulsionStrength;
+            document.getElementById('repulsionStrength-value').textContent = config.repulsionStrength.toFixed(1);
+            document.getElementById('repulsionRange').value = config.repulsionRange;
+            document.getElementById('repulsionRange-value').textContent = Math.round(config.repulsionRange);
+
+            document.getElementById('enableVortex').checked = config.enableVortex;
+            document.getElementById('vortexStrength').value = config.vortexStrength;
+            document.getElementById('vortexStrength-value').textContent = config.vortexStrength.toFixed(1);
+            document.getElementById('vortexRange').value = config.vortexRange;
+            document.getElementById('vortexRange-value').textContent = Math.round(config.vortexRange);
+            document.getElementById('vortexClockwise').checked = config.vortexClockwise;
+
+            document.getElementById('enableRipple').checked = config.enableRipple;
+            document.getElementById('rippleStrength').value = config.rippleStrength;
+            document.getElementById('rippleStrength-value').textContent = config.rippleStrength.toFixed(1);
+            document.getElementById('rippleSpeed').value = config.rippleSpeed;
+            document.getElementById('rippleSpeed-value').textContent = config.rippleSpeed.toFixed(1);
+            document.getElementById('rippleDecay').value = config.rippleDecay;
+            document.getElementById('rippleDecay-value').textContent = config.rippleDecay.toFixed(2);
+
+            document.getElementById('enableConnection').checked = config.enableConnection;
+            document.getElementById('connectionDistance').value = config.connectionDistance;
+            document.getElementById('connectionDistance-value').textContent = Math.round(config.connectionDistance);
+            document.getElementById('connectionOpacity').value = config.connectionOpacity;
+            document.getElementById('connectionOpacity-value').textContent = config.connectionOpacity.toFixed(1);
+            document.getElementById('connectionMouseRange').value = config.connectionMouseRange;
+            document.getElementById('connectionMouseRange-value').textContent = Math.round(config.connectionMouseRange);
+
+            document.getElementById('enableInfection').checked = config.enableInfection;
+            document.getElementById('infectionColor').value = '#' + config.infectionColor.getHexString();
+            document.getElementById('infectionIntensity').value = config.infectionIntensity;
+            document.getElementById('infectionIntensity-value').textContent = config.infectionIntensity.toFixed(1);
+            document.getElementById('infectionRange').value = config.infectionRange;
+            document.getElementById('infectionRange-value').textContent = Math.round(config.infectionRange);
+
+            document.getElementById('enableGravity').checked = config.enableGravity;
+            document.getElementById('gravityStrength').value = config.gravityStrength;
+            document.getElementById('gravityStrength-value').textContent = Math.round(config.gravityStrength);
+            document.getElementById('gravityMinDist').value = config.gravityMinDist;
+            document.getElementById('gravityMinDist-value').textContent = Math.round(config.gravityMinDist);
+
+            document.getElementById('enableTrail').checked = config.enableTrail;
+            document.getElementById('trailLength').value = config.trailLength;
+            document.getElementById('trailLength-value').textContent = Math.round(config.trailLength);
+            document.getElementById('trailDecay').value = config.trailDecay;
+            document.getElementById('trailDecay-value').textContent = config.trailDecay.toFixed(2);
+
+            document.getElementById('enableTimeDilation').checked = config.enableTimeDilation;
+            document.getElementById('timeDilationFactor').value = config.timeDilationFactor;
+            document.getElementById('timeDilationFactor-value').textContent = config.timeDilationFactor.toFixed(1);
+            document.getElementById('timeDilationRange').value = config.timeDilationRange;
+            document.getElementById('timeDilationRange-value').textContent = Math.round(config.timeDilationRange);
+
+            document.getElementById('enableHalo').checked = config.enableHalo;
+            document.getElementById('haloSize').value = config.haloSize;
+            document.getElementById('haloSize-value').textContent = Math.round(config.haloSize);
+            document.getElementById('haloIntensity').value = config.haloIntensity;
+            document.getElementById('haloIntensity-value').textContent = config.haloIntensity.toFixed(1);
+            document.getElementById('haloPulseSpeed').value = config.haloPulseSpeed;
+            document.getElementById('haloPulseSpeed-value').textContent = config.haloPulseSpeed.toFixed(1);
+
+            document.getElementById('enableForceLines').checked = config.enableForceLines;
+            document.getElementById('forceLinesCount').value = config.forceLinesCount;
+            document.getElementById('forceLinesCount-value').textContent = Math.round(config.forceLinesCount);
+            document.getElementById('forceLinesRange').value = config.forceLinesRange;
+            document.getElementById('forceLinesRange-value').textContent = Math.round(config.forceLinesRange);
+            document.getElementById('forceLinesOpacity').value = config.forceLinesOpacity;
+            document.getElementById('forceLinesOpacity-value').textContent = config.forceLinesOpacity.toFixed(1);
 
             document.getElementById('enableDOF').checked = config.enableDOF;
             document.getElementById('focusDistance').value = config.focusDistance;
@@ -833,11 +1214,85 @@
 
             setupPostProcessing();
             createSurfaces();
+            createInteractiveElements();
             setupControls();
             updateUIFromConfig();
 
             window.addEventListener('resize', onWindowResize);
             document.getElementById('loading').style.display = 'none';
+        }
+
+        // 创建交互特效元素
+        function createInteractiveElements() {
+            // 创建鼠标光晕
+            const haloGeometry = new THREE.CircleGeometry(1, 32);
+            const haloMaterial = new THREE.ShaderMaterial({
+                uniforms: {
+                    time: { value: 0 },
+                    intensity: { value: config.haloIntensity },
+                    pulseSpeed: { value: config.haloPulseSpeed }
+                },
+                vertexShader: `
+                    varying vec2 vUv;
+                    void main() {
+                        vUv = uv;
+                        gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+                    }
+                `,
+                fragmentShader: `
+                    uniform float time;
+                    uniform float intensity;
+                    uniform float pulseSpeed;
+                    varying vec2 vUv;
+                    void main() {
+                        vec2 center = vUv - vec2(0.5);
+                        float dist = length(center);
+                        float pulse = sin(time * pulseSpeed) * 0.3 + 0.7;
+                        float alpha = (1.0 - dist) * pulse * intensity;
+                        alpha = smoothstep(0.0, 0.5, alpha);
+                        vec3 color = vec3(0.16, 0.95, 0.13); // #28f321
+                        gl_FragColor = vec4(color, alpha * 0.5);
+                    }
+                `,
+                transparent: true,
+                blending: THREE.AdditiveBlending,
+                depthWrite: false
+            });
+            mouseHalo = new THREE.Mesh(haloGeometry, haloMaterial);
+            mouseHalo.position.z = 0;
+            scene.add(mouseHalo);
+
+            // 创建粒子连线
+            const maxConnections = 1000;
+            const connectionPositions = new Float32Array(maxConnections * 6);
+            const connectionColors = new Float32Array(maxConnections * 6);
+            const connectionGeometry = new THREE.BufferGeometry();
+            connectionGeometry.setAttribute('position', new THREE.BufferAttribute(connectionPositions, 3));
+            connectionGeometry.setAttribute('color', new THREE.BufferAttribute(connectionColors, 3));
+            const connectionMaterial = new THREE.LineBasicMaterial({
+                vertexColors: true,
+                transparent: true,
+                opacity: config.connectionOpacity,
+                blending: THREE.AdditiveBlending
+            });
+            connectionLines = new THREE.LineSegments(connectionGeometry, connectionMaterial);
+            scene.add(connectionLines);
+
+            // 创建磁力线
+            const maxForceLines = 30;
+            const forceLinePositions = new Float32Array(maxForceLines * 6);
+            const forceLineColors = new Float32Array(maxForceLines * 6);
+            const forceLineGeometry = new THREE.BufferGeometry();
+            forceLineGeometry.setAttribute('position', new THREE.BufferAttribute(forceLinePositions, 3));
+            forceLineGeometry.setAttribute('color', new THREE.BufferAttribute(forceLineColors, 3));
+            const forceLineMaterial = new THREE.LineBasicMaterial({
+                vertexColors: true,
+                transparent: true,
+                opacity: config.forceLinesOpacity,
+                blending: THREE.AdditiveBlending
+            });
+            forceFieldLines = new THREE.LineSegments(forceLineGeometry, forceLineMaterial);
+            scene.add(forceFieldLines);
         }
 
         // 设置后处理
@@ -1072,18 +1527,70 @@
                         let finalY = y + spiralY + wave1 + wave2 + radialWave + dnaY + twistY;
                         let finalZ = z + spiralZ + dnaZ;
 
-                        // 磁性吸附效果
-                        if (config.enableMagnetic) {
-                            const dx = mouse.worldX - finalX;
-                            const dy = mouse.worldY - finalY;
-                            const dz = mouse.worldZ - finalZ;
-                            const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
+                        // 计算到鼠标的距离（用于多个特效）
+                        const dx = mouse.worldX - finalX;
+                        const dy = mouse.worldY - finalY;
+                        const dz = mouse.worldZ - finalZ;
+                        const mouseDistance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-                            if (distance < config.magneticRange) {
-                                const force = (1 - distance / config.magneticRange) * config.magneticStrength;
-                                finalX += (dx / distance) * force * 0.1;
-                                finalY += (dy / distance) * force * 0.1;
-                                finalZ += (dz / distance) * force * 0.1;
+                        // 时间膨胀系数（默认为1）
+                        let timeScale = 1.0;
+
+                        // 磁性吸附效果
+                        if (config.enableMagnetic && mouseDistance < config.magneticRange) {
+                            const force = (1 - mouseDistance / config.magneticRange) * config.magneticStrength;
+                            finalX += (dx / mouseDistance) * force * 0.1;
+                            finalY += (dy / mouseDistance) * force * 0.1;
+                            finalZ += (dz / mouseDistance) * force * 0.1;
+                        }
+
+                        // 排斥力效果
+                        if (config.enableRepulsion && mouseDistance < config.repulsionRange) {
+                            const force = (1 - mouseDistance / config.repulsionRange) * config.repulsionStrength;
+                            finalX -= (dx / mouseDistance) * force * 0.1;
+                            finalY -= (dy / mouseDistance) * force * 0.1;
+                            finalZ -= (dz / mouseDistance) * force * 0.1;
+                        }
+
+                        // 涡旋漩涡效果
+                        if (config.enableVortex && mouseDistance < config.vortexRange) {
+                            const force = (1 - mouseDistance / config.vortexRange) * config.vortexStrength;
+                            const tangentX = -dy;
+                            const tangentY = dx;
+                            const dir = config.vortexClockwise ? 1 : -1;
+                            finalX += tangentX * force * 0.05 * dir;
+                            finalY += tangentY * force * 0.05 * dir;
+                        }
+
+                        // 重力井效果（平方反比定律）
+                        if (config.enableGravity) {
+                            const minDist = Math.max(mouseDistance, config.gravityMinDist);
+                            const gravityForce = config.gravityStrength / (minDist * minDist);
+                            finalX += (dx / mouseDistance) * gravityForce * 0.001;
+                            finalY += (dy / mouseDistance) * gravityForce * 0.001;
+                            finalZ += (dz / mouseDistance) * gravityForce * 0.001;
+                        }
+
+                        // 时间膨胀效果
+                        if (config.enableTimeDilation && mouseDistance < config.timeDilationRange) {
+                            const factor = 1 - (mouseDistance / config.timeDilationRange);
+                            timeScale = 1.0 - factor * (1.0 - config.timeDilationFactor);
+                        }
+
+                        // 波纹扩散效果
+                        for (let r = 0; r < ripples.length; r++) {
+                            const ripple = ripples[r];
+                            const rdx = finalX - ripple.x;
+                            const rdy = finalY - ripple.y;
+                            const rdz = finalZ - ripple.z;
+                            const rippleDist = Math.sqrt(rdx * rdx + rdy * rdy + rdz * rdz);
+                            const rippleEdge = Math.abs(rippleDist - ripple.radius);
+
+                            if (rippleEdge < 10) {
+                                const rippleForce = ripple.strength * (1 - rippleEdge / 10) * Math.sin(rippleEdge * 0.5);
+                                finalX += (rdx / rippleDist) * rippleForce * 0.05;
+                                finalY += (rdy / rippleDist) * rippleForce * 0.05;
+                                finalZ += (rdz / rippleDist) * rippleForce * 0.05;
                             }
                         }
 
@@ -1106,6 +1613,12 @@
 
                         const color = new THREE.Color();
                         color.lerpColors(config.colorStart, config.colorEnd, t);
+
+                        // 色彩感染效果
+                        if (config.enableInfection && mouseDistance < config.infectionRange) {
+                            const infectionFactor = (1 - mouseDistance / config.infectionRange) * config.infectionIntensity;
+                            color.lerp(config.infectionColor, infectionFactor);
+                        }
 
                         colors[idx * 3] = color.r;
                         colors[idx * 3 + 1] = color.g;
@@ -1138,6 +1651,156 @@
             });
         }
 
+        // 更新鼠标交互特效
+        function updateMouseEffects() {
+            // 更新光晕
+            if (mouseHalo && config.enableHalo) {
+                mouseHalo.visible = true;
+                mouseHalo.position.set(mouse.worldX, mouse.worldY, mouse.worldZ);
+                mouseHalo.scale.setScalar(config.haloSize);
+                mouseHalo.material.uniforms.time.value = time;
+                mouseHalo.material.uniforms.intensity.value = config.haloIntensity;
+                mouseHalo.material.uniforms.pulseSpeed.value = config.haloPulseSpeed;
+            } else if (mouseHalo) {
+                mouseHalo.visible = false;
+            }
+
+            // 更新波纹
+            for (let i = ripples.length - 1; i >= 0; i--) {
+                ripples[i].radius += config.rippleSpeed;
+                ripples[i].strength *= (1 - config.rippleDecay);
+                if (ripples[i].strength < 0.1) {
+                    ripples.splice(i, 1);
+                }
+            }
+
+            // 更新粒子连线
+            if (connectionLines && config.enableConnection) {
+                connectionLines.visible = true;
+                const positions = connectionLines.geometry.attributes.position.array;
+                const colors = connectionLines.geometry.attributes.color.array;
+                let lineIndex = 0;
+
+                ribbons.forEach(surface => {
+                    const particlePositions = surface.geometry.attributes.position.array;
+                    const particleCount = particlePositions.length / 3;
+
+                    for (let i = 0; i < particleCount && lineIndex < 1000; i++) {
+                        const x1 = particlePositions[i * 3];
+                        const y1 = particlePositions[i * 3 + 1];
+                        const z1 = particlePositions[i * 3 + 2];
+
+                        const distToMouse = Math.sqrt(
+                            Math.pow(x1 - mouse.worldX, 2) +
+                            Math.pow(y1 - mouse.worldY, 2) +
+                            Math.pow(z1 - mouse.worldZ, 2)
+                        );
+
+                        if (distToMouse < config.connectionMouseRange) {
+                            for (let j = i + 1; j < particleCount && lineIndex < 1000; j++) {
+                                const x2 = particlePositions[j * 3];
+                                const y2 = particlePositions[j * 3 + 1];
+                                const z2 = particlePositions[j * 3 + 2];
+
+                                const dist = Math.sqrt(
+                                    Math.pow(x2 - x1, 2) +
+                                    Math.pow(y2 - y1, 2) +
+                                    Math.pow(z2 - z1, 2)
+                                );
+
+                                if (dist < config.connectionDistance) {
+                                    positions[lineIndex * 6] = x1;
+                                    positions[lineIndex * 6 + 1] = y1;
+                                    positions[lineIndex * 6 + 2] = z1;
+                                    positions[lineIndex * 6 + 3] = x2;
+                                    positions[lineIndex * 6 + 4] = y2;
+                                    positions[lineIndex * 6 + 5] = z2;
+
+                                    const alpha = 1 - dist / config.connectionDistance;
+                                    colors[lineIndex * 6] = 0.16;
+                                    colors[lineIndex * 6 + 1] = 0.95;
+                                    colors[lineIndex * 6 + 2] = 0.13;
+                                    colors[lineIndex * 6 + 3] = 0.16;
+                                    colors[lineIndex * 6 + 4] = 0.95;
+                                    colors[lineIndex * 6 + 5] = 0.13;
+
+                                    lineIndex++;
+                                }
+                            }
+                        }
+                    }
+                });
+
+                connectionLines.geometry.setDrawRange(0, lineIndex * 2);
+                connectionLines.geometry.attributes.position.needsUpdate = true;
+                connectionLines.geometry.attributes.color.needsUpdate = true;
+                connectionLines.material.opacity = config.connectionOpacity;
+            } else if (connectionLines) {
+                connectionLines.visible = false;
+            }
+
+            // 更新磁力线
+            if (forceFieldLines && config.enableForceLines) {
+                forceFieldLines.visible = true;
+                const positions = forceFieldLines.geometry.attributes.position.array;
+                const colors = forceFieldLines.geometry.attributes.color.array;
+                let lineIndex = 0;
+
+                ribbons.forEach(surface => {
+                    const particlePositions = surface.geometry.attributes.position.array;
+                    const particleCount = particlePositions.length / 3;
+
+                    let closestParticles = [];
+                    for (let i = 0; i < particleCount; i++) {
+                        const x = particlePositions[i * 3];
+                        const y = particlePositions[i * 3 + 1];
+                        const z = particlePositions[i * 3 + 2];
+
+                        const dist = Math.sqrt(
+                            Math.pow(x - mouse.worldX, 2) +
+                            Math.pow(y - mouse.worldY, 2) +
+                            Math.pow(z - mouse.worldZ, 2)
+                        );
+
+                        if (dist < config.forceLinesRange) {
+                            closestParticles.push({ x, y, z, dist });
+                        }
+                    }
+
+                    closestParticles.sort((a, b) => a.dist - b.dist);
+                    closestParticles = closestParticles.slice(0, config.forceLinesCount);
+
+                    closestParticles.forEach(p => {
+                        if (lineIndex < 30) {
+                            positions[lineIndex * 6] = mouse.worldX;
+                            positions[lineIndex * 6 + 1] = mouse.worldY;
+                            positions[lineIndex * 6 + 2] = mouse.worldZ;
+                            positions[lineIndex * 6 + 3] = p.x;
+                            positions[lineIndex * 6 + 4] = p.y;
+                            positions[lineIndex * 6 + 5] = p.z;
+
+                            const alpha = 1 - p.dist / config.forceLinesRange;
+                            colors[lineIndex * 6] = 0.16;
+                            colors[lineIndex * 6 + 1] = 0.95;
+                            colors[lineIndex * 6 + 2] = 0.13;
+                            colors[lineIndex * 6 + 3] = 0.13 * alpha;
+                            colors[lineIndex * 6 + 4] = 0.59 * alpha;
+                            colors[lineIndex * 6 + 5] = 0.95 * alpha;
+
+                            lineIndex++;
+                        }
+                    });
+                });
+
+                forceFieldLines.geometry.setDrawRange(0, lineIndex * 2);
+                forceFieldLines.geometry.attributes.position.needsUpdate = true;
+                forceFieldLines.geometry.attributes.color.needsUpdate = true;
+                forceFieldLines.material.opacity = config.forceLinesOpacity;
+            } else if (forceFieldLines) {
+                forceFieldLines.visible = false;
+            }
+        }
+
         // 窗口大小调整
         function onWindowResize() {
             camera.aspect = window.innerWidth / window.innerHeight;
@@ -1159,6 +1822,7 @@
 
             updateRealTimeParameters();
             updateRibbons();
+            updateMouseEffects();
 
             composer.render();
         }
@@ -1304,7 +1968,7 @@
                 config.timeSpeed = parseFloat(val);
             });
 
-            // 特效控制
+            // 鼠标交互特效控制
             setupCheckbox('enableMagnetic', (val) => {
                 config.enableMagnetic = val;
             });
@@ -1315,6 +1979,150 @@
 
             setupSlider('magneticRange', (val) => {
                 config.magneticRange = parseFloat(val);
+            });
+
+            setupCheckbox('enableRepulsion', (val) => {
+                config.enableRepulsion = val;
+            });
+
+            setupSlider('repulsionStrength', (val) => {
+                config.repulsionStrength = parseFloat(val);
+            });
+
+            setupSlider('repulsionRange', (val) => {
+                config.repulsionRange = parseFloat(val);
+            });
+
+            setupCheckbox('enableVortex', (val) => {
+                config.enableVortex = val;
+            });
+
+            setupSlider('vortexStrength', (val) => {
+                config.vortexStrength = parseFloat(val);
+            });
+
+            setupSlider('vortexRange', (val) => {
+                config.vortexRange = parseFloat(val);
+            });
+
+            setupCheckbox('vortexClockwise', (val) => {
+                config.vortexClockwise = val;
+            });
+
+            setupCheckbox('enableRipple', (val) => {
+                config.enableRipple = val;
+            });
+
+            setupSlider('rippleStrength', (val) => {
+                config.rippleStrength = parseFloat(val);
+            });
+
+            setupSlider('rippleSpeed', (val) => {
+                config.rippleSpeed = parseFloat(val);
+            });
+
+            setupSlider('rippleDecay', (val) => {
+                config.rippleDecay = parseFloat(val);
+            });
+
+            setupCheckbox('enableConnection', (val) => {
+                config.enableConnection = val;
+            });
+
+            setupSlider('connectionDistance', (val) => {
+                config.connectionDistance = parseFloat(val);
+            });
+
+            setupSlider('connectionOpacity', (val) => {
+                config.connectionOpacity = parseFloat(val);
+            });
+
+            setupSlider('connectionMouseRange', (val) => {
+                config.connectionMouseRange = parseFloat(val);
+            });
+
+            setupCheckbox('enableInfection', (val) => {
+                config.enableInfection = val;
+            });
+
+            setupColorPicker('infectionColor', (val) => {
+                config.infectionColor = new THREE.Color(val);
+            });
+
+            setupSlider('infectionIntensity', (val) => {
+                config.infectionIntensity = parseFloat(val);
+            });
+
+            setupSlider('infectionRange', (val) => {
+                config.infectionRange = parseFloat(val);
+            });
+
+            setupCheckbox('enableGravity', (val) => {
+                config.enableGravity = val;
+            });
+
+            setupSlider('gravityStrength', (val) => {
+                config.gravityStrength = parseFloat(val);
+            });
+
+            setupSlider('gravityMinDist', (val) => {
+                config.gravityMinDist = parseFloat(val);
+            });
+
+            setupCheckbox('enableTrail', (val) => {
+                config.enableTrail = val;
+            });
+
+            setupSlider('trailLength', (val) => {
+                config.trailLength = parseFloat(val);
+            });
+
+            setupSlider('trailDecay', (val) => {
+                config.trailDecay = parseFloat(val);
+            });
+
+            setupCheckbox('enableTimeDilation', (val) => {
+                config.enableTimeDilation = val;
+            });
+
+            setupSlider('timeDilationFactor', (val) => {
+                config.timeDilationFactor = parseFloat(val);
+            });
+
+            setupSlider('timeDilationRange', (val) => {
+                config.timeDilationRange = parseFloat(val);
+            });
+
+            setupCheckbox('enableHalo', (val) => {
+                config.enableHalo = val;
+            });
+
+            setupSlider('haloSize', (val) => {
+                config.haloSize = parseFloat(val);
+            });
+
+            setupSlider('haloIntensity', (val) => {
+                config.haloIntensity = parseFloat(val);
+            });
+
+            setupSlider('haloPulseSpeed', (val) => {
+                config.haloPulseSpeed = parseFloat(val);
+            });
+
+            setupCheckbox('enableForceLines', (val) => {
+                config.enableForceLines = val;
+            });
+
+            setupSlider('forceLinesCount', (val) => {
+                config.forceLinesCount = parseFloat(val);
+            });
+
+            setupSlider('forceLinesRange', (val) => {
+                config.forceLinesRange = parseFloat(val);
+            });
+
+            setupSlider('forceLinesOpacity', (val) => {
+                config.forceLinesOpacity = parseFloat(val);
             });
 
             setupCheckbox('enableDOF', (val) => {
