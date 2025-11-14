@@ -282,12 +282,11 @@
     <div id="loading">Loading Ultimate Interactive Effects...</div>
     <div id="info">
         <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
-        <div>量子能量丝带 · 精选版 · 6 Effects</div>
+        <div>量子能量丝带 · 精选版 · 5 Effects</div>
         <div class="features">
             <span class="effect-badge">🌀 Repulsion</span>
             <span class="effect-badge">🌊 Ripple</span>
-            <span class="effect-badge">🎨 Infection</span><br>
-            <span class="effect-badge">⏱️ TimeDilation</span>
+            <span class="effect-badge">🎨 Infection</span>
             <span class="effect-badge">📷 DOF</span>
             <span class="effect-badge">💎 Reflect</span>
         </div>
@@ -398,24 +397,6 @@
             <div class="control-group">
                 <label>感染范围 Range: <span class="value-display" id="infectionRange-value">100</span></label>
                 <input type="range" id="infectionRange" min="30" max="200" step="10" value="100">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>⏱️ 时间膨胀 Time Dilation</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableTimeDilation">
-                    <span class="checkbox-label">启用时间膨胀 Enable Time Dilation</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>膨胀系数 Factor: <span class="value-display" id="timeDilationFactor-value">0.3</span></label>
-                <input type="range" id="timeDilationFactor" min="0.1" max="2" step="0.1" value="0.3">
-            </div>
-            <div class="control-group">
-                <label>作用范围 Range: <span class="value-display" id="timeDilationRange-value">100</span></label>
-                <input type="range" id="timeDilationRange" min="0" max="200" step="10" value="100">
             </div>
         </div>
 
@@ -624,10 +605,6 @@
             infectionIntensity: 0.8,
             infectionRange: 100,
 
-            enableTimeDilation: false,
-            timeDilationFactor: 0.3,
-            timeDilationRange: 100,
-
             // 其他特效参数
             enableDOF: true,
             focusDistance: 50,
@@ -814,12 +791,11 @@
         // 全效果开关
         window.toggleAllEffects = function() {
             const allEnabled = config.enableRepulsion && config.enableRipple && config.enableInfection &&
-                              config.enableTimeDilation && config.enableDOF && config.enableReflection;
+                              config.enableDOF && config.enableReflection;
 
             config.enableRepulsion = !allEnabled;
             config.enableRipple = !allEnabled;
             config.enableInfection = !allEnabled;
-            config.enableTimeDilation = !allEnabled;
             config.enableDOF = !allEnabled;
             config.enableReflection = !allEnabled;
 
@@ -915,12 +891,6 @@
             document.getElementById('infectionIntensity-value').textContent = config.infectionIntensity.toFixed(1);
             document.getElementById('infectionRange').value = config.infectionRange;
             document.getElementById('infectionRange-value').textContent = Math.round(config.infectionRange);
-
-            document.getElementById('enableTimeDilation').checked = config.enableTimeDilation;
-            document.getElementById('timeDilationFactor').value = config.timeDilationFactor;
-            document.getElementById('timeDilationFactor-value').textContent = config.timeDilationFactor.toFixed(1);
-            document.getElementById('timeDilationRange').value = config.timeDilationRange;
-            document.getElementById('timeDilationRange-value').textContent = Math.round(config.timeDilationRange);
 
             document.getElementById('enableDOF').checked = config.enableDOF;
             document.getElementById('focusDistance').value = config.focusDistance;
@@ -1104,9 +1074,6 @@
             const offsets = new Float32Array(particleCount);
             const gridCoords = new Float32Array(particleCount * 2);
 
-            // 为粘性场效果存储每个粒子的当前位置
-            const currentPositions = new Float32Array(particleCount * 3);
-
             const yOffset = (index - total / 2) * 8;
             const zOffset = (index % 2 === 0 ? 1 : -1) * (3 + index * 2);
 
@@ -1126,11 +1093,6 @@
                     positions[idx * 3] = x;
                     positions[idx * 3 + 1] = y;
                     positions[idx * 3 + 2] = z;
-
-                    // 初始化当前位置
-                    currentPositions[idx * 3] = x;
-                    currentPositions[idx * 3 + 1] = y;
-                    currentPositions[idx * 3 + 2] = z;
 
                     const color = new THREE.Color();
                     color.lerpColors(config.colorStart, config.colorEnd, u);
@@ -1166,8 +1128,7 @@
                 gridH,
                 yOffset,
                 zOffset,
-                phaseOffset: index * 1.2,
-                currentPositions  // 粘性场效果的当前位置
+                phaseOffset: index * 1.2
             };
         }
 
@@ -1198,7 +1159,7 @@
                         const baseDz = mouse.worldZ - baseZ;
                         const mouseDistance = Math.sqrt(baseDx * baseDx + baseDy * baseDy + baseDz * baseDz);
 
-                        // 波动相位（不再受时间膨胀影响，改为使用位置插值）
+                        // 波动相位
                         const waveOffset = surface.phaseOffset + time * config.waveSpeed;
 
                         // 原有波动效果
@@ -1255,52 +1216,9 @@
                             }
                         }
 
-                        // 粘性场效果：使用位置插值创建粒子延迟效果
-                        let displayX, displayY, displayZ;
-                        let viscosityFactor = 0; // 粘性系数，用于视觉衰减
-
-                        if (config.enableTimeDilation && mouseDistance < config.timeDilationRange * 1.5) {
-                            // 扩大影响范围1.5倍，创建柔化区域
-                            const extendedRange = config.timeDilationRange * 1.5;
-                            const normalizedDist = Math.min(mouseDistance / extendedRange, 1.0);
-
-                            // 使用 smoothstep 创建平滑过渡
-                            const smoothFactor = normalizedDist * normalizedDist * (3 - 2 * normalizedDist);
-                            viscosityFactor = 1 - smoothFactor; // 距离越近，粘性越强
-
-                            // 计算插值速度：粘性区域内移动变慢
-                            // viscosityFactor = 0 时完全跟随（远离鼠标）
-                            // viscosityFactor = 1 时几乎静止（鼠标中心）
-                            const lerpSpeed = 0.08 * (1 - viscosityFactor * 0.85); // 粘性区域内降低到原来的15%
-
-                            // 从当前位置向目标位置插值
-                            const currX = surface.currentPositions[idx * 3];
-                            const currY = surface.currentPositions[idx * 3 + 1];
-                            const currZ = surface.currentPositions[idx * 3 + 2];
-
-                            displayX = currX + (finalX - currX) * lerpSpeed;
-                            displayY = currY + (finalY - currY) * lerpSpeed;
-                            displayZ = currZ + (finalZ - currZ) * lerpSpeed;
-
-                            // 更新当前位置
-                            surface.currentPositions[idx * 3] = displayX;
-                            surface.currentPositions[idx * 3 + 1] = displayY;
-                            surface.currentPositions[idx * 3 + 2] = displayZ;
-                        } else {
-                            // 远离鼠标时直接跟随目标位置
-                            displayX = finalX;
-                            displayY = finalY;
-                            displayZ = finalZ;
-
-                            // 更新当前位置
-                            surface.currentPositions[idx * 3] = finalX;
-                            surface.currentPositions[idx * 3 + 1] = finalY;
-                            surface.currentPositions[idx * 3 + 2] = finalZ;
-                        }
-
-                        positions[idx * 3] = displayX;
-                        positions[idx * 3 + 1] = displayY;
-                        positions[idx * 3 + 2] = displayZ;
+                        positions[idx * 3] = finalX;
+                        positions[idx * 3 + 1] = finalY;
+                        positions[idx * 3 + 2] = finalZ;
 
                         // 动态循环渐变色
                         const flowOffset = (time * config.colorFlowSpeed) % 1.0;
@@ -1331,22 +1249,14 @@
                         // 律动的粒子大小
                         const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
                         const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        let baseSize = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
-
-                        // 粘性场视觉衰减：减小粒子大小
-                        baseSize *= (1 - viscosityFactor * 0.4); // 最多减小40%
-                        sizes[idx] = baseSize;
+                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
 
                         // 律动的透明度
                         const edgeFadeX = Math.sin(u * Math.PI);
                         const edgeFadeY = Math.sin(v * Math.PI);
                         const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
                         const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        let baseAlpha = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
-
-                        // 粘性场视觉衰减：降低透明度
-                        baseAlpha *= (1 - viscosityFactor * 0.5); // 最多减少50%透明度
-                        alphas[idx] = baseAlpha;
+                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
 
                         idx++;
                     }
@@ -1585,18 +1495,6 @@
 
             setupSlider('infectionRange', (val) => {
                 config.infectionRange = parseFloat(val);
-            });
-
-            setupCheckbox('enableTimeDilation', (val) => {
-                config.enableTimeDilation = val;
-            });
-
-            setupSlider('timeDilationFactor', (val) => {
-                config.timeDilationFactor = parseFloat(val);
-            });
-
-            setupSlider('timeDilationRange', (val) => {
-                config.timeDilationRange = parseFloat(val);
             });
 
             setupCheckbox('enableDOF', (val) => {
