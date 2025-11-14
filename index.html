@@ -57,6 +57,15 @@
             font-size: 13px;
             box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(10px);
+            display: none;
+            opacity: 0;
+            transform: translateX(20px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        #controlPanel.visible {
+            opacity: 1;
+            transform: translateX(0);
         }
 
         #controlPanel h2 {
@@ -158,12 +167,13 @@
         .toggle-btn {
             position: absolute;
             top: 20px;
-            right: 360px;
+            right: 20px;
             padding: 8px 15px;
             width: auto;
             background: rgba(10, 10, 15, 0.8);
             border: 1px solid rgba(40, 243, 33, 0.3);
             margin: 0;
+            transition: right 0.3s ease;
         }
 
         #controlPanel::-webkit-scrollbar {
@@ -384,7 +394,26 @@
         // 控制面板切换
         function togglePanel() {
             const panel = document.getElementById('controlPanel');
-            panel.style.display = panel.style.display === 'none' ? 'block' : 'none';
+            const toggleBtn = document.querySelector('.toggle-btn');
+            const isVisible = panel.classList.contains('visible');
+
+            if (!isVisible) {
+                // 显示面板
+                panel.style.display = 'block';
+                setTimeout(() => {
+                    panel.classList.add('visible');
+                }, 10);
+                toggleBtn.style.right = '360px';
+                toggleBtn.textContent = '隐藏面板';
+            } else {
+                // 隐藏面板
+                panel.classList.remove('visible');
+                setTimeout(() => {
+                    panel.style.display = 'none';
+                }, 300);
+                toggleBtn.style.right = '20px';
+                toggleBtn.textContent = '控制面板';
+            }
         }
 
         // 重置为默认值
