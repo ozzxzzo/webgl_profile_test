@@ -285,7 +285,7 @@
         <div>量子能量丝带 · 精选版 · 5 Effects</div>
         <div class="features">
             <span class="effect-badge">🌀 Repulsion</span>
-            <span class="effect-badge">🌊 Ripple</span>
+            <span class="effect-badge">💫 QuantumPulse</span>
             <span class="effect-badge">🎨 Infection</span>
             <span class="effect-badge">📷 DOF</span>
             <span class="effect-badge">💎 Reflect</span>
@@ -357,23 +357,23 @@
         </div>
 
         <div class="control-section">
-            <h3>🌊 波纹扩散 Ripple Wave</h3>
+            <h3>💫 量子脉冲 Quantum Pulse</h3>
             <div class="control-group">
                 <label>
                     <input type="checkbox" id="enableRipple" checked>
-                    <span class="checkbox-label">启用波纹 Enable Ripple (点击)</span>
+                    <span class="checkbox-label">启用量子脉冲 Enable Quantum Pulse (点击)</span>
                 </label>
             </div>
             <div class="control-group">
-                <label>波纹强度 Strength: <span class="value-display" id="rippleStrength-value">25.0</span></label>
+                <label>脉冲强度 Strength: <span class="value-display" id="rippleStrength-value">25.0</span></label>
                 <input type="range" id="rippleStrength" min="5" max="50" step="1" value="25">
             </div>
             <div class="control-group">
-                <label>波纹速度 Speed: <span class="value-display" id="rippleSpeed-value">0.8</span></label>
+                <label>扩散速度 Speed: <span class="value-display" id="rippleSpeed-value">0.8</span></label>
                 <input type="range" id="rippleSpeed" min="0.2" max="2" step="0.1" value="0.8">
             </div>
             <div class="control-group">
-                <label>波纹衰减 Decay: <span class="value-display" id="rippleDecay-value">0.02</span></label>
+                <label>能量衰减 Decay: <span class="value-display" id="rippleDecay-value">0.02</span></label>
                 <input type="range" id="rippleDecay" min="0.01" max="0.1" step="0.01" value="0.02">
             </div>
         </div>
@@ -703,15 +703,26 @@
                 cursor.style.transform = 'scale(1)';
             }, 150);
 
-            // 创建波纹效果
+            // 创建量子脉冲效果 - 多层波纹
             if (config.enableRipple) {
-                ripples.push({
-                    x: mouse.worldX,
-                    y: mouse.worldY,
-                    z: mouse.worldZ,
-                    radius: 0,
-                    strength: config.rippleStrength
-                });
+                const pulseCount = 4; // 4层脉冲
+                const time = performance.now();
+
+                for (let i = 0; i < pulseCount; i++) {
+                    ripples.push({
+                        x: mouse.worldX,
+                        y: mouse.worldY,
+                        z: mouse.worldZ,
+                        radius: 0,
+                        strength: config.rippleStrength * (1 - i * 0.15), // 强度递减
+                        layer: i, // 层级
+                        speed: config.rippleSpeed * (1 + i * 0.3), // 速度递增
+                        frequency: 2 + i * 1.5, // 频率不同
+                        phase: i * Math.PI / 2, // 相位差
+                        birthTime: time, // 创建时间用于脉动
+                        colorHue: i * 90 // 颜色色相偏移
+                    });
+                }
             }
         });
 
@@ -1199,7 +1210,9 @@
                             finalZ -= (dz / finalMouseDistance) * force * 0.1;
                         }
 
-                        // 波纹扩散效果
+                        // 量子脉冲效果 - 多层波纹叠加
+                        let quantumPulseIntensity = 0; // 用于粒子马赛克效果
+
                         for (let r = 0; r < ripples.length; r++) {
                             const ripple = ripples[r];
                             const rdx = finalX - ripple.x;
@@ -1208,17 +1221,56 @@
                             const rippleDist = Math.sqrt(rdx * rdx + rdy * rdy + rdz * rdz);
                             const rippleEdge = Math.abs(rippleDist - ripple.radius);
 
-                            if (rippleEdge < 10) {
-                                const rippleForce = ripple.strength * (1 - rippleEdge / 10) * Math.sin(rippleEdge * 0.5);
-                                finalX += (rdx / rippleDist) * rippleForce * 0.05;
-                                finalY += (rdy / rippleDist) * rippleForce * 0.05;
-                                finalZ += (rdz / rippleDist) * rippleForce * 0.05;
+                            // 每层波纹的影响范围
+                            const edgeWidth = 15 + ripple.layer * 3; // 不同层宽度不同
+
+                            if (rippleEdge < edgeWidth) {
+                                // 脉动因子 - 使用频率和相位创建脉动
+                                const pulseTime = (performance.now() - ripple.birthTime) * 0.003;
+                                const pulseFactor = Math.sin(pulseTime * ripple.frequency + ripple.phase) * 0.5 + 0.5;
+
+                                // 边缘衰减
+                                const edgeFalloff = 1 - rippleEdge / edgeWidth;
+
+                                // 力量计算 - 包含脉动
+                                const wavePattern = Math.sin(rippleEdge * 0.3 + ripple.phase);
+                                const rippleForce = ripple.strength * edgeFalloff * wavePattern * (0.7 + pulseFactor * 0.6);
+
+                                // 应用力量
+                                finalX += (rdx / rippleDist) * rippleForce * 0.08;
+                                finalY += (rdy / rippleDist) * rippleForce * 0.08;
+                                finalZ += (rdz / rippleDist) * rippleForce * 0.08;
+
+                                // 累积脉冲强度用于马赛克效果
+                                quantumPulseIntensity += edgeFalloff * pulseFactor * (1 - ripple.layer * 0.2);
                             }
                         }
 
-                        positions[idx * 3] = finalX;
-                        positions[idx * 3 + 1] = finalY;
-                        positions[idx * 3 + 2] = finalZ;
+                        // 限制脉冲强度
+                        quantumPulseIntensity = Math.min(quantumPulseIntensity, 1.0);
+
+                        // 马赛克破碎效果 - 位置抖动
+                        let mosaicX = finalX;
+                        let mosaicY = finalY;
+                        let mosaicZ = finalZ;
+
+                        if (quantumPulseIntensity > 0.1) {
+                            // 基于粒子坐标的伪随机种子
+                            const seed = (idx * 12345.6789) % 1000;
+                            const randomX = Math.sin(seed + time * 3) * quantumPulseIntensity;
+                            const randomY = Math.cos(seed * 1.3 + time * 3.2) * quantumPulseIntensity;
+                            const randomZ = Math.sin(seed * 1.7 + time * 2.8) * quantumPulseIntensity;
+
+                            // 马赛克破碎 - 随机位移
+                            const shatterStrength = 2.5;
+                            mosaicX += randomX * shatterStrength;
+                            mosaicY += randomY * shatterStrength;
+                            mosaicZ += randomZ * shatterStrength;
+                        }
+
+                        positions[idx * 3] = mosaicX;
+                        positions[idx * 3 + 1] = mosaicY;
+                        positions[idx * 3 + 2] = mosaicZ;
 
                         // 动态循环渐变色
                         const flowOffset = (time * config.colorFlowSpeed) % 1.0;
@@ -1242,6 +1294,37 @@
                             color.lerp(config.infectionColor, infectionFactor);
                         }
 
+                        // 马赛克破碎效果 - 颜色闪烁和色相偏移
+                        if (quantumPulseIntensity > 0.1) {
+                            // 获取当前脉冲波的颜色信息
+                            let hueShift = 0;
+                            let colorIntensity = 0;
+
+                            for (let r = 0; r < ripples.length; r++) {
+                                const ripple = ripples[r];
+                                const rdx = mosaicX - ripple.x;
+                                const rdy = mosaicY - ripple.y;
+                                const rdz = mosaicZ - ripple.z;
+                                const rippleDist = Math.sqrt(rdx * rdx + rdy * rdy + rdz * rdz);
+                                const rippleEdge = Math.abs(rippleDist - ripple.radius);
+                                const edgeWidth = 15 + ripple.layer * 3;
+
+                                if (rippleEdge < edgeWidth) {
+                                    const edgeFalloff = 1 - rippleEdge / edgeWidth;
+                                    hueShift += ripple.colorHue * edgeFalloff * 0.002; // 色相偏移
+                                    colorIntensity += edgeFalloff * (1 - ripple.layer * 0.15);
+                                }
+                            }
+
+                            // 应用色相偏移
+                            const hsl = { h: 0, s: 0, l: 0 };
+                            color.getHSL(hsl);
+                            hsl.h = (hsl.h + hueShift) % 1.0;
+                            hsl.s = Math.min(hsl.s + colorIntensity * 0.3, 1.0); // 增加饱和度
+                            hsl.l = Math.min(hsl.l + colorIntensity * 0.15, 1.0); // 增加亮度
+                            color.setHSL(hsl.h, hsl.s, hsl.l);
+                        }
+
                         colors[idx * 3] = color.r;
                         colors[idx * 3 + 1] = color.g;
                         colors[idx * 3 + 2] = color.b;
@@ -1249,14 +1332,35 @@
                         // 律动的粒子大小
                         const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
                         const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
+                        let baseSize = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
+
+                        // 马赛克破碎效果 - 大小随机变化
+                        if (quantumPulseIntensity > 0.1) {
+                            const seed = (idx * 9876.543) % 1000;
+                            const sizeFlicker = Math.sin(seed + time * 4.5) * 0.5 + 0.5; // 0-1
+                            const sizeVariation = 1.0 + (sizeFlicker - 0.5) * quantumPulseIntensity * 0.8;
+                            baseSize *= sizeVariation;
+                        }
+
+                        sizes[idx] = baseSize;
 
                         // 律动的透明度
                         const edgeFadeX = Math.sin(u * Math.PI);
                         const edgeFadeY = Math.sin(v * Math.PI);
                         const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
                         const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
+                        let baseAlpha = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
+
+                        // 马赛克破碎效果 - 透明度闪烁
+                        if (quantumPulseIntensity > 0.1) {
+                            const seed = (idx * 6543.21) % 1000;
+                            const alphaFlicker = Math.sin(seed + time * 5) * 0.5 + 0.5; // 0-1
+                            // 量子脉冲强度越高，闪烁越明显
+                            const alphaBoost = 1.0 + alphaFlicker * quantumPulseIntensity * 0.6;
+                            baseAlpha *= alphaBoost;
+                        }
+
+                        alphas[idx] = Math.min(baseAlpha, 1.0); // 确保不超过1
 
                         idx++;
                     }
@@ -1275,11 +1379,13 @@
 
         // 更新鼠标交互特效
         function updateMouseEffects() {
-            // 更新波纹
+            // 更新量子脉冲波纹
             for (let i = ripples.length - 1; i >= 0; i--) {
-                ripples[i].radius += config.rippleSpeed;
-                ripples[i].strength *= (1 - config.rippleDecay);
-                if (ripples[i].strength < 0.1) {
+                const ripple = ripples[i];
+                // 每层使用自己的速度
+                ripple.radius += ripple.speed;
+                ripple.strength *= (1 - config.rippleDecay);
+                if (ripple.strength < 0.1) {
                     ripples.splice(i, 1);
                 }
             }
