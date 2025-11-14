@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Energy Ribbons - 量子能量丝带·终极豪华版</title>
+    <title>Quantum Energy Ribbons - 量子能量丝带·精选版</title>
     <style>
         * {
             margin: 0;
@@ -279,16 +279,13 @@
 </head>
 <body>
     <div id="cursor"></div>
-    <div id="loading">Loading Ultimate Effects...</div>
+    <div id="loading">Loading Effects...</div>
     <div id="info">
         <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
-        <div>量子能量丝带 · 终极豪华版</div>
+        <div>量子能量丝带 · 精选版</div>
         <div class="features">
             <span class="effect-badge">🧲 Magnetic</span>
-            <span class="effect-badge">💗 Pulse</span>
-            <span class="effect-badge">📷 DOF</span><br>
-            <span class="effect-badge">⚡ Glitch</span>
-            <span class="effect-badge">✨ Fresnel</span>
+            <span class="effect-badge">📷 DOF</span>
             <span class="effect-badge">💎 Reflect</span>
         </div>
     </div>
@@ -296,7 +293,7 @@
     <button class="toggle-btn" onclick="togglePanel()">控制面板</button>
 
     <div id="controlPanel">
-        <h2>🎛️ 终极控制面板</h2>
+        <h2>🎛️ 控制面板</h2>
 
         <div class="control-section">
             <h3>🎨 基础参数 Basic</h3>
@@ -353,28 +350,6 @@
         </div>
 
         <div class="control-section">
-            <h3>💗 能量脉冲 Energy Pulse</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enablePulse" checked>
-                    <span class="checkbox-label">启用脉冲 Enable Pulse</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>脉冲速度 Speed: <span class="value-display" id="pulseSpeed-value">0.5</span></label>
-                <input type="range" id="pulseSpeed" min="0.1" max="2" step="0.1" value="0.5">
-            </div>
-            <div class="control-group">
-                <label>脉冲强度 Intensity: <span class="value-display" id="pulseIntensity-value">2.0</span></label>
-                <input type="range" id="pulseIntensity" min="0.5" max="5" step="0.1" value="2.0">
-            </div>
-            <div class="control-group">
-                <label>脉冲频率 Frequency: <span class="value-display" id="pulseFrequency-value">1.0</span></label>
-                <input type="range" id="pulseFrequency" min="0.1" max="3" step="0.1" value="1.0">
-            </div>
-        </div>
-
-        <div class="control-section">
             <h3>📷 景深 Depth of Field</h3>
             <div class="control-group">
                 <label>
@@ -393,42 +368,6 @@
             <div class="control-group">
                 <label>虚化强度 Blur Strength: <span class="value-display" id="blurStrength-value">1.5</span></label>
                 <input type="range" id="blurStrength" min="0" max="5" step="0.1" value="1.5">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>⚡ 全息故障 Holographic Glitch</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableGlitch" checked>
-                    <span class="checkbox-label">启用故障 Enable Glitch</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>故障强度 Intensity: <span class="value-display" id="glitchIntensity-value">0.3</span></label>
-                <input type="range" id="glitchIntensity" min="0" max="1" step="0.05" value="0.3">
-            </div>
-            <div class="control-group">
-                <label>故障频率 Frequency: <span class="value-display" id="glitchFrequency-value">0.1</span></label>
-                <input type="range" id="glitchFrequency" min="0.01" max="0.5" step="0.01" value="0.1">
-            </div>
-        </div>
-
-        <div class="control-section">
-            <h3>✨ 边缘发光 Fresnel Glow</h3>
-            <div class="control-group">
-                <label>
-                    <input type="checkbox" id="enableFresnel" checked>
-                    <span class="checkbox-label">启用边缘光 Enable Fresnel</span>
-                </label>
-            </div>
-            <div class="control-group">
-                <label>发光强度 Intensity: <span class="value-display" id="fresnelIntensity-value">1.5</span></label>
-                <input type="range" id="fresnelIntensity" min="0" max="5" step="0.1" value="1.5">
-            </div>
-            <div class="control-group">
-                <label>发光功率 Power: <span class="value-display" id="fresnelPower-value">2.0</span></label>
-                <input type="range" id="fresnelPower" min="0.5" max="5" step="0.1" value="2.0">
             </div>
         </div>
 
@@ -553,11 +492,10 @@
         import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
 
         // 场景设置
-        let scene, camera, renderer, composer, bloomPass, dofPass, glitchPass;
+        let scene, camera, renderer, composer, bloomPass, dofPass;
         let ribbons = [];
         let time = 0;
         let mouse = { x: 0, y: 0, worldX: 0, worldY: 0, worldZ: 0 };
-        let energyPulses = [];
 
         // 配置参数
         const config = {
@@ -598,28 +536,15 @@
             fogDensity: 0.011,
             timeSpeed: 0.8,
 
-            // 新增特效参数
+            // 特效参数
             enableMagnetic: true,
             magneticStrength: 15,
             magneticRange: 100,
-
-            enablePulse: true,
-            pulseSpeed: 0.5,
-            pulseIntensity: 2.0,
-            pulseFrequency: 1.0,
 
             enableDOF: true,
             focusDistance: 50,
             dofRange: 30,
             blurStrength: 1.5,
-
-            enableGlitch: true,
-            glitchIntensity: 0.3,
-            glitchFrequency: 0.1,
-
-            enableFresnel: true,
-            fresnelIntensity: 1.5,
-            fresnelPower: 2.0,
 
             enableReflection: true,
             reflectionIntensity: 0.6,
@@ -676,68 +601,6 @@
                     blurred /= samples;
 
                     gl_FragColor = mix(color, blurred, blur);
-                }
-            `
-        };
-
-        // 故障效果着色器
-        const GlitchShader = {
-            uniforms: {
-                'tDiffuse': { value: null },
-                'time': { value: 0.0 },
-                'intensity': { value: 0.3 },
-                'frequency': { value: 0.1 }
-            },
-            vertexShader: `
-                varying vec2 vUv;
-                void main() {
-                    vUv = uv;
-                    gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
-                }
-            `,
-            fragmentShader: `
-                uniform sampler2D tDiffuse;
-                uniform float time;
-                uniform float intensity;
-                uniform float frequency;
-                varying vec2 vUv;
-
-                float random(vec2 st) {
-                    return fract(sin(dot(st.xy, vec2(12.9898, 78.233))) * 43758.5453123);
-                }
-
-                void main() {
-                    vec2 uv = vUv;
-
-                    // 随机闪烁
-                    float glitchRandom = random(vec2(floor(time * 10.0), floor(uv.y * 100.0)));
-
-                    if(glitchRandom < frequency * intensity) {
-                        // RGB分离
-                        float offset = (random(vec2(time, uv.y)) - 0.5) * intensity * 0.05;
-                        vec4 r = texture2D(tDiffuse, uv + vec2(offset, 0.0));
-                        vec4 g = texture2D(tDiffuse, uv);
-                        vec4 b = texture2D(tDiffuse, uv - vec2(offset, 0.0));
-                        gl_FragColor = vec4(r.r, g.g, b.b, 1.0);
-
-                        // 扫描线
-                        float scanline = sin(uv.y * 800.0 + time * 20.0) * 0.5 + 0.5;
-                        gl_FragColor.rgb *= 0.8 + scanline * 0.2;
-                    } else {
-                        // 横向干扰条
-                        float lineGlitch = step(0.99, random(vec2(floor(time * 5.0), floor(uv.y * 50.0))));
-                        if(lineGlitch > 0.5) {
-                            uv.x += (random(vec2(time, uv.y)) - 0.5) * intensity * 0.1;
-                        }
-
-                        vec4 color = texture2D(tDiffuse, uv);
-
-                        // 像素化闪烁
-                        float pixelGlitch = step(0.98, random(vec2(floor(uv.x * 500.0), floor(uv.y * 500.0) + time)));
-                        color.rgb = mix(color.rgb, vec3(1.0), pixelGlitch * intensity * 0.5);
-
-                        gl_FragColor = color;
-                    }
                 }
             `
         };
@@ -834,10 +697,6 @@
 
             config.magneticStrength = Math.random() * 40 + 10;
             config.magneticRange = Math.random() * 150 + 50;
-            config.pulseSpeed = Math.random() * 1.5 + 0.2;
-            config.pulseIntensity = Math.random() * 4 + 1;
-            config.glitchIntensity = Math.random() * 0.8;
-            config.fresnelIntensity = Math.random() * 4 + 0.5;
             config.reflectionIntensity = Math.random() * 1.5;
 
             updateUIFromConfig();
@@ -846,15 +705,10 @@
 
         // 全效果开关
         window.toggleAllEffects = function() {
-            const allEnabled = config.enableMagnetic && config.enablePulse &&
-                             config.enableDOF && config.enableGlitch &&
-                             config.enableFresnel && config.enableReflection;
+            const allEnabled = config.enableMagnetic && config.enableDOF && config.enableReflection;
 
             config.enableMagnetic = !allEnabled;
-            config.enablePulse = !allEnabled;
             config.enableDOF = !allEnabled;
-            config.enableGlitch = !allEnabled;
-            config.enableFresnel = !allEnabled;
             config.enableReflection = !allEnabled;
 
             updateUIFromConfig();
@@ -928,20 +782,12 @@
             document.getElementById('timeSpeed').value = config.timeSpeed;
             document.getElementById('timeSpeed-value').textContent = config.timeSpeed.toFixed(1);
 
-            // 新增特效
+            // 特效
             document.getElementById('enableMagnetic').checked = config.enableMagnetic;
             document.getElementById('magneticStrength').value = config.magneticStrength;
             document.getElementById('magneticStrength-value').textContent = config.magneticStrength.toFixed(1);
             document.getElementById('magneticRange').value = config.magneticRange;
             document.getElementById('magneticRange-value').textContent = Math.round(config.magneticRange);
-
-            document.getElementById('enablePulse').checked = config.enablePulse;
-            document.getElementById('pulseSpeed').value = config.pulseSpeed;
-            document.getElementById('pulseSpeed-value').textContent = config.pulseSpeed.toFixed(1);
-            document.getElementById('pulseIntensity').value = config.pulseIntensity;
-            document.getElementById('pulseIntensity-value').textContent = config.pulseIntensity.toFixed(1);
-            document.getElementById('pulseFrequency').value = config.pulseFrequency;
-            document.getElementById('pulseFrequency-value').textContent = config.pulseFrequency.toFixed(1);
 
             document.getElementById('enableDOF').checked = config.enableDOF;
             document.getElementById('focusDistance').value = config.focusDistance;
@@ -950,18 +796,6 @@
             document.getElementById('dofRange-value').textContent = Math.round(config.dofRange);
             document.getElementById('blurStrength').value = config.blurStrength;
             document.getElementById('blurStrength-value').textContent = config.blurStrength.toFixed(1);
-
-            document.getElementById('enableGlitch').checked = config.enableGlitch;
-            document.getElementById('glitchIntensity').value = config.glitchIntensity;
-            document.getElementById('glitchIntensity-value').textContent = config.glitchIntensity.toFixed(2);
-            document.getElementById('glitchFrequency').value = config.glitchFrequency;
-            document.getElementById('glitchFrequency-value').textContent = config.glitchFrequency.toFixed(2);
-
-            document.getElementById('enableFresnel').checked = config.enableFresnel;
-            document.getElementById('fresnelIntensity').value = config.fresnelIntensity;
-            document.getElementById('fresnelIntensity-value').textContent = config.fresnelIntensity.toFixed(1);
-            document.getElementById('fresnelPower').value = config.fresnelPower;
-            document.getElementById('fresnelPower-value').textContent = config.fresnelPower.toFixed(1);
 
             document.getElementById('enableReflection').checked = config.enableReflection;
             document.getElementById('reflectionIntensity').value = config.reflectionIntensity;
@@ -1027,26 +861,18 @@
             dofPass.uniforms['blurStrength'].value = config.blurStrength;
             composer.addPass(dofPass);
 
-            glitchPass = new ShaderPass(GlitchShader);
-            glitchPass.uniforms['intensity'].value = config.glitchIntensity;
-            glitchPass.uniforms['frequency'].value = config.glitchFrequency;
-            composer.addPass(glitchPass);
-
             const outputPass = new OutputPass();
             composer.addPass(outputPass);
         }
 
-        // 创建粒子材质（带Fresnel和反射）
+        // 创建粒子材质（带反射）
         function createParticleMaterial() {
             return new THREE.ShaderMaterial({
                 uniforms: {
                     time: { value: 0 },
                     colorStart: { value: config.colorStart },
                     colorEnd: { value: config.colorEnd },
-                    fresnelIntensity: { value: config.fresnelIntensity },
-                    fresnelPower: { value: config.fresnelPower },
                     reflectionIntensity: { value: config.reflectionIntensity },
-                    enableFresnel: { value: config.enableFresnel ? 1.0 : 0.0 },
                     enableReflection: { value: config.enableReflection ? 1.0 : 0.0 }
                 },
                 vertexShader: `
@@ -1064,8 +890,6 @@
                         vColor = customColor;
                         vAlpha = alpha;
                         vPosition = position;
-
-                        // 计算法线（近似）
                         vNormal = normalize(position);
 
                         vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
@@ -1079,10 +903,7 @@
                     uniform float time;
                     uniform vec3 colorStart;
                     uniform vec3 colorEnd;
-                    uniform float fresnelIntensity;
-                    uniform float fresnelPower;
                     uniform float reflectionIntensity;
-                    uniform float enableFresnel;
                     uniform float enableReflection;
 
                     varying vec3 vColor;
@@ -1092,7 +913,6 @@
                     varying vec3 vViewPosition;
 
                     void main() {
-                        // 创建圆角正方形粒子
                         vec2 center = gl_PointCoord - vec2(0.5);
                         vec2 absCenter = abs(center);
 
@@ -1104,31 +924,19 @@
 
                         if (dist > 0.0) discard;
 
-                        // 边缘渐变
                         float strength = 1.0 - smoothstep(-0.1, 0.0, dist);
                         strength = pow(strength, 1.5);
 
-                        // Fresnel 边缘发光
-                        vec3 normal = normalize(vNormal);
-                        vec3 viewDir = normalize(vViewPosition);
-                        float fresnel = pow(1.0 - max(dot(normal, viewDir), 0.0), fresnelPower);
-                        fresnel *= fresnelIntensity;
-
-                        // 反射效果（简化的环境映射）
-                        vec3 reflection = reflect(-viewDir, normal);
-                        float reflectionFactor = (sin(reflection.x * 10.0 + time) * 0.5 + 0.5) *
-                                                (cos(reflection.y * 10.0 + time * 0.7) * 0.5 + 0.5);
-                        reflectionFactor *= reflectionIntensity;
-
-                        // 组合所有效果
                         vec3 finalColor = vColor * 1.8;
 
-                        if (enableFresnel > 0.5) {
-                            finalColor += vec3(fresnel) * mix(colorStart, colorEnd, 0.5);
-                        }
-
+                        // 反射效果
                         if (enableReflection > 0.5) {
-                            finalColor += vec3(reflectionFactor) * 0.5;
+                            vec3 normal = normalize(vNormal);
+                            vec3 viewDir = normalize(vViewPosition);
+                            vec3 reflection = reflect(-viewDir, normal);
+                            float reflectionFactor = (sin(reflection.x * 10.0 + time) * 0.5 + 0.5) *
+                                                    (cos(reflection.y * 10.0 + time * 0.7) * 0.5 + 0.5);
+                            finalColor += vec3(reflectionFactor * reflectionIntensity) * 0.5;
                         }
 
                         gl_FragColor = vec4(finalColor, strength * vAlpha);
@@ -1221,39 +1029,6 @@
             };
         }
 
-        // 创建能量脉冲
-        function createEnergyPulse() {
-            if (!config.enablePulse) return;
-
-            const pulse = {
-                position: 0, // 0 到 1，表示从左到右的位置
-                intensity: config.pulseIntensity,
-                width: 0.15,
-                speed: config.pulseSpeed
-            };
-
-            energyPulses.push(pulse);
-        }
-
-        // 更新能量脉冲
-        function updateEnergyPulses() {
-            // 周期性创建新脉冲
-            if (config.enablePulse && Math.sin(time * config.pulseFrequency * Math.PI) > 0.99) {
-                createEnergyPulse();
-            }
-
-            // 更新现有脉冲
-            for (let i = energyPulses.length - 1; i >= 0; i--) {
-                const pulse = energyPulses[i];
-                pulse.position += pulse.speed * 0.01;
-
-                // 移除超出范围的脉冲
-                if (pulse.position > 1.2) {
-                    energyPulses.splice(i, 1);
-                }
-            }
-        }
-
         // 更新光流曲面动画
         function updateRibbons() {
             ribbons.forEach((surface, surfaceIndex) => {
@@ -1312,21 +1087,6 @@
                             }
                         }
 
-                        // 能量脉冲效果
-                        let pulseEffect = 0;
-                        if (config.enablePulse) {
-                            energyPulses.forEach(pulse => {
-                                const distToPulse = Math.abs(u - pulse.position);
-                                if (distToPulse < pulse.width) {
-                                    const pulseFactor = 1 - (distToPulse / pulse.width);
-                                    pulseEffect += pulseFactor * pulse.intensity;
-                                }
-                            });
-                        }
-
-                        finalY += pulseEffect * Math.sin(v * Math.PI * 2);
-                        finalZ += pulseEffect * Math.cos(v * Math.PI * 2);
-
                         positions[idx * 3] = finalX;
                         positions[idx * 3 + 1] = finalY;
                         positions[idx * 3 + 2] = finalZ;
@@ -1347,13 +1107,6 @@
                         const color = new THREE.Color();
                         color.lerpColors(config.colorStart, config.colorEnd, t);
 
-                        // 脉冲颜色增强
-                        if (pulseEffect > 0) {
-                            color.r = Math.min(1, color.r + pulseEffect * 0.3);
-                            color.g = Math.min(1, color.g + pulseEffect * 0.3);
-                            color.b = Math.min(1, color.b + pulseEffect * 0.3);
-                        }
-
                         colors[idx * 3] = color.r;
                         colors[idx * 3 + 1] = color.g;
                         colors[idx * 3 + 2] = color.b;
@@ -1361,14 +1114,14 @@
                         // 律动的粒子大小
                         const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
                         const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2 + pulseEffect * 0.5);
+                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
 
                         // 律动的透明度
                         const edgeFadeX = Math.sin(u * Math.PI);
                         const edgeFadeY = Math.sin(v * Math.PI);
                         const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
                         const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2 + pulseEffect * 0.3);
+                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
 
                         idx++;
                     }
@@ -1380,10 +1133,7 @@
                 surface.geometry.attributes.alpha.needsUpdate = true;
 
                 surface.points.material.uniforms.time.value = time;
-                surface.points.material.uniforms.fresnelIntensity.value = config.fresnelIntensity;
-                surface.points.material.uniforms.fresnelPower.value = config.fresnelPower;
                 surface.points.material.uniforms.reflectionIntensity.value = config.reflectionIntensity;
-                surface.points.material.uniforms.enableFresnel.value = config.enableFresnel ? 1.0 : 0.0;
                 surface.points.material.uniforms.enableReflection.value = config.enableReflection ? 1.0 : 0.0;
             });
         }
@@ -1408,7 +1158,6 @@
             }
 
             updateRealTimeParameters();
-            updateEnergyPulses();
             updateRibbons();
 
             composer.render();
@@ -1435,13 +1184,6 @@
                 dofPass.uniforms['focusDistance'].value = config.focusDistance;
                 dofPass.uniforms['dofRange'].value = config.dofRange;
                 dofPass.uniforms['blurStrength'].value = config.blurStrength;
-            }
-
-            if (glitchPass) {
-                glitchPass.enabled = config.enableGlitch;
-                glitchPass.uniforms['time'].value = time;
-                glitchPass.uniforms['intensity'].value = config.glitchIntensity;
-                glitchPass.uniforms['frequency'].value = config.glitchFrequency;
             }
 
             renderer.toneMappingExposure = config.brightness;
@@ -1562,7 +1304,7 @@
                 config.timeSpeed = parseFloat(val);
             });
 
-            // 新增特效控制
+            // 特效控制
             setupCheckbox('enableMagnetic', (val) => {
                 config.enableMagnetic = val;
             });
@@ -1573,22 +1315,6 @@
 
             setupSlider('magneticRange', (val) => {
                 config.magneticRange = parseFloat(val);
-            });
-
-            setupCheckbox('enablePulse', (val) => {
-                config.enablePulse = val;
-            });
-
-            setupSlider('pulseSpeed', (val) => {
-                config.pulseSpeed = parseFloat(val);
-            });
-
-            setupSlider('pulseIntensity', (val) => {
-                config.pulseIntensity = parseFloat(val);
-            });
-
-            setupSlider('pulseFrequency', (val) => {
-                config.pulseFrequency = parseFloat(val);
             });
 
             setupCheckbox('enableDOF', (val) => {
@@ -1605,30 +1331,6 @@
 
             setupSlider('blurStrength', (val) => {
                 config.blurStrength = parseFloat(val);
-            });
-
-            setupCheckbox('enableGlitch', (val) => {
-                config.enableGlitch = val;
-            });
-
-            setupSlider('glitchIntensity', (val) => {
-                config.glitchIntensity = parseFloat(val);
-            });
-
-            setupSlider('glitchFrequency', (val) => {
-                config.glitchFrequency = parseFloat(val);
-            });
-
-            setupCheckbox('enableFresnel', (val) => {
-                config.enableFresnel = val;
-            });
-
-            setupSlider('fresnelIntensity', (val) => {
-                config.fresnelIntensity = parseFloat(val);
-            });
-
-            setupSlider('fresnelPower', (val) => {
-                config.fresnelPower = parseFloat(val);
             });
 
             setupCheckbox('enableReflection', (val) => {
