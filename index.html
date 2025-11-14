@@ -453,7 +453,7 @@
             </div>
             <div class="control-group">
                 <label>作用范围 Range: <span class="value-display" id="timeDilationRange-value">100</span></label>
-                <input type="range" id="timeDilationRange" min="30" max="200" step="10" value="100">
+                <input type="range" id="timeDilationRange" min="0" max="200" step="10" value="100">
             </div>
         </div>
 
@@ -1272,7 +1272,13 @@
                         // 时间膨胀效果 - 鼠标附近的粒子时间变慢
                         if (config.enableTimeDilation && mouseDistance < config.timeDilationRange) {
                             const factor = 1 - (mouseDistance / config.timeDilationRange);
-                            timeScale = 1.0 - factor * (1.0 - config.timeDilationFactor);
+                            const rawTimeScale = 1.0 - factor * (1.0 - config.timeDilationFactor);
+
+                            // 放大时间差异，使效果立即可见（放大5倍）
+                            const timeDilationAmplification = 5.0;
+                            const timeDiffFactor = 1 - rawTimeScale; // 时间差异因子
+                            const amplifiedDiffFactor = Math.min(timeDiffFactor * timeDilationAmplification, 0.95); // 限制最大为0.95
+                            timeScale = 1 - amplifiedDiffFactor;
                         }
 
                         const waveOffset = surface.phaseOffset + time * config.waveSpeed * timeScale;
