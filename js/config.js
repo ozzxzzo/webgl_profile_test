@@ -40,9 +40,9 @@ export const config = {
     timeSpeed: 0.8,
 
     // 鼠标交互特效参数
-    enableRepulsion: false,
-    repulsionStrength: 20,
-    repulsionRange: 100,
+    enableRepulsion: true,
+    repulsionStrength: 26,
+    repulsionRange: 190,
 
     enableInfection: false,
     infectionColor: new THREE.Color(0xff00ff),
