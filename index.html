@@ -3,212 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Energy Ribbons - 量子能量丝带</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
+    <title>Quantum Energy Ribbons - 量子能量丝带·终极交互版</title>
 
-        body {
-            background: #0a0a0f;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-        }
-
-        canvas {
-            display: block;
-            width: 100vw;
-            height: 100vh;
-        }
-
-        #info {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            pointer-events: none;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-
-        #loading {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: #28f321;
-            font-size: 24px;
-            text-shadow: 0 0 20px #28f321;
-        }
-
-        #controlPanel {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            width: 320px;
-            max-height: 90vh;
-            overflow-y: auto;
-            background: rgba(10, 10, 15, 0.9);
-            border: 1px solid rgba(40, 243, 33, 0.3);
-            border-radius: 8px;
-            padding: 20px;
-            color: #fff;
-            font-size: 13px;
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
-            opacity: 0;
-            transform: translateX(20px);
-            transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-
-        #controlPanel.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-
-        #controlPanel h2 {
-            margin: 0 0 15px 0;
-            font-size: 18px;
-            color: #28f321;
-            text-shadow: 0 0 10px rgba(40, 243, 33, 0.5);
-        }
-
-        .control-section {
-            margin-bottom: 20px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .control-section:last-child {
-            border-bottom: none;
-        }
-
-        .control-section h3 {
-            margin: 0 0 10px 0;
-            font-size: 14px;
-            color: #2196F3;
-        }
-
-        .control-group {
-            margin-bottom: 12px;
-        }
-
-        .control-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: rgba(255, 255, 255, 0.8);
-        }
-
-        .control-group input[type="range"] {
-            width: 100%;
-            height: 4px;
-            border-radius: 2px;
-            background: rgba(255, 255, 255, 0.2);
-            outline: none;
-            -webkit-appearance: none;
-        }
-
-        .control-group input[type="range"]::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            appearance: none;
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #28f321;
-            cursor: pointer;
-            box-shadow: 0 0 8px rgba(40, 243, 33, 0.6);
-        }
-
-        .control-group input[type="range"]::-moz-range-thumb {
-            width: 14px;
-            height: 14px;
-            border-radius: 50%;
-            background: #28f321;
-            cursor: pointer;
-            border: none;
-            box-shadow: 0 0 8px rgba(40, 243, 33, 0.6);
-        }
-
-        .control-group input[type="color"] {
-            width: 100%;
-            height: 32px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            border-radius: 4px;
-            background: transparent;
-            cursor: pointer;
-        }
-
-        .control-group .value-display {
-            float: right;
-            color: #28f321;
-            font-weight: bold;
-        }
-
-        button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-            background: rgba(40, 243, 33, 0.2);
-            border: 1px solid #28f321;
-            border-radius: 4px;
-            color: #28f321;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: rgba(40, 243, 33, 0.3);
-            box-shadow: 0 0 15px rgba(40, 243, 33, 0.4);
-        }
-
-        .toggle-btn {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 8px 15px;
-            width: auto;
-            background: rgba(10, 10, 15, 0.8);
-            border: 1px solid rgba(40, 243, 33, 0.3);
-            margin: 0;
-            transition: right 0.3s ease;
-        }
-
-        #controlPanel::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        #controlPanel::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        #controlPanel::-webkit-scrollbar-thumb {
-            background: rgba(40, 243, 33, 0.5);
-            border-radius: 3px;
-        }
-
-        #controlPanel::-webkit-scrollbar-thumb:hover {
-            background: rgba(40, 243, 33, 0.7);
-        }
-    </style>
+    <!-- 样式表 -->
+    <link rel="stylesheet" href="styles/main.css">
 </head>
 <body>
-    <div id="loading">Loading...</div>
+    <div id="cursor"></div>
+    <div id="loading">Loading Ultimate Interactive Effects...</div>
     <div id="info">
-        Quantum Energy Ribbons<br>
-        量子能量丝带
+        <div class="title">⚡ Quantum Energy Ribbons ⚡</div>
+        <div>量子能量丝带 · 精选版 · 5 Effects</div>
+        <div class="features">
+            <span class="effect-badge">🌀 Repulsion</span>
+            <span class="effect-badge">💫 QuantumPulse</span>
+            <span class="effect-badge">🎨 Infection</span>
+            <span class="effect-badge">📷 DOF</span>
+            <span class="effect-badge">💎 Reflect</span>
+        </div>
     </div>
 
     <button class="toggle-btn" onclick="togglePanel()">控制面板</button>
 
     <div id="controlPanel">
-        <h2>控制面板 Control Panel</h2>
+        <h2>🎛️ 终极交互控制面板</h2>
 
         <div class="control-section">
-            <h3>基础参数 Basic</h3>
+            <h3>🎨 基础参数 Basic</h3>
             <div class="control-group">
                 <label>曲面数量 Surfaces: <span class="value-display" id="surfaceCount-value">1</span></label>
                 <input type="range" id="surfaceCount" min="1" max="10" step="1" value="1">
@@ -228,7 +49,7 @@
         </div>
 
         <div class="control-section">
-            <h3>颜色 Colors</h3>
+            <h3>🌈 颜色 Colors</h3>
             <div class="control-group">
                 <label>起始颜色 Start Color</label>
                 <input type="color" id="colorStart" value="#28f321">
@@ -244,7 +65,114 @@
         </div>
 
         <div class="control-section">
-            <h3>光效 Lighting</h3>
+            <h3>🎮 鼠标交互特效 Mouse Effects</h3>
+            <p style="font-size: 11px; color: rgba(255,255,255,0.6); margin-bottom: 15px;">以下所有特效基于鼠标位置实时生效</p>
+        </div>
+
+        <div class="control-section">
+            <h3>🌀 推力排斥场 Repulsion Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableRepulsion">
+                    <span class="checkbox-label">启用排斥力 Enable Repulsion</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>排斥强度 Strength: <span class="value-display" id="repulsionStrength-value">20.0</span></label>
+                <input type="range" id="repulsionStrength" min="0" max="50" step="1" value="20">
+            </div>
+            <div class="control-group">
+                <label>作用范围 Range: <span class="value-display" id="repulsionRange-value">100</span></label>
+                <input type="range" id="repulsionRange" min="20" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💫 量子脉冲 Quantum Pulse</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableRipple" checked>
+                    <span class="checkbox-label">启用量子脉冲 Enable Quantum Pulse (点击)</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>脉冲强度 Strength: <span class="value-display" id="rippleStrength-value">25.0</span></label>
+                <input type="range" id="rippleStrength" min="5" max="50" step="1" value="25">
+            </div>
+            <div class="control-group">
+                <label>扩散速度 Speed: <span class="value-display" id="rippleSpeed-value">0.8</span></label>
+                <input type="range" id="rippleSpeed" min="0.2" max="2" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>能量衰减 Decay: <span class="value-display" id="rippleDecay-value">0.02</span></label>
+                <input type="range" id="rippleDecay" min="0.01" max="0.1" step="0.01" value="0.02">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>🎨 色彩感染 Color Infection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableInfection">
+                    <span class="checkbox-label">启用色彩感染 Enable Infection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>感染颜色 Infection Color</label>
+                <input type="color" id="infectionColor" value="#ff00ff">
+            </div>
+            <div class="control-group">
+                <label>感染强度 Intensity: <span class="value-display" id="infectionIntensity-value">0.8</span></label>
+                <input type="range" id="infectionIntensity" min="0" max="1" step="0.1" value="0.8">
+            </div>
+            <div class="control-group">
+                <label>感染范围 Range: <span class="value-display" id="infectionRange-value">100</span></label>
+                <input type="range" id="infectionRange" min="30" max="200" step="10" value="100">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>📷 景深 Depth of Field</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableDOF" checked>
+                    <span class="checkbox-label">启用景深 Enable DOF</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>焦距 Focus Distance: <span class="value-display" id="focusDistance-value">50</span></label>
+                <input type="range" id="focusDistance" min="20" max="150" step="5" value="50">
+            </div>
+            <div class="control-group">
+                <label>景深范围 DOF Range: <span class="value-display" id="dofRange-value">30</span></label>
+                <input type="range" id="dofRange" min="10" max="100" step="5" value="30">
+            </div>
+            <div class="control-group">
+                <label>虚化强度 Blur Strength: <span class="value-display" id="blurStrength-value">1.5</span></label>
+                <input type="range" id="blurStrength" min="0" max="5" step="0.1" value="1.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>💎 反射折射 Reflection</h3>
+            <div class="control-group">
+                <label>
+                    <input type="checkbox" id="enableReflection" checked>
+                    <span class="checkbox-label">启用反射 Enable Reflection</span>
+                </label>
+            </div>
+            <div class="control-group">
+                <label>反射强度 Intensity: <span class="value-display" id="reflectionIntensity-value">0.6</span></label>
+                <input type="range" id="reflectionIntensity" min="0" max="2" step="0.1" value="0.6">
+            </div>
+            <div class="control-group">
+                <label>折射率 Refraction: <span class="value-display" id="refractionIndex-value">1.5</span></label>
+                <input type="range" id="refractionIndex" min="1" max="3" step="0.1" value="1.5">
+            </div>
+        </div>
+
+        <div class="control-section">
+            <h3>✨ 光效 Lighting</h3>
             <div class="control-group">
                 <label>辉光强度 Bloom Strength: <span class="value-display" id="bloomStrength-value">1.7</span></label>
                 <input type="range" id="bloomStrength" min="0" max="3" step="0.1" value="1.7">
@@ -264,7 +192,7 @@
         </div>
 
         <div class="control-section">
-            <h3>波动效果 Wave Effects</h3>
+            <h3>🌊 波动效果 Wave Effects</h3>
             <div class="control-group">
                 <label>波动幅度 Wave Amplitude: <span class="value-display" id="waveAmplitude-value">1.7</span></label>
                 <input type="range" id="waveAmplitude" min="0" max="8" step="0.1" value="1.7">
@@ -292,7 +220,7 @@
         </div>
 
         <div class="control-section">
-            <h3>粒子 Particles</h3>
+            <h3>✨ 粒子 Particles</h3>
             <div class="control-group">
                 <label>粒子大小 Particle Size: <span class="value-display" id="particleSize-value">0.8</span></label>
                 <input type="range" id="particleSize" min="0.2" max="2" step="0.1" value="0.8">
@@ -304,7 +232,7 @@
         </div>
 
         <div class="control-section">
-            <h3>相机与环境 Camera & Environment</h3>
+            <h3>📷 相机与环境 Camera</h3>
             <div class="control-group">
                 <label>相机距离 Camera Distance: <span class="value-display" id="cameraZ-value">50</span></label>
                 <input type="range" id="cameraZ" min="20" max="150" step="5" value="50">
@@ -323,10 +251,12 @@
             </div>
         </div>
 
-        <button onclick="resetToDefault()">重置默认值 Reset</button>
-        <button onclick="randomize()">随机化 Randomize</button>
+        <button onclick="resetToDefault()">🔄 重置默认值 Reset</button>
+        <button onclick="randomize()">🎲 随机化 Randomize</button>
+        <button onclick="toggleAllEffects()">⚡ 全效果开关 Toggle All</button>
     </div>
 
+    <!-- Three.js Import Map -->
     <script type="importmap">
     {
         "imports": {
@@ -336,731 +266,7 @@
     }
     </script>
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
-        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
-        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
-        import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
-
-        // 场景设置
-        let scene, camera, renderer, composer, bloomPass;
-        let ribbons = [];
-        let time = 0;
-
-        // 配置参数 - 完整的可配置参数集
-        const config = {
-            // 基础参数
-            surfaceCount: 1,
-            gridWidth: 200,
-            gridHeight: 60,
-            surfaceWidth: 200,
-            surfaceHeight: 29,
-            gridDensity: 1.7,
-
-            // 颜色参数
-            colorStart: new THREE.Color(0x28f321),
-            colorEnd: new THREE.Color(0x2196F3),
-            colorFlowSpeed: 0.05,
-
-            // 光效参数
-            bloomStrength: 1.7,
-            bloomRadius: 0.00,
-            bloomThreshold: 0.55,
-            brightness: 1.5,
-
-            // 波动效果参数
-            waveAmplitude: 1.7,
-            waveSpeed: 0.27,
-            spiralFreq: 11.5,
-            spiralAmp: 1.3,
-            twistStrength: 1.9,
-            dnaStrength: 0.5,
-
-            // 粒子参数
-            particleSize: 0.8,
-            particlePulse: 0.20,
-
-            // 相机与环境
-            cameraZ: 50,
-            fov: 60,
-            fogDensity: 0.011,
-            timeSpeed: 0.8
-        };
-
-        // 默认配置备份
-        const defaultConfig = {...config};
-
-        // 控制面板切换
-        window.togglePanel = function() {
-            const panel = document.getElementById('controlPanel');
-            const toggleBtn = document.querySelector('.toggle-btn');
-            const isVisible = panel.classList.contains('visible');
-
-            if (!isVisible) {
-                // 显示面板
-                panel.style.display = 'block';
-                setTimeout(() => {
-                    panel.classList.add('visible');
-                }, 10);
-                toggleBtn.style.right = '360px';
-                toggleBtn.textContent = '隐藏面板';
-            } else {
-                // 隐藏面板
-                panel.classList.remove('visible');
-                setTimeout(() => {
-                    panel.style.display = 'none';
-                }, 300);
-                toggleBtn.style.right = '20px';
-                toggleBtn.textContent = '控制面板';
-            }
-        }
-
-        // 重置为默认值
-        window.resetToDefault = function() {
-            Object.assign(config, defaultConfig);
-            updateUIFromConfig();
-            needsRebuild = true;
-        }
-
-        // 随机化参数
-        window.randomize = function() {
-            config.surfaceCount = Math.floor(Math.random() * 8) + 2;
-            config.gridDensity = Math.random() * 1.5 + 0.5;
-            config.surfaceWidth = Math.random() * 120 + 50;
-            config.surfaceHeight = Math.random() * 30 + 10;
-            config.colorFlowSpeed = Math.random() * 0.4;
-            config.bloomStrength = Math.random() * 2 + 0.5;
-            config.bloomRadius = Math.random();
-            config.bloomThreshold = Math.random() * 0.5;
-            config.brightness = Math.random() * 2 + 0.5;
-            config.waveAmplitude = Math.random() * 6 + 1;
-            config.waveSpeed = Math.random() * 0.8 + 0.1;
-            config.spiralFreq = Math.random() * 10 + 1;
-            config.spiralAmp = Math.random() * 4 + 0.5;
-            config.twistStrength = Math.random() * 2;
-            config.dnaStrength = Math.random() * 1.5;
-            config.particleSize = Math.random() * 1.5 + 0.3;
-            config.particlePulse = Math.random() * 0.8;
-            config.cameraZ = Math.random() * 80 + 40;
-            config.fov = Math.random() * 60 + 40;
-            config.fogDensity = Math.random() * 0.015;
-            config.timeSpeed = Math.random() * 2 + 0.2;
-
-            // 随机颜色
-            const randomColor1 = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-            const randomColor2 = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
-            config.colorStart = new THREE.Color(randomColor1);
-            config.colorEnd = new THREE.Color(randomColor2);
-
-            updateUIFromConfig();
-            needsRebuild = true;
-        }
-
-        // 从配置更新UI
-        function updateUIFromConfig() {
-            document.getElementById('surfaceCount').value = config.surfaceCount;
-            document.getElementById('surfaceCount-value').textContent = config.surfaceCount;
-
-            document.getElementById('gridDensity').value = config.gridDensity;
-            document.getElementById('gridDensity-value').textContent = config.gridDensity.toFixed(1);
-
-            document.getElementById('surfaceWidth').value = config.surfaceWidth;
-            document.getElementById('surfaceWidth-value').textContent = config.surfaceWidth;
-
-            document.getElementById('surfaceHeight').value = config.surfaceHeight;
-            document.getElementById('surfaceHeight-value').textContent = config.surfaceHeight;
-
-            document.getElementById('colorStart').value = '#' + config.colorStart.getHexString();
-            document.getElementById('colorEnd').value = '#' + config.colorEnd.getHexString();
-
-            document.getElementById('colorFlowSpeed').value = config.colorFlowSpeed;
-            document.getElementById('colorFlowSpeed-value').textContent = config.colorFlowSpeed.toFixed(2);
-
-            document.getElementById('bloomStrength').value = config.bloomStrength;
-            document.getElementById('bloomStrength-value').textContent = config.bloomStrength.toFixed(1);
-
-            document.getElementById('bloomRadius').value = config.bloomRadius;
-            document.getElementById('bloomRadius-value').textContent = config.bloomRadius.toFixed(2);
-
-            document.getElementById('bloomThreshold').value = config.bloomThreshold;
-            document.getElementById('bloomThreshold-value').textContent = config.bloomThreshold.toFixed(2);
-
-            document.getElementById('brightness').value = config.brightness;
-            document.getElementById('brightness-value').textContent = config.brightness.toFixed(1);
-
-            document.getElementById('waveAmplitude').value = config.waveAmplitude;
-            document.getElementById('waveAmplitude-value').textContent = config.waveAmplitude.toFixed(1);
-
-            document.getElementById('waveSpeed').value = config.waveSpeed;
-            document.getElementById('waveSpeed-value').textContent = config.waveSpeed.toFixed(2);
-
-            document.getElementById('spiralFreq').value = config.spiralFreq;
-            document.getElementById('spiralFreq-value').textContent = config.spiralFreq.toFixed(1);
-
-            document.getElementById('spiralAmp').value = config.spiralAmp;
-            document.getElementById('spiralAmp-value').textContent = config.spiralAmp.toFixed(1);
-
-            document.getElementById('twistStrength').value = config.twistStrength;
-            document.getElementById('twistStrength-value').textContent = config.twistStrength.toFixed(1);
-
-            document.getElementById('dnaStrength').value = config.dnaStrength;
-            document.getElementById('dnaStrength-value').textContent = config.dnaStrength.toFixed(1);
-
-            document.getElementById('particleSize').value = config.particleSize;
-            document.getElementById('particleSize-value').textContent = config.particleSize.toFixed(1);
-
-            document.getElementById('particlePulse').value = config.particlePulse;
-            document.getElementById('particlePulse-value').textContent = config.particlePulse.toFixed(2);
-
-            document.getElementById('cameraZ').value = config.cameraZ;
-            document.getElementById('cameraZ-value').textContent = config.cameraZ;
-
-            document.getElementById('fov').value = config.fov;
-            document.getElementById('fov-value').textContent = config.fov;
-
-            document.getElementById('fogDensity').value = config.fogDensity;
-            document.getElementById('fogDensity-value').textContent = config.fogDensity.toFixed(3);
-
-            document.getElementById('timeSpeed').value = config.timeSpeed;
-            document.getElementById('timeSpeed-value').textContent = config.timeSpeed.toFixed(1);
-        }
-
-        // 需要重建标志
-        let needsRebuild = false;
-
-        // 初始化场景
-        function init() {
-            // 场景
-            scene = new THREE.Scene();
-            scene.fog = new THREE.FogExp2(0x0a0a0f, config.fogDensity);
-
-            // 相机
-            camera = new THREE.PerspectiveCamera(
-                config.fov,
-                window.innerWidth / window.innerHeight,
-                0.1,
-                1000
-            );
-            camera.position.set(0, 0, config.cameraZ);
-            camera.lookAt(0, 0, 0);
-
-            // 渲染器
-            renderer = new THREE.WebGLRenderer({
-                antialias: true,
-                alpha: true
-            });
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-            renderer.toneMapping = THREE.ACESFilmicToneMapping;
-            renderer.toneMappingExposure = config.brightness;
-            document.body.appendChild(renderer.domElement);
-
-            // 后处理
-            setupPostProcessing();
-
-            // 创建光流曲面
-            createSurfaces();
-
-            // 设置控制面板事件监听器
-            setupControls();
-
-            // 更新UI以反映加载的配置
-            updateUIFromConfig();
-
-            // 事件监听
-            window.addEventListener('resize', onWindowResize);
-
-            // 隐藏加载提示
-            document.getElementById('loading').style.display = 'none';
-        }
-
-        // 设置后处理（光晕效果）
-        function setupPostProcessing() {
-            composer = new EffectComposer(renderer);
-
-            const renderPass = new RenderPass(scene, camera);
-            composer.addPass(renderPass);
-
-            bloomPass = new UnrealBloomPass(
-                new THREE.Vector2(window.innerWidth, window.innerHeight),
-                config.bloomStrength,
-                config.bloomRadius,
-                config.bloomThreshold
-            );
-            composer.addPass(bloomPass);
-
-            const outputPass = new OutputPass();
-            composer.addPass(outputPass);
-        }
-
-        // 创建自定义粒子材质
-        function createParticleMaterial() {
-            return new THREE.ShaderMaterial({
-                uniforms: {
-                    time: { value: 0 },
-                    colorStart: { value: config.colorStart },
-                    colorEnd: { value: config.colorEnd }
-                },
-                vertexShader: `
-                    attribute float alpha;
-                    attribute float size;
-                    attribute vec3 customColor;
-
-                    varying vec3 vColor;
-                    varying float vAlpha;
-
-                    void main() {
-                        vColor = customColor;
-                        vAlpha = alpha;
-
-                        vec4 mvPosition = modelViewMatrix * vec4(position, 1.0);
-                        gl_PointSize = size * (300.0 / -mvPosition.z);
-                        gl_Position = projectionMatrix * mvPosition;
-                    }
-                `,
-                fragmentShader: `
-                    varying vec3 vColor;
-                    varying float vAlpha;
-
-                    void main() {
-                        // 创建圆角正方形粒子
-                        vec2 center = gl_PointCoord - vec2(0.5);
-                        vec2 absCenter = abs(center);
-
-                        // 圆角正方形的距离场
-                        float cornerRadius = 0.15;
-                        float squareSize = 0.45;
-
-                        // 计算到正方形边缘的距离
-                        vec2 d = absCenter - vec2(squareSize - cornerRadius);
-                        float dist = length(max(d, 0.0)) + min(max(d.x, d.y), 0.0) - cornerRadius;
-
-                        if (dist > 0.0) discard;
-
-                        // 边缘渐变，中心亮边缘虚化
-                        float strength = 1.0 - smoothstep(-0.1, 0.0, dist);
-                        strength = pow(strength, 1.5);
-
-                        // 增强亮度
-                        gl_FragColor = vec4(vColor * 1.5, strength * vAlpha);
-                    }
-                `,
-                transparent: true,
-                blending: THREE.AdditiveBlending,
-                depthWrite: false
-            });
-        }
-
-        // 创建光流曲面
-        function createSurfaces() {
-            for (let i = 0; i < config.surfaceCount; i++) {
-                const surface = createSurface(i, config.surfaceCount);
-                ribbons.push(surface);
-                scene.add(surface.points);
-            }
-        }
-
-        // 创建单个光流曲面（网格状粒子）
-        function createSurface(index, total) {
-            const gridW = Math.floor(config.gridWidth * config.gridDensity);
-            const gridH = Math.floor(config.gridHeight * config.gridDensity);
-            const particleCount = gridW * gridH;
-            const geometry = new THREE.BufferGeometry();
-
-            const positions = new Float32Array(particleCount * 3);
-            const colors = new Float32Array(particleCount * 3);
-            const alphas = new Float32Array(particleCount);
-            const sizes = new Float32Array(particleCount);
-            const offsets = new Float32Array(particleCount);
-            const gridCoords = new Float32Array(particleCount * 2); // 存储网格坐标
-
-            // 曲面的垂直位置
-            const yOffset = (index - total / 2) * 8;
-            // 曲面的深度位置
-            const zOffset = (index % 2 === 0 ? 1 : -1) * (3 + index * 2);
-
-            let idx = 0;
-            for (let iy = 0; iy < gridH; iy++) {
-                for (let ix = 0; ix < gridW; ix++) {
-                    // 网格归一化坐标 (0-1)
-                    const u = ix / (gridW - 1);
-                    const v = iy / (gridH - 1);
-
-                    // 存储网格坐标
-                    gridCoords[idx * 2] = u;
-                    gridCoords[idx * 2 + 1] = v;
-
-                    // 计算世界坐标
-                    const x = (u - 0.5) * config.surfaceWidth;
-                    const y = (v - 0.5) * config.surfaceHeight + yOffset;
-                    const z = zOffset;
-
-                    positions[idx * 3] = x;
-                    positions[idx * 3 + 1] = y;
-                    positions[idx * 3 + 2] = z;
-
-                    // 颜色渐变（从左到右）
-                    const color = new THREE.Color();
-                    color.lerpColors(config.colorStart, config.colorEnd, u);
-                    colors[idx * 3] = color.r;
-                    colors[idx * 3 + 1] = color.g;
-                    colors[idx * 3 + 2] = color.b;
-
-                    // 透明度（边缘淡化）
-                    const edgeFadeX = Math.sin(u * Math.PI);
-                    const edgeFadeY = Math.sin(v * Math.PI);
-                    alphas[idx] = edgeFadeX * edgeFadeY * 0.8 + 0.2;
-
-                    // 粒子大小
-                    sizes[idx] = config.particleSize + Math.random() * 0.3;
-
-                    // 动画偏移
-                    offsets[idx] = Math.random() * Math.PI * 2;
-
-                    idx++;
-                }
-            }
-
-            geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-            geometry.setAttribute('customColor', new THREE.BufferAttribute(colors, 3));
-            geometry.setAttribute('alpha', new THREE.BufferAttribute(alphas, 1));
-            geometry.setAttribute('size', new THREE.BufferAttribute(sizes, 1));
-
-            const material = createParticleMaterial();
-            const points = new THREE.Points(geometry, material);
-
-            return {
-                points,
-                geometry,
-                offsets,
-                gridCoords,
-                gridW,
-                gridH,
-                yOffset,
-                zOffset,
-                phaseOffset: index * 1.2
-            };
-        }
-
-        // 更新光流曲面动画
-        function updateRibbons() {
-            ribbons.forEach((surface, surfaceIndex) => {
-                const positions = surface.geometry.attributes.position.array;
-                const colors = surface.geometry.attributes.customColor.array;
-                const sizes = surface.geometry.attributes.size.array;
-                const alphas = surface.geometry.attributes.alpha.array;
-
-                let idx = 0;
-                for (let iy = 0; iy < surface.gridH; iy++) {
-                    for (let ix = 0; ix < surface.gridW; ix++) {
-                        const u = surface.gridCoords[idx * 2];
-                        const v = surface.gridCoords[idx * 2 + 1];
-
-                        // 基础位置
-                        const x = (u - 0.5) * config.surfaceWidth;
-                        const y = (v - 0.5) * config.surfaceHeight + surface.yOffset;
-                        const z = surface.zOffset;
-
-                        // 复杂的数学波动效果
-                        const waveOffset = surface.phaseOffset + time * config.waveSpeed;
-
-                        // 螺旋缠绕效果 - 每条粒子线形成螺旋
-                        const spiralY = Math.sin(u * Math.PI * config.spiralFreq + waveOffset + v * Math.PI * 2) * config.spiralAmp;
-                        const spiralZ = Math.cos(u * Math.PI * config.spiralFreq + waveOffset + v * Math.PI * 2) * config.spiralAmp;
-
-                        // 主波动 - 横向传播的正弦波
-                        const wave1 = Math.sin(u * Math.PI * 3 + waveOffset) * config.waveAmplitude * 0.8;
-
-                        // 次波动 - 纵向传播的余弦波
-                        const wave2 = Math.cos(v * Math.PI * 4 + waveOffset * 1.5) * config.waveAmplitude * 0.5;
-
-                        // 径向波动 - 从中心扩散的圆形波
-                        const centerX = u - 0.5;
-                        const centerY = v - 0.5;
-                        const distFromCenter = Math.sqrt(centerX * centerX + centerY * centerY);
-                        const radialWave = Math.sin(distFromCenter * Math.PI * 6 + waveOffset * 2) * config.waveAmplitude * 0.3;
-
-                        // 扭曲效果 - 双频调制产生复杂图案
-                        const twistX = Math.sin(u * Math.PI * 12 + time * 2) * Math.cos(v * Math.PI * 6 + time) * config.twistStrength;
-                        const twistY = Math.cos(u * Math.PI * 6 + time * 1.5) * Math.sin(v * Math.PI * 12 + time * 2) * config.twistStrength;
-
-                        // DNA双螺旋效果（可选层叠）
-                        const dnaPhase = u * Math.PI * 8 + waveOffset * 3;
-                        const dnaY = Math.sin(dnaPhase + v * Math.PI) * config.dnaStrength;
-                        const dnaZ = Math.cos(dnaPhase + v * Math.PI) * config.dnaStrength;
-
-                        positions[idx * 3] = x + twistX;
-                        positions[idx * 3 + 1] = y + spiralY + wave1 + wave2 + radialWave + dnaY + twistY;
-                        positions[idx * 3 + 2] = z + spiralZ + dnaZ;
-
-                        // 动态循环渐变色 - 统一的单向流动
-                        // 计算流动偏移：随时间单向循环流动
-                        const flowOffset = (time * config.colorFlowSpeed) % 1.0;
-
-                        // 计算当前粒子的颜色位置（0-1循环）
-                        const colorPos = (u + flowOffset) % 1.0;
-
-                        // 平滑的单向渐变：绿色 -> 蓝色 -> 绿色（循环）
-                        // 使用 smoothstep 让过渡更柔和
-                        let t;
-                        if (colorPos < 0.5) {
-                            // 前半段：绿色渐变到蓝色
-                            t = colorPos * 2; // 0 -> 1
-                        } else {
-                            // 后半段：蓝色渐变回绿色
-                            t = (1.0 - colorPos) * 2; // 1 -> 0
-                        }
-
-                        // 应用平滑过渡
-                        t = t * t * (3 - 2 * t); // smoothstep
-
-                        // 在绿色和蓝色之间插值
-                        const color = new THREE.Color();
-                        color.lerpColors(config.colorStart, config.colorEnd, t);
-
-                        colors[idx * 3] = color.r;
-                        colors[idx * 3 + 1] = color.g;
-                        colors[idx * 3 + 2] = color.b;
-
-                        // 律动的粒子大小 - 规律性的数学脉冲
-                        const pulse1 = Math.sin(time * 2 + u * Math.PI * 6) * config.particlePulse;
-                        const pulse2 = Math.cos(time * 1.5 + v * Math.PI * 8) * config.particlePulse * 0.75;
-                        sizes[idx] = (config.particleSize + Math.random() * 0.15) * (1.0 + pulse1 + pulse2);
-
-                        // 律动的透明度 - 呼吸式闪烁
-                        const edgeFadeX = Math.sin(u * Math.PI);
-                        const edgeFadeY = Math.sin(v * Math.PI);
-                        const alphaPulse1 = Math.sin(time * 1.5 + u * Math.PI * 4) * config.particlePulse * 0.75;
-                        const alphaPulse2 = Math.cos(time * 2 + v * Math.PI * 6) * config.particlePulse * 0.5;
-                        alphas[idx] = edgeFadeX * edgeFadeY * (0.75 + alphaPulse1 + alphaPulse2);
-
-                        idx++;
-                    }
-                }
-
-                surface.geometry.attributes.position.needsUpdate = true;
-                surface.geometry.attributes.customColor.needsUpdate = true;
-                surface.geometry.attributes.size.needsUpdate = true;
-                surface.geometry.attributes.alpha.needsUpdate = true;
-
-                // 更新材质时间
-                surface.points.material.uniforms.time.value = time;
-            });
-        }
-
-        // 窗口大小调整
-        function onWindowResize() {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            composer.setSize(window.innerWidth, window.innerHeight);
-        }
-
-        // 动画循环
-        function animate() {
-            requestAnimationFrame(animate);
-
-            time += 0.01 * config.timeSpeed;
-
-            // 如果需要重建场景
-            if (needsRebuild) {
-                rebuildScene();
-                needsRebuild = false;
-            }
-
-            // 更新实时参数
-            updateRealTimeParameters();
-
-            // 更新丝带
-            updateRibbons();
-
-            // 渲染
-            composer.render();
-        }
-
-        // 更新实时参数（不需要重建场景的参数）
-        function updateRealTimeParameters() {
-            // 更新相机
-            camera.position.z = config.cameraZ;
-            camera.fov = config.fov;
-            camera.updateProjectionMatrix();
-
-            // 更新雾效
-            if (scene.fog) {
-                scene.fog.density = config.fogDensity;
-            }
-
-            // 更新后处理
-            if (bloomPass) {
-                bloomPass.strength = config.bloomStrength;
-                bloomPass.radius = config.bloomRadius;
-                bloomPass.threshold = config.bloomThreshold;
-            }
-
-            // 更新亮度
-            renderer.toneMappingExposure = config.brightness;
-
-            // 更新材质颜色
-            ribbons.forEach(surface => {
-                if (surface.points && surface.points.material && surface.points.material.uniforms) {
-                    surface.points.material.uniforms.colorStart.value = config.colorStart;
-                    surface.points.material.uniforms.colorEnd.value = config.colorEnd;
-                }
-            });
-        }
-
-        // 重建场景（当需要重新创建丝带时）
-        function rebuildScene() {
-            // 移除所有现有的丝带
-            ribbons.forEach(surface => {
-                scene.remove(surface.points);
-                surface.geometry.dispose();
-                surface.points.material.dispose();
-            });
-            ribbons = [];
-
-            // 重新创建丝带
-            createSurfaces();
-        }
-
-        // 设置控制面板事件监听器
-        function setupControls() {
-            // 基础参数
-            setupSlider('surfaceCount', (val) => {
-                config.surfaceCount = parseInt(val);
-                needsRebuild = true;
-            });
-
-            setupSlider('gridDensity', (val) => {
-                config.gridDensity = parseFloat(val);
-                needsRebuild = true;
-            });
-
-            setupSlider('surfaceWidth', (val) => {
-                config.surfaceWidth = parseFloat(val);
-            });
-
-            setupSlider('surfaceHeight', (val) => {
-                config.surfaceHeight = parseFloat(val);
-            });
-
-            // 颜色参数
-            setupColorPicker('colorStart', (val) => {
-                config.colorStart = new THREE.Color(val);
-            });
-
-            setupColorPicker('colorEnd', (val) => {
-                config.colorEnd = new THREE.Color(val);
-            });
-
-            setupSlider('colorFlowSpeed', (val) => {
-                config.colorFlowSpeed = parseFloat(val);
-            });
-
-            // 光效参数
-            setupSlider('bloomStrength', (val) => {
-                config.bloomStrength = parseFloat(val);
-            });
-
-            setupSlider('bloomRadius', (val) => {
-                config.bloomRadius = parseFloat(val);
-            });
-
-            setupSlider('bloomThreshold', (val) => {
-                config.bloomThreshold = parseFloat(val);
-            });
-
-            setupSlider('brightness', (val) => {
-                config.brightness = parseFloat(val);
-            });
-
-            // 波动效果参数
-            setupSlider('waveAmplitude', (val) => {
-                config.waveAmplitude = parseFloat(val);
-            });
-
-            setupSlider('waveSpeed', (val) => {
-                config.waveSpeed = parseFloat(val);
-            });
-
-            setupSlider('spiralFreq', (val) => {
-                config.spiralFreq = parseFloat(val);
-            });
-
-            setupSlider('spiralAmp', (val) => {
-                config.spiralAmp = parseFloat(val);
-            });
-
-            setupSlider('twistStrength', (val) => {
-                config.twistStrength = parseFloat(val);
-            });
-
-            setupSlider('dnaStrength', (val) => {
-                config.dnaStrength = parseFloat(val);
-            });
-
-            // 粒子参数
-            setupSlider('particleSize', (val) => {
-                config.particleSize = parseFloat(val);
-            });
-
-            setupSlider('particlePulse', (val) => {
-                config.particlePulse = parseFloat(val);
-            });
-
-            // 相机与环境
-            setupSlider('cameraZ', (val) => {
-                config.cameraZ = parseFloat(val);
-            });
-
-            setupSlider('fov', (val) => {
-                config.fov = parseFloat(val);
-            });
-
-            setupSlider('fogDensity', (val) => {
-                config.fogDensity = parseFloat(val);
-            });
-
-            setupSlider('timeSpeed', (val) => {
-                config.timeSpeed = parseFloat(val);
-            });
-        }
-
-        // 辅助函数：设置滑块
-        function setupSlider(id, callback) {
-            const slider = document.getElementById(id);
-            const valueDisplay = document.getElementById(id + '-value');
-
-            slider.addEventListener('input', (e) => {
-                const val = e.target.value;
-                callback(val);
-
-                // 更新显示值
-                const step = parseFloat(slider.step);
-                if (step >= 1) {
-                    valueDisplay.textContent = parseInt(val);
-                } else if (step >= 0.1) {
-                    valueDisplay.textContent = parseFloat(val).toFixed(1);
-                } else if (step >= 0.01) {
-                    valueDisplay.textContent = parseFloat(val).toFixed(2);
-                } else {
-                    valueDisplay.textContent = parseFloat(val).toFixed(3);
-                }
-            });
-        }
-
-        // 辅助函数：设置颜色选择器
-        function setupColorPicker(id, callback) {
-            const picker = document.getElementById(id);
-            picker.addEventListener('input', (e) => {
-                callback(e.target.value);
-            });
-        }
-
-        // 启动
-        init();
-        animate();
-    </script>
+    <!-- Main Application Script -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
