@@ -1,7 +1,7 @@
 import { config } from './config.js';
 import { initScene, getSceneComponents } from './scene.js';
-import { createSurfaces, activateGlassEffect, activateSnowEffect } from './particle.js';
-import { initMouseInteraction, createQuantumPulse } from './interaction.js';
+import { createSurfaces, activateSnowEffect } from './particle.js';
+import { initMouseInteraction } from './interaction.js';
 import { setupControls, updateUIFromConfig, togglePanel, resetToDefault, randomize, toggleAllEffects } from './ui.js';
 import { animate } from './animation.js';
 
@@ -21,10 +21,8 @@ function init() {
     // 初始化鼠标交互（需要传入config以便点击时创建波纹）
     initMouseInteraction(camera);
 
-    // 点击事件：创建量子脉冲、激活玻璃效果、激活雪花效果
+    // 点击事件：激活雪花效果
     document.addEventListener('click', () => {
-        createQuantumPulse(config);
-        activateGlassEffect();
         activateSnowEffect();
     });
 

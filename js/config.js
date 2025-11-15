@@ -44,11 +44,6 @@ export const config = {
     repulsionStrength: 20,
     repulsionRange: 100,
 
-    enableRipple: true,
-    rippleStrength: 25,
-    rippleSpeed: 0.8,
-    rippleDecay: 0.02,
-
     enableInfection: false,
     infectionColor: new THREE.Color(0xff00ff),
     infectionIntensity: 0.8,
@@ -63,15 +58,6 @@ export const config = {
     enableReflection: true,
     reflectionIntensity: 0.8,
     refractionIndex: 1.5,
-
-    // 玻璃效果参数
-    enableGlass: false,
-    glassOpacity: 0.10,
-    frostedAmount: 0.60,
-    highlightIntensity: 2.0,
-    glassColor: new THREE.Color(0xccffff),
-    glassRadius: 6,
-    glassFadeSpeed: 0.01,
 
     // 数字雪花效果参数
     enableSnow: false,
@@ -88,8 +74,7 @@ export const defaultConfig = JSON.parse(JSON.stringify({
     ...config,
     colorStart: 0x28f321,
     colorEnd: 0x2196F3,
-    infectionColor: 0xff00ff,
-    glassColor: 0xccffff
+    infectionColor: 0xff00ff
 }));
 
 // 重建标志

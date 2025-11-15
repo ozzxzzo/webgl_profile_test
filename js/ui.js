@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 import { config, defaultConfig, setNeedsRebuild } from './config.js';
-import { glassActivation, snowActivation, activateGlassEffect, activateSnowEffect } from './particle.js';
+import { snowActivation } from './particle.js';
 import { snowConfig, setSnowConfig } from './digitalSnow.js';
 
 /**
@@ -35,19 +35,14 @@ export function resetToDefault() {
     config.colorStart = new THREE.Color(defaultConfig.colorStart);
     config.colorEnd = new THREE.Color(defaultConfig.colorEnd);
     config.infectionColor = new THREE.Color(defaultConfig.infectionColor);
-    config.glassColor = new THREE.Color(defaultConfig.glassColor);
     Object.assign(config, {
         ...defaultConfig,
         colorStart: config.colorStart,
         colorEnd: config.colorEnd,
-        infectionColor: config.infectionColor,
-        glassColor: config.glassColor
+        infectionColor: config.infectionColor
     });
 
-    // 同步玻璃和雪花状态
-    glassActivation.enabled = config.enableGlass;
-    glassActivation.clickRadius = config.glassRadius;
-    glassActivation.fadeSpeed = config.glassFadeSpeed;
+    // 同步雪花状态
     setSnowConfig({
         enabled: config.enableSnow,
         density: config.snowDensity,
@@ -191,14 +186,6 @@ export function updateUIFromConfig() {
     document.getElementById('repulsionRange').value = config.repulsionRange;
     document.getElementById('repulsionRange-value').textContent = Math.round(config.repulsionRange);
 
-    document.getElementById('enableRipple').checked = config.enableRipple;
-    document.getElementById('rippleStrength').value = config.rippleStrength;
-    document.getElementById('rippleStrength-value').textContent = config.rippleStrength.toFixed(1);
-    document.getElementById('rippleSpeed').value = config.rippleSpeed;
-    document.getElementById('rippleSpeed-value').textContent = config.rippleSpeed.toFixed(1);
-    document.getElementById('rippleDecay').value = config.rippleDecay;
-    document.getElementById('rippleDecay-value').textContent = config.rippleDecay.toFixed(2);
-
     document.getElementById('enableInfection').checked = config.enableInfection;
     document.getElementById('infectionColor').value = '#' + config.infectionColor.getHexString();
     document.getElementById('infectionIntensity').value = config.infectionIntensity;
@@ -219,20 +206,6 @@ export function updateUIFromConfig() {
     document.getElementById('reflectionIntensity-value').textContent = config.reflectionIntensity.toFixed(1);
     document.getElementById('refractionIndex').value = config.refractionIndex;
     document.getElementById('refractionIndex-value').textContent = config.refractionIndex.toFixed(1);
-
-    // 玻璃效果
-    document.getElementById('enableGlass').checked = config.enableGlass;
-    document.getElementById('glassOpacity').value = config.glassOpacity;
-    document.getElementById('glassOpacity-value').textContent = config.glassOpacity.toFixed(2);
-    document.getElementById('frostedAmount').value = config.frostedAmount;
-    document.getElementById('frostedAmount-value').textContent = config.frostedAmount.toFixed(2);
-    document.getElementById('highlightIntensity').value = config.highlightIntensity;
-    document.getElementById('highlightIntensity-value').textContent = config.highlightIntensity.toFixed(1);
-    document.getElementById('glassColor').value = '#' + config.glassColor.getHexString();
-    document.getElementById('glassRadius').value = config.glassRadius;
-    document.getElementById('glassRadius-value').textContent = Math.round(config.glassRadius);
-    document.getElementById('glassFadeSpeed').value = config.glassFadeSpeed;
-    document.getElementById('glassFadeSpeed-value').textContent = config.glassFadeSpeed.toFixed(3);
 
     // 数字雪花效果
     document.getElementById('enableSnow').checked = config.enableSnow;
@@ -358,22 +331,6 @@ export function setupControls() {
         config.repulsionRange = parseFloat(val);
     });
 
-    setupCheckbox('enableRipple', (val) => {
-        config.enableRipple = val;
-    });
-
-    setupSlider('rippleStrength', (val) => {
-        config.rippleStrength = parseFloat(val);
-    });
-
-    setupSlider('rippleSpeed', (val) => {
-        config.rippleSpeed = parseFloat(val);
-    });
-
-    setupSlider('rippleDecay', (val) => {
-        config.rippleDecay = parseFloat(val);
-    });
-
     setupCheckbox('enableInfection', (val) => {
         config.enableInfection = val;
     });
@@ -416,38 +373,6 @@ export function setupControls() {
 
     setupSlider('refractionIndex', (val) => {
         config.refractionIndex = parseFloat(val);
-    });
-
-    // 玻璃效果控制
-    setupCheckbox('enableGlass', (val) => {
-        config.enableGlass = val;
-        glassActivation.enabled = val;
-    });
-
-    setupSlider('glassOpacity', (val) => {
-        config.glassOpacity = parseFloat(val);
-    });
-
-    setupSlider('frostedAmount', (val) => {
-        config.frostedAmount = parseFloat(val);
-    });
-
-    setupSlider('highlightIntensity', (val) => {
-        config.highlightIntensity = parseFloat(val);
-    });
-
-    setupColorPicker('glassColor', (val) => {
-        config.glassColor = new THREE.Color(val);
-    });
-
-    setupSlider('glassRadius', (val) => {
-        config.glassRadius = parseFloat(val);
-        glassActivation.clickRadius = parseFloat(val);
-    });
-
-    setupSlider('glassFadeSpeed', (val) => {
-        config.glassFadeSpeed = parseFloat(val);
-        glassActivation.fadeSpeed = parseFloat(val);
     });
 
     // 数字雪花效果控制
