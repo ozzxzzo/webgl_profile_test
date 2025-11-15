@@ -54,12 +54,23 @@ export function calculateDNAEffect(u, v, waveOffset, dnaStrength) {
  * 应用排斥力效果
  */
 export function applyRepulsionEffect(finalX, finalY, finalZ, mouse, config) {
+    // 检查鼠标是否在粒子群附近（只有悬浮在粒子上时才激活）
+    const particleBoundaryMargin = 50;
+    const maxX = config.surfaceWidth / 2 + particleBoundaryMargin;
+    const maxY = config.surfaceHeight / 2 + particleBoundaryMargin;
+
+    const mouseInBounds = Math.abs(mouse.worldX) < maxX && Math.abs(mouse.worldY) < maxY;
+
+    if (!mouseInBounds || !config.enableRepulsion) {
+        return { x: finalX, y: finalY, z: finalZ };
+    }
+
     const dx = mouse.worldX - finalX;
     const dy = mouse.worldY - finalY;
     const dz = mouse.worldZ - finalZ;
     const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-    if (config.enableRepulsion && distance < config.repulsionRange) {
+    if (distance < config.repulsionRange) {
         const force = (1 - distance / config.repulsionRange) * config.repulsionStrength;
         return {
             x: finalX - (dx / distance) * force * 0.1,

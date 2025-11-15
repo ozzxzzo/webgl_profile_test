@@ -41,7 +41,7 @@ export const config = {
 
     // 鼠标交互特效参数
     enableRepulsion: true,
-    repulsionStrength: 26,
+    repulsionStrength: 15,
     repulsionRange: 190,
 
     enableInfection: false,
