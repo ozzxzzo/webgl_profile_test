@@ -97,11 +97,10 @@ export function randomize() {
  * 全效果开关
  */
 export function toggleAllEffects() {
-    const allEnabled = config.enableRepulsion && config.enableRipple && config.enableInfection &&
+    const allEnabled = config.enableRepulsion && config.enableInfection &&
                       config.enableDOF && config.enableReflection;
 
     config.enableRepulsion = !allEnabled;
-    config.enableRipple = !allEnabled;
     config.enableInfection = !allEnabled;
     config.enableDOF = !allEnabled;
     config.enableReflection = !allEnabled;
