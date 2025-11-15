@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 import { config, defaultConfig, setNeedsRebuild } from './config.js';
+import { glassActivation, snowActivation, activateGlassEffect, activateSnowEffect } from './particle.js';
+import { snowConfig, setSnowConfig } from './digitalSnow.js';
 
 /**
  * 控制面板切换
@@ -33,12 +35,28 @@ export function resetToDefault() {
     config.colorStart = new THREE.Color(defaultConfig.colorStart);
     config.colorEnd = new THREE.Color(defaultConfig.colorEnd);
     config.infectionColor = new THREE.Color(defaultConfig.infectionColor);
+    config.glassColor = new THREE.Color(defaultConfig.glassColor);
     Object.assign(config, {
         ...defaultConfig,
         colorStart: config.colorStart,
         colorEnd: config.colorEnd,
-        infectionColor: config.infectionColor
+        infectionColor: config.infectionColor,
+        glassColor: config.glassColor
     });
+
+    // 同步玻璃和雪花状态
+    glassActivation.enabled = config.enableGlass;
+    glassActivation.clickRadius = config.glassRadius;
+    glassActivation.fadeSpeed = config.glassFadeSpeed;
+    setSnowConfig({
+        enabled: config.enableSnow,
+        density: config.snowDensity,
+        updateSpeed: config.snowUpdateSpeed,
+        colorMode: config.snowColorMode,
+        flickerIntensity: config.snowFlickerIntensity
+    });
+    snowActivation.clickRadius = config.snowRadius;
+
     updateUIFromConfig();
     setNeedsRebuild(true);
 }
@@ -201,6 +219,32 @@ export function updateUIFromConfig() {
     document.getElementById('reflectionIntensity-value').textContent = config.reflectionIntensity.toFixed(1);
     document.getElementById('refractionIndex').value = config.refractionIndex;
     document.getElementById('refractionIndex-value').textContent = config.refractionIndex.toFixed(1);
+
+    // 玻璃效果
+    document.getElementById('enableGlass').checked = config.enableGlass;
+    document.getElementById('glassOpacity').value = config.glassOpacity;
+    document.getElementById('glassOpacity-value').textContent = config.glassOpacity.toFixed(2);
+    document.getElementById('frostedAmount').value = config.frostedAmount;
+    document.getElementById('frostedAmount-value').textContent = config.frostedAmount.toFixed(2);
+    document.getElementById('highlightIntensity').value = config.highlightIntensity;
+    document.getElementById('highlightIntensity-value').textContent = config.highlightIntensity.toFixed(1);
+    document.getElementById('glassColor').value = '#' + config.glassColor.getHexString();
+    document.getElementById('glassRadius').value = config.glassRadius;
+    document.getElementById('glassRadius-value').textContent = Math.round(config.glassRadius);
+    document.getElementById('glassFadeSpeed').value = config.glassFadeSpeed;
+    document.getElementById('glassFadeSpeed-value').textContent = config.glassFadeSpeed.toFixed(3);
+
+    // 数字雪花效果
+    document.getElementById('enableSnow').checked = config.enableSnow;
+    document.getElementById('snowDensity').value = config.snowDensity;
+    document.getElementById('snowDensity-value').textContent = config.snowDensity.toFixed(2);
+    document.getElementById('snowUpdateSpeed').value = config.snowUpdateSpeed;
+    document.getElementById('snowUpdateSpeed-value').textContent = config.snowUpdateSpeed.toFixed(1);
+    document.getElementById('snowColorMode').value = config.snowColorMode;
+    document.getElementById('snowFlickerIntensity').value = config.snowFlickerIntensity;
+    document.getElementById('snowFlickerIntensity-value').textContent = config.snowFlickerIntensity.toFixed(2);
+    document.getElementById('snowRadius').value = config.snowRadius;
+    document.getElementById('snowRadius-value').textContent = Math.round(config.snowRadius);
 }
 
 /**
@@ -373,6 +417,69 @@ export function setupControls() {
     setupSlider('refractionIndex', (val) => {
         config.refractionIndex = parseFloat(val);
     });
+
+    // 玻璃效果控制
+    setupCheckbox('enableGlass', (val) => {
+        config.enableGlass = val;
+        glassActivation.enabled = val;
+    });
+
+    setupSlider('glassOpacity', (val) => {
+        config.glassOpacity = parseFloat(val);
+    });
+
+    setupSlider('frostedAmount', (val) => {
+        config.frostedAmount = parseFloat(val);
+    });
+
+    setupSlider('highlightIntensity', (val) => {
+        config.highlightIntensity = parseFloat(val);
+    });
+
+    setupColorPicker('glassColor', (val) => {
+        config.glassColor = new THREE.Color(val);
+    });
+
+    setupSlider('glassRadius', (val) => {
+        config.glassRadius = parseFloat(val);
+        glassActivation.clickRadius = parseFloat(val);
+    });
+
+    setupSlider('glassFadeSpeed', (val) => {
+        config.glassFadeSpeed = parseFloat(val);
+        glassActivation.fadeSpeed = parseFloat(val);
+    });
+
+    // 数字雪花效果控制
+    setupCheckbox('enableSnow', (val) => {
+        config.enableSnow = val;
+        setSnowConfig({ enabled: val });
+    });
+
+    setupSlider('snowDensity', (val) => {
+        config.snowDensity = parseFloat(val);
+        setSnowConfig({ density: parseFloat(val) });
+    });
+
+    setupSlider('snowUpdateSpeed', (val) => {
+        config.snowUpdateSpeed = parseFloat(val);
+        setSnowConfig({ updateSpeed: parseFloat(val) });
+    });
+
+    setupSelect('snowColorMode', (val) => {
+        config.snowColorMode = val;
+        setSnowConfig({ colorMode: val });
+    });
+
+    setupSlider('snowFlickerIntensity', (val) => {
+        config.snowFlickerIntensity = parseFloat(val);
+        setSnowConfig({ flickerIntensity: parseFloat(val) });
+    });
+
+    setupSlider('snowRadius', (val) => {
+        config.snowRadius = parseFloat(val);
+        snowActivation.clickRadius = parseFloat(val);
+    });
 }
 
 /**
@@ -418,5 +525,15 @@ function setupCheckbox(id, callback) {
     const checkbox = document.getElementById(id);
     checkbox.addEventListener('change', (e) => {
         callback(e.target.checked);
+    });
+}
+
+/**
+ * 辅助函数：设置下拉选择框
+ */
+function setupSelect(id, callback) {
+    const select = document.getElementById(id);
+    select.addEventListener('change', (e) => {
+        callback(e.target.value);
     });
 }

@@ -199,6 +199,28 @@ canvas {
     vertical-align: middle;
 }
 
+.control-group select {
+    width: 100%;
+    height: 32px;
+    padding: 4px 8px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+    background: rgba(10, 10, 15, 0.8);
+    color: #fff;
+    font-size: 12px;
+    cursor: pointer;
+    outline: none;
+}
+
+.control-group select:hover {
+    border-color: rgba(40, 243, 33, 0.5);
+}
+
+.control-group select:focus {
+    border-color: #28f321;
+    box-shadow: 0 0 8px rgba(40, 243, 33, 0.4);
+}
+
 .control-group .value-display {
     float: right;
     color: #28f321;
